@@ -1,14 +1,147 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}MDVOS{% endblock %}</title>
+    {% load static %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>{% block title %}MobileRanker{% endblock %}</title>
+	<meta name="description" content="Strona dedykowana osobom szukającym wiedzy na temat wsparcia ich telefonu lub tabletu.">
+	<meta name="keywords" content="telefon, tablet, system operacyjny, wsparcie, zabezpieczenia">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge,chrome=1">
+	
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/fontello.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+	
 </head>
+
 <body>
-    {% block navbar %}{% endblock %}
-    {% block content %}{% endblock %}
-    {% block footer %}{% endblock %}
+
+	<header>
+		<nav class ="navbar navbar-dark navbar-expand-md ">
+		
+			<div class = "container">
+
+				<a class = "col-4 navbar-brand"  href = "#"> <h1>MobileRanker</h1> </a>
+
+				<button class = "navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" ariaexpanded="false" arialabel="Rozwiń menu">
+					<span class = "navbar-toggler-icon"></span>
+				</button>
+
+				<div class = "collapse navbar-collapse" id="navbarNav">
+					
+					<div class="container ">
+						<nav class="navbar navbar-dark">
+							<div class="container-fluid">
+							<form class="d-flex">
+								
+								<button class="btn btn-outline-none" type="submit">
+									<i class="demo-icon icon-search"></i> 
+								</button>
+								<input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Search">
+								
+
+							</form>
+							</div>
+						</nav>
+					</div>
+		
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle m-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+									<i class="demo-icon icon-user"></i>
+									Konto użytkownika
+								</button>
+						<div class="dropdown-menu" aria-labelledby="triggerId" >
+							<a class="dropdown-item" href="#">Profil</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item disabled" href="#">Wyloguj się</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+			
+		</nav>
+		
+	</header>
+	
+	
+	<main>
+	
+	<article>
+	
+		<div class = "container-fluid">
+		
+			<div class = "row">
+			
+				<div  class = "d-flex flex-xolumn justify-content-between col-auto min-vh-100 sidemenu">
+				
+					<div>
+						<a href="#" class = "nav-link text-white m-2" aria-current="page">
+							<span class = "ms-2">
+								<h5><i class="demo-icon icon-home"></i>
+								Home</h5></span>
+						</a>
+						
+						<hr class="hr" />
+
+						<button class = "navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" ariaexpanded="false" arialabel="Rozwiń menu">
+							<h3>Model urządzenia</h3>
+						</button>
+												
+						<div class = "collapse navbar-collapse" id="navbarNav2">
+							
+							<button class = "navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavTab" aria-controls="navbarNavTab" ariaexpanded="false" arialabel="Rozwiń menu">
+								<h6>Tablety</h6>
+							</button>
+							<div class = "collapse navbar-collapse" id="navbarNavTab">
+
+							</div>
+						    </br>
+							<button class = "navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavTel" aria-controls="navbarNavTel" ariaexpanded="false" arialabel="Rozwiń menu">
+								<h6>Telefony</h6>
+							</button>
+				
+							<div class = "collapse navbar-collapse" id="navbarNavTel">
+
+							</div>
+						</div>
+						
+
+					</div>				
+				</div>
+			</div>
+		</div>
+	</article>
+		
+	</main>
+
+	
+		
+			
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	
+	
 </body>
 </html>

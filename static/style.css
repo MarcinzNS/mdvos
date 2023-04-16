@@ -1,0 +1,31 @@
+body
+{
+	background-color: #CBD0D8;
+	color: #F4F3EA;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+h1
+{
+	font-size: 36px;
+	font-weight: 400;
+	color: #F4F3EA;
+	margin: 20px;
+	
+	background-color: #333D51
+}
+h3
+{
+	font-size: 24px;
+}
+.navbar
+{
+	min-height: 57px;
+	background-color: #333D51;
+}
+
+.sidemenu
+{
+	background-color: #D3AC2B;	
+}
