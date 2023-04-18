@@ -2,16 +2,16 @@ from django.db import models
 
 class OS(models.Model):
     id_os = models.IntegerField(primary_key=True)
-    version = models.CharField(max_length=50)
-    name = models.CharField(max_length=50)
+    version = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=30)
     date_start = models.DateField()
     date_end = models.DateField(null=True)
-    description = models.CharField(max_length=1000, null=True)
+    description = models.CharField(max_length=500, null=True)
     accepted = models.BooleanField()
 
 class Devices(models.Model):
     id_device = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     premier = models.DateField()
     device_type = models.CharField(max_length=30)
     model = models.CharField(max_length=50)
@@ -22,11 +22,11 @@ class User(models.Model):
     id_user = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
-    login = models.CharField(max_length=50)
-    email = models.CharField(max_length=30)
+    login = models.CharField(max_length=50, unique=True)
+    email = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=50)
-    theme = models.BooleanField()
-    admin_acc = models.BooleanField()
+    theme = models.BooleanField(default=False)
+    admin_acc = models.BooleanField(default=False)
 
 class Followed_devices(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
