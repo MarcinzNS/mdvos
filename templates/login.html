@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %} - MobileRanker{% endblock %}
-{% extends 'base.html' %}
+{% block title %} Logowanie{% endblock %}
+
 
 {% block content %}
 <main>
@@ -11,7 +11,7 @@
 
       </div>
       <div class="col-6 ">
-        <form class="border border-2 rounded-3 p-3" action="{% url 'login' %}" method="post">
+        <form class="border border-2 rounded-3 p-3" action="{% url 'home' %}" method="post">
           {% csrf_token %}
             <div class="row mb-3">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
@@ -42,7 +42,7 @@
             <a href="#" class= "link-dark  link-offset-2 ">Forgot password?</a>
           </div>
           <div class="mt-2">
-            <a href="register.html" class= "link-dark  link-offset-2 ">You don't have account?</a>
+            <a href="{% url 'registration' %}" class= "link-dark  link-offset-2 ">You don't have account?</a>
           </div>
         </div>
       </div>
