@@ -1,31 +1,28 @@
-body
-{
-	background-color: #CBD0D8;
-	color: #F4F3EA;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-}
-
-h1
-{
-	font-size: 36px;
-	font-weight: 400;
-	color: #F4F3EA;
-	margin: 20px;
-	
-	background-color: #333D51
-}
-h3
-{
-	font-size: 24px;
-}
-.navbar
-{
-	min-height: 57px;
+nav{
+	min-height: 60px;
+	background-color: rgb(24, 24, 24);
+  }
+footer{
+	background-color: rgb(24, 24, 24);
+  }
+  .bg-wyszukaj{
+	background-color: #E0E0E0;
+	padding: 2px;
+  }
+  .bg-login{
+	background-color: #D3AC2B;
+	color: white;
+  }
+  .bg-button-register{
 	background-color: #333D51;
-}
-
-.sidemenu
-{
-	background-color: #D3AC2B;	
-}
+	color:#FFFFFF;
+  }
+  .bg-nav2{
+	background-color: #D3AC2B ;
+	color:#FFFFFF;
+	height: 100%
+  }
+  .bg-body{
+	background-color: #F4F3EA;
+  }
+  
