@@ -6,11 +6,11 @@ def login(request):
     context = {
         "now" : datetime.datetime.now()
     }
-    return render(request, "index.html", context)
+    return render(request, "login.html", context)
 
 # Create your views here.
 def registration(request):
     context = {
         "now" : datetime.datetime.now()
     }
-    return render(request, "index.html", context)
+    return render(request, "register.html", context)
