@@ -11,38 +11,41 @@
 
       </div>
       <div class="col-6 ">
-        <form class="border border-2 rounded-3 p-3" action="{% url 'home' %}" method="post">
+        <h2>Logowanie:</h2>
+        </br>
+        <form class="border border-2 rounded-3 p-3 " action="{% url 'home' %}" method="post">
           {% csrf_token %}
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3">
+              
+              <div class="col-sm-12">
+                <input type="email" class="form-control" placeholder="Email" id="inputEmail3">
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3">
+              
+              <div class="col-sm-12">
+                <input type="password" class="form-control" placeholder="Hasło" id="inputPassword3">
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-sm-10 offset-sm-2">
+              <div class="col-sm-10 ">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="gridCheck1">
                   <label class="form-check-label" for="gridCheck1">
-                    Remember me?
+                    Zapamiętaj mnie
                   </label>
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            
+            <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zaloguj się</button>
           </form>
-        <div class="float-end mt-1">
+        <div class="mt-1">
           <div class="mt-2">
-            <a href="#" class= "link-dark  link-offset-2 ">Forgot password?</a>
+            <a href="#" class= "link-dark  link-offset-2 ">Nie pamiętasz hasła?</a>
           </div>
           <div class="mt-2">
-            <a href="{% url 'registration' %}" class= "link-dark  link-offset-2 ">You don't have account?</a>
+            <a href="{% url 'registration' %}" class= "link-dark  link-offset-2 ">Zarejestruj się</a>
           </div>
         </div>
       </div>

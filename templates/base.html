@@ -26,7 +26,7 @@
     <head>
       <nav class="navbar navbar-dark navbar-expand-xl">
         <a class="navbar-brand mx-5 " href="{% url 'home' %}">MobileRanker</a>
-        <button class="navbar-toggler me-3" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
           <span class="navbar-toggler-icon" ></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="mainmenu">
@@ -64,9 +64,9 @@
                 <div class="col-sm-12 col-xl-5">
                   <ul class="navbar-nav mx-3">
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="{% url 'login' %}" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> <i class="bi bi-person-square"></i> Użytkownik </a>
-                      <div class="dropdown-menu" aria-labelledby="submenu">
-                        <a class="dropdown-item" href="#"> Mój Profil </a>
+                      <a class="nav-link dropdown-toggle" href="{% url 'login' %}" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> <i class="bi bi-person-square"></i> Użytkownik </a>
+                      <div class="dropdown-menu" aria-labelledby="submenu">                       
+                        <a class="dropdown-item" href="{% url 'profile' %}"> Mój Profil </a>
                         <a class="dropdown-item" href="#"> Ulubione </a>
                         <a class="dropdown-item" href="{% url 'home' %}"> Wyloguj się </a>
                       </div>
@@ -86,9 +86,11 @@
         </div>
       </nav>
     </head>
+    <body>
     {% block content %}
 
     {% endblock %}
+    </body>
     <footer class="footer mt-auto py-3 bg-second text-white-50 ">
       <div class="container">
         <p class="text-center text-white">Copyright <i class="bi bi-c-circle"></i> Wszelkie prawa zastrzeżone.
