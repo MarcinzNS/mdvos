@@ -3,39 +3,174 @@
 {% block title %}Produkty{% endblock %}
 
 {% block content %}
-<main class="row mt-5">
 
-    <div class="col-sm-12 col-md-2"></div>
-    <div class="col-sm-12 col-md-8">
-
-        <div class="container"> <p class="h3"> Realme Narzo 50A Prime</p></div>
-        <div class="container row mt-3">
-
-            <div class="col-sm-12 col-md-6">
-                <img src="img/Redmi_A1.jpg" style="width: 18rem;" class="card-img-top " alt="...">
-            </div>
-            <div class="col-sm-12  border-start col-md-6">
-                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,6"</p></span>
-                <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Samsung Exynos 1280</p></span>
-                <span class="d-flex"><i class="bi bi-memory me-3"></i><p>6 GB</p></span>
-                <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>128 GB</p></span>
-            </div>
+<main>
+    <div class="container row mt-5">
+        <div class="col-sm-12 col-md-1">
         </div>
-        <div class="card-body my-3 pt-3 border-top">
-            <p class="card-text">
-                Seria narzo od realme to odpowiedź na prośby użytkowników, którzy potrzebują taniego i wszechstronnego urządzenia. Ostatnią premierą z tej serii był model 50A Prime, który oferuje całkiem niezły stosunek ceny do jakości.
-            </p>
-            <p class="card-text">
-                Pod względem wzornictwa jest to dość spora nowość dla realme, który dopiero od niedawna decyduje się na proste, wręcz kanciaste ramki w swoich smartfonach. Te wykonano z tworzywa sztucznego, natomiast front tego smartfona stanowi oczywiście szkło. Całość jednak prezentuje się zaskakująco dobrze i tak samo też leży w dłoni, nawet pomimo sporego rozmiaru. Model realme narzo 50A Prime działa pod kontrolą Androida 11 z nakładką realme UI 2.0.
-            </p>
-            <p class="card-text">
-                Ten smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
-            </p>
-        </div>
+        <div class="col-sm-12 col-md-3">
+            <nav class="navbar navbar-light navbar-expand-xl ">
+                
+                <button class="navbar-toggler me-3" type="button" data-toggle="collapse" data-target="#filtr" aria-controls="filtr" aria-expanded="false" aria-label="Przełącznik filtra">
+                    <i class="bi bi-funnel"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="filtr">
+                    <form action="#" class="border border-2 rounded-3 p-3 me-2">
+                        {% csrf_token %}
+                        <p class="h3 mb-2">Filtry</p>
+                        <p class="h4 pt-3 border-top"> Producent</p>
         
-
-
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Xiaiomi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Samsung
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Apple
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Motorola
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="h4 pt-3 border-top"> Pamięć RAM</p>
+        
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        6 GB
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        8 GB
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        12 GB
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        16 GB
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="PXiaiomi">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        18 GB
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary float-end">Filtruj</button>
+                        <div class="clearfix"></div>
+        
+                    </form>
+                </div>
+                
+            </nav>      
+        </div>
+        <div class="col-sm-12 col-md-7 ">
+            <div class="row position-relative border-top rounded mt-2 p-1">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <img src="..." class="w-100" alt="zdjęcie_telefonu">
+                </div>
+                <div class="col-md-6 p-4 ps-md-0">
+                    <h5 class="mt-0">Xiaomi POCO M4 Pro 8/256GB Cool Blue</h5>
+                    <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,67"</p></span>
+                    <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Qualcomm Snapdragon 778G</p></span>
+                    <span class="d-flex"><i class="bi bi-memory me-3"></i><p>8 GB</p></span>
+                    <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>256 GB</p></span>
+                    <a href="{% url 'one_device' %}" class="stretched-link">Czytaj więcej</a>
+                </div>
+            </div>
+            <div class="row position-relative border-top rounded mt-2 p-1">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <img src="..." class="w-100" alt="zdjęcie_telefonu">
+                </div>
+                <div class="col-md-6 p-4 ps-md-0">
+                    <h5 class="mt-0">Apple iPhone 14 128GB Midnight</h5>
+                    <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,1"</p></span>
+                    <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Apple A15 Bionic</p></span>
+                    <span class="d-flex"><i class="bi bi-memory me-3"></i><p>6 GB</p></span>
+                    <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>128 GB</p></span>
+                    <a href="{% url 'one_device' %}" class="stretched-link">Czytaj więcej</a>
+                </div>
+            </div>
+            <div class="row position-relative border-top rounded mt-2 p-1">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <img src="..." class="w-100" alt="zdjęcie_telefonu">
+                </div>
+                <div class="col-md-6 p-4 ps-md-0">
+                    <h5 class="mt-0">Samsung Galaxy M33 5G 6/128 Blue 120Hz</h5>
+                    <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,6"</p></span>
+                    <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Samsung Exynos 1280</p></span>
+                    <span class="d-flex"><i class="bi bi-memory me-3"></i><p>6 GB</p></span>
+                    <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>128 GB</p></span>
+                    <a href="{% url 'one_device' %}" class="stretched-link">Czytaj więcej</a>
+                </div>
+            </div>
+            <div class="row position-relative border-top rounded mt-2 p-1">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <img src="..." class="w-100" alt="zdjęcie_telefonu">
+                </div>
+                <div class="col-md-6 p-4 ps-md-0">
+                    <h5 class="mt-0">Realme Narzo 50A Prime</h5>
+                    <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,6"</p></span>
+                    <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Unisoc Tiger T612</p></span>
+                    <span class="d-flex"><i class="bi bi-memory me-3"></i><p>4 GB</p></span>
+                    <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>64 GB</p></span>
+                    <a href="{% url 'one_device' %}" class="stretched-link">Czytaj więcej</a>
+                </div>
+            </div>
+            <div class="row border-top rounded d-flex p-3">
+                <div class="col-4"><p> </p></div>
+                <div class="col-4">
+                    <nav aria-label="Page navigation example " class="mx-auto ">
+                        <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-4"><p> </p></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-1"></div>
     </div>
-    <div class="col-sm-12 col-md-2"></div>
-    </main>
+</main>
+
 {% endblock %}
