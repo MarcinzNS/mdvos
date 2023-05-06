@@ -1,10 +1,11 @@
-nav{
+.main_nav{
 	min-height: 60px;
 	background-color: rgb(24, 24, 24);
   }
 footer{
 	background-color: rgb(24, 24, 24);
   }
+  
   .bg-wyszukaj{
 	background-color: #E0E0E0;
 	padding: 2px;
