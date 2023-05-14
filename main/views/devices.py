@@ -3,8 +3,15 @@ from ..services.devices import *
 import math
 
 def devices(request, page=1):
-    how_many_item_on_page = 2
     context = {
+        "sidebar": {
+            "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
+            "ram": [6, 8, 12, 16, 18],
+        }
+    } 
+    
+    how_many_item_on_page = 2
+    context |= {
         "data": 
             getDevicesDataForPage(how_many_item_on_page, page),
         "how_many_pages": 
