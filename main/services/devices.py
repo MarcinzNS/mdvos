@@ -12,9 +12,7 @@ def getHowManyDevices():
     return len(Devices.objects.all())
 
 def getDeviceData(id):
-    devices = Devices.objects.all().filter(id_device=id).values()
-    return devices
+    return Devices.objects.all().filter(id_device=id).values()[0]
 
 def getSpecificationData(id):
-    specification = Specification.objects.all().filter(devices_id=id).values()
-    return specification
+    return  Specification.objects.all().filter(devices_id=id).values()[0]
