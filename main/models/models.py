@@ -1,4 +1,13 @@
 from django.db import models
+import datetime, os
+import hashlib
+
+def filepath(request, filename):
+    extension = filename.split(".")[-1]
+    old_filename_hash = str(hashlib.md5(filename.encode()).hexdigest())
+    timeNow = datetime.datetime.now().strftime('%Y%m%d%H:%M:%S')
+    filename = f"{timeNow}-{old_filename_hash}.{extension}"
+    return os.path.join('static/uploads/', filename)
 
 class OS(models.Model):
     id_os = models.IntegerField(primary_key=True)
@@ -17,7 +26,8 @@ class Devices(models.Model):
     premier = models.DateField()
     device_type = models.CharField(max_length=30)
     model = models.CharField(max_length=50)
-    picture = models.BinaryField(null=True)
+    #picture = models.BinaryField(null=True)
+    image = models.ImageField(upload_to=filepath, null=True, blank=True)
     accepted = models.BooleanField()
     def __str__(self):
         return f"{self.device_type}: {self.name} {self.model}"

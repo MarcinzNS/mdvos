@@ -13,36 +13,36 @@
         <div class="col-6 ">
           <h2>Rejestracja:</h2>
           </br>
-          <form class="border border-2 rounded-3 p-3" action="{% url 'home' %}" method="post">
+          <form class="border border-2 rounded-3 p-3" action="{% url 'registration' %}" method="post">
             {% csrf_token %}
             <div class="row mb-3">
              
               <div class="col-sm-12">
-                <input type="text" class="form-control" placeholder="Imię" id="inputEmail3">
+                <input type="text" class="form-control" name="name" placeholder="Imię" id="inputEmail3">
               </div>
             </div>
             <div class="row mb-3">
               
               <div class="col-sm-12">
-                <input type="text" class="form-control" placeholder="Nazwisko" id="inputEmail3">
+                <input type="text" class="form-control" name="surname" placeholder="Nazwisko" id="inputEmail3">
               </div>
             </div>
             <div class="row mb-3">
               
               <div class="col-sm-12">
-                <input type="text" class="form-control" placeholder="Nazwa użytkownika" id="inputEmail3">
+                <input type="text" class="form-control" name="nick" placeholder="Nazwa użytkownika" id="inputEmail3">
               </div>
             </div>
             <div class="row mb-3">
               
               <div class="col-sm-12">
-                <input type="email" class="form-control" placeholder="Email" id="inputEmail3">
+                <input type="email" class="form-control" name="email" placeholder="Email" id="inputEmail3">
               </div>
             </div>
             <div class="row mb-3">
               
               <div class="col-sm-12">
-                <input type="password" class="form-control" placeholder="Hasło" id="inputPassword3">
+                <input type="password" class="form-control" name="password" placeholder="Hasło" id="inputPassword3">
               </div>
             </div>
 

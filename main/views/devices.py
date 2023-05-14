@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from ..services.devices import getDevicesDataForPage, getHowManyDevices
-import datetime, math
+from ..services.devices import *
+import math
 
 def devices(request, page=1):
     how_many_item_on_page = 2
@@ -18,6 +18,7 @@ def devices(request, page=1):
 
 def one_device(request, id):
     context = {
-        "now" : datetime.datetime.now()
+        "device" : getDeviceData(id),
+        "specification" : getSpecificationData(id),
     }
     return render(request, "device.html", context)

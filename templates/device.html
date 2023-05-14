@@ -8,17 +8,17 @@
     <div class="col-sm-12 col-md-2"></div>
     <div class="col-sm-12 col-md-8">
 
-        <div class="container"> <p class="h3"> Realme Narzo 50A Prime</p></div>
+        <div class="container"> <p class="h3">{{ device.name }} {{ device.model }}</p></div>
         <div class="container row mt-3">
 
             <div class="col-sm-12 col-md-6">
-                <img src="img/Redmi_A1.jpg" style="width: 18rem;" class="card-img-top " alt="...">
+                <img src="/{{ device.image }}" style="width: 18rem;" class="card-img-top " alt="...">
             </div>
             <div class="col-sm-12  border-start col-md-6">
-                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>6,6"</p></span>
-                <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>Samsung Exynos 1280</p></span>
-                <span class="d-flex"><i class="bi bi-memory me-3"></i><p>6 GB</p></span>
-                <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>128 GB</p></span>
+                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ specification.size }}"</p></span>
+                <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ specification.processor }}</p></span>
+                <span class="d-flex"><i class="bi bi-memory me-3"></i><p>{{ specification.ram }} GB</p></span>
+                <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ specification.memory }} GB</p></span>
             </div>
         </div>
         <div class="card-body my-3 pt-3 border-top">
