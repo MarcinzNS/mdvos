@@ -1,15 +1,22 @@
 from django.shortcuts import render
-import datetime
+from ..services.devices import getDevicesDataForPage, getHowManyDevices
+import datetime, math
 
-# Create your views here.
-def devices(request):
+def devices(request, page=1):
+    how_many_item_on_page = 1
     context = {
-        "now" : datetime.datetime.now()
+        "data": 
+            getDevicesDataForPage(how_many_item_on_page, page),
+        "how_many_pages": 
+            [i+1 for i in range(math.ceil(getHowManyDevices()/how_many_item_on_page))],
+        "show_arrow": 
+            [page >= 2, page+1 <= math.ceil(getHowManyDevices()/how_many_item_on_page)],
+        "page": 
+            {"previous": page-1, "next": page+1, "show_pages_controler": math.ceil(getHowManyDevices()/how_many_item_on_page) > 1}
     }
     return render(request, "devices.html", context)
 
-# Create your views here.
-def one_device(request):
+def one_device(request, id):
     context = {
         "now" : datetime.datetime.now()
     }

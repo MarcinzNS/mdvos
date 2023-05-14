@@ -8,6 +8,7 @@ urlpatterns = [
     path('sign-up', login_system.registration, name="registration"),
     path('categories', categories.categories, name="categories"),
     path('devices', devices.devices, name="devices"),
-    path('one-device', devices.one_device, name="one_device"),
+    path('devices/<int:page>', devices.devices, name="devices"),
+    path('one-device/<int:id>', devices.one_device, name="one_device"),
     path('profile', profile.profile, name="profile"),
 ]
