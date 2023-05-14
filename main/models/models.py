@@ -8,6 +8,8 @@ class OS(models.Model):
     date_end = models.DateField(null=True)
     description = models.CharField(max_length=500, null=True)
     accepted = models.BooleanField()
+    def __str__(self):
+        return f"{self.name} {self.version}"
 
 class Devices(models.Model):
     id_device = models.IntegerField(primary_key=True)
@@ -17,6 +19,8 @@ class Devices(models.Model):
     model = models.CharField(max_length=50)
     picture = models.BinaryField(null=True)
     accepted = models.BooleanField()
+    def __str__(self):
+        return f"{self.device_type}: {self.name} {self.model}"
 
 class User(models.Model):
     id_user = models.IntegerField(primary_key=True)
@@ -27,6 +31,8 @@ class User(models.Model):
     password = models.CharField(max_length=50)
     theme = models.BooleanField(default=False)
     admin_acc = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.name} {self.lastname}"
 
 class Followed_devices(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,6 +48,8 @@ class Specification(models.Model):
     price = models.FloatField(null=True)
     screen_type = models.CharField(max_length=20, null=True)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.processor} {self.ram}/{self.memory}GB {self.size}\'\'"
 
 class OS_devices(models.Model):
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE)
