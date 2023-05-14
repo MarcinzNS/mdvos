@@ -3,7 +3,7 @@ from ..services.devices import getDevicesDataForPage, getHowManyDevices
 import datetime, math
 
 def devices(request, page=1):
-    how_many_item_on_page = 1
+    how_many_item_on_page = 2
     context = {
         "data": 
             getDevicesDataForPage(how_many_item_on_page, page),
