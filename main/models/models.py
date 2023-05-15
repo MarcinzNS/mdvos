@@ -1,6 +1,7 @@
 from django.db import models
 import datetime, os
 import hashlib
+from django.contrib.auth.models import AbstractUser
 
 def filepath(request, filename):
     extension = filename.split(".")[-1]
@@ -32,18 +33,24 @@ class Devices(models.Model):
     def __str__(self):
         return f"{self.device_type}: {self.name} {self.model}"
 
-class User(models.Model):
-    id_user = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=30)
-    login = models.CharField(max_length=50, unique=True)
-    email = models.CharField(max_length=30, unique=True)
-    password = models.CharField(max_length=50)
-    theme = models.BooleanField(default=False)
-    admin_acc = models.BooleanField(default=False)
-    def __str__(self):
-        return f"{self.name} {self.lastname}"
+# class User(models.Model):
+#     id_user = models.IntegerField(primary_key=True)
+#     name = models.CharField(max_length=30)
+#     lastname = models.CharField(max_length=30)
+#     login = models.CharField(max_length=50, unique=True)
+#     email = models.CharField(max_length=30, unique=True)
+#     password = models.CharField(max_length=50)
+#     theme = models.BooleanField(default=False)
+#     admin_acc = models.BooleanField(default=False)
+#     def __str__(self):
+#         return f"{self.name} {self.lastname}"
 
+class User(AbstractUser):
+    # imie, nazwisko i username są dziedziczone z AbstractUser
+
+    def __str__(self):
+        return f"{self.username} {self.first_name} {self.last_name}"
+    
 class Followed_devices(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
