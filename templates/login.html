@@ -10,7 +10,6 @@
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8 py-5">
               <h2>Logowanie:</h2>
-              </br>
                 <form action="{% url 'login' %}" method="post" class="border border-2 rounded-3 p-3 ">
                   {% csrf_token %}
                     <div class="row mb-3">
@@ -37,9 +36,18 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zaloguj się</button>
-                  </form>
-                  
-              <form class="bg-white  rounded-5 shadow-5-strong p-5">
+                </form>
+                <br>
+
+                {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-danger" role="alert">
+                        {{message}}
+                      </div>
+                    {% endfor %}
+                {% endif %}
+              
+              <form class="bg-white  rounded-5 shadow-5-strong">
                 <div class="mt-1">
                   <div class="mt-2">
                     <a href="#" class= "link-dark  link-offset-2 ">Nie pamiętasz hasła?</a>
@@ -49,6 +57,7 @@
                   </div>
                 </div>
               </form>
+
             </div>
           </div>
         </div>
