@@ -10,12 +10,12 @@
         <div class="col-3">
 
         </div>
+
         <div class="col-6 ">
           <h2>Rejestracja:</h2>
-          </br>
           <form class="border border-2 rounded-3 p-3" action="{% url 'registration' %}" method="post">
             {% csrf_token %}
-            
+
             <div class="row mb-3"> 
               <div class="col-sm-12">
                 <input type="text" class="form-control" name="first_name" placeholder="Imię" id="inputEmail3">
@@ -54,6 +54,17 @@
 
             <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zarejestruj się</button>
           </form>
+          <br>
+          
+          {% if form.errors %}
+            {% for field in form.errors.values %}
+              {% for error in field %}
+                <div class="alert alert-danger" role="alert">
+                  {{error}}
+                </div>
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
 
           <div class="float-end mt-3">
               <a href="{% url 'login' %}" class= "link-dark  link-offset-2 ">Wróć do logowania</a>
