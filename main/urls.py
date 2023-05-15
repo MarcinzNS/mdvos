@@ -13,6 +13,7 @@ urlpatterns = [
     path('categories', categories.categories, name="categories"),
     path('devices', devices.devices, name="devices"),
     path('devices/<int:page>', devices.devices, name="devices"),
+    path('devices/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),
     path('one-device/<int:id>', devices.one_device, name="one_device"),
     path('profile', profile.profile, name="profile"),
 ]
