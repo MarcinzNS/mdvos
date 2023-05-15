@@ -24,7 +24,7 @@
                                 {% for item in sidebar.brand %}
                                 <div class="form-check">
                                     {% if item in filters.brand %}
-                                    <input class="form-check-input" type="checkbox" name="{{ item }}" value id="PXiaiomi" checked>
+                                    <input class="form-check-input" type="checkbox" name="{{ item }}" value="on" id="PXiaiomi" checked>
                                     {% else %}
                                     <input class="form-check-input" type="checkbox" name="{{ item }}" id="PXiaiomi">
                                     {% endif %}
@@ -42,7 +42,7 @@
                                 {% for item in sidebar.ram %}
                                 <div class="form-check">
                                     {% if item in filters.ram %}
-                                    <input class="form-check-input" type="checkbox" name="ram{{ item }}" value id="PXiaiomi" checked>
+                                    <input class="form-check-input" type="checkbox" name="ram{{ item }}" value="on" id="PXiaiomi" checked>
                                     {% else %}
                                     <input class="form-check-input" type="checkbox" name="ram{{ item }}" id="PXiaiomi">
                                     {% endif %}
