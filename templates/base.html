@@ -37,22 +37,9 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="category" aria-haspopup="true"> Kategorie </a>
                   <div class="dropdown-menu" aria-labelledby="category px-3">
-                    <form action="{% url 'devices' %}" class="mx-3">
-                      {% csrf_token %}
-                      <div class="form-check m">
-                        <input type="checkbox" class="form-check-input" id="phone">
-                        <label class="form-check-label" for="phone">Telefony</label>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="phone">
-                        <label class="form-check-label" for="phone">Tablety</label>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="phone">
-                        <label class="form-check-label" for="phone">Laptopy</label>
-                      </div>
-                      <button type="submit" class="btn btn-outline-dark mt-3 mx-auto">Wyświetl</button>
-                    </form>
+                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-phone"></i> Telefony </a>
+                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-tablet"></i> Tablety </a>
+                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-laptop"></i> Laptopy </a>
                   </div>
                 </li>
               </ul>
