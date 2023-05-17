@@ -24,15 +24,40 @@
   <body class="d-flex flex-column min-vh-100">
     
     <head>
-      <nav class="navbar navbar-dark navbar-expand-xl">
+      <nav class="navbar navbar-dark navbar-expand-xl main_nav">
         <a class="navbar-brand mx-5 " href="{% url 'home' %}">MobileRanker</a>
-        <button class="navbar-toggler me-3" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
           <span class="navbar-toggler-icon" ></span>
         </button>
+
         <div class="collapse navbar-collapse justify-content-between" id="mainmenu">
           <div class="row w-100">
-            <div class="col-sm-6 col-xl-2">
+            <div class="col-sm-6 col-xl-2 my-2">
+              <ul class="navbar-nav mx-3">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="category" aria-haspopup="true"> Kategorie </a>
+                  <div class="dropdown-menu" aria-labelledby="category px-3">
+                    <form action="{% url 'devices' %}" class="mx-3">
+                      {% csrf_token %}
+                      <div class="form-check m">
+                        <input type="checkbox" class="form-check-input" id="phone">
+                        <label class="form-check-label" for="phone">Telefony</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="phone">
+                        <label class="form-check-label" for="phone">Tablety</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="phone">
+                        <label class="form-check-label" for="phone">Laptopy</label>
+                      </div>
+                      <button type="submit" class="btn btn-outline-dark mt-3 mx-auto">Wyświetl</button>
+                    </form>
+                  </div>
+                </li>
+              </ul>
             </div>
+
             <div class="col-sm-12 col-xl-6 ">
               <div class="row ">
                 <div class=" col-xl-2">
@@ -41,15 +66,18 @@
                   <form class="form-inline mx-3 my-2">
                     <div class="input-group">
                       <div class="form-control d-flex bg-wyszukaj">
-                        <form action="{% url 'devices' %}" method="post">
-                          {% csrf_token %}
-                          <input type="text" class="form-control border-0 bg-wyszukaj" placeholder="Wyszukaj" aria-label="Wyszukaj" aria-describedby="basic-addon1">
-                          <div class="input-group-prepend ">
-                            <button class="btn  border-0 bg-wyszukaj ms-2" type="button submit">
+                        <input type="text" class="form-control border-0 bg-wyszukaj" placeholder="Wyszukaj" aria-label="Wyszukaj" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend ">
+                          <a href="{% url 'devices' %}">
+                            <button class="btn  border-0 bg-wyszukaj ms-2" type="button">
                               <span class="input-group-text  border-0 bg-wyszukaj" id="basic-addon1"><i class="bi bi-search"></i></span>
                             </button>
-                          </div>
-                        </form>
+                            <!--
+                              tutaj następuje sprawdzenie wyszukiwania a następnie przekierowuje na strone z produktami,
+                              na pustym wyszukaniu wyświetlić najbardziej popularne
+                            -->
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -64,11 +92,27 @@
                 <div class="col-sm-12 col-xl-5">
                   <ul class="navbar-nav mx-3">
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="{% url 'login' %}" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> <i class="bi bi-person-square"></i> Użytkownik </a>
+                      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> 
+                        <span class="bi bi-person-square">
+                          {% if not request.user.is_authenticated %}
+                            Nie zalogowano
+                          {% endif %}
+
+                          {% if request.user.is_authenticated %}
+                            {{request.user.username}}
+                          {% endif %}
+                        </span> 
+                      </a>
                       <div class="dropdown-menu" aria-labelledby="submenu">
-                        <a class="dropdown-item" href="#"> Mój Profil </a>
+                        {% if not request.user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'login' %}"> Zaloguj się </a>
+                        <a class="dropdown-item" href="{% url 'registration' %}"> Zarejestruj się </a>
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'profile' %}"> Mój Profil </a>
                         <a class="dropdown-item" href="#"> Ulubione </a>
-                        <a class="dropdown-item" href="{% url 'home' %}"> Wyloguj się </a>
+                        <a class="dropdown-item" href="{% url 'logout' %}"> Wyloguj się </a>
+                        {% endif %}
                       </div>
                     </li>
                   </ul>
@@ -86,9 +130,12 @@
         </div>
       </nav>
     </head>
+    <body>
+   
     {% block content %}
 
     {% endblock %}
+    </body>
     <footer class="footer mt-auto py-3 bg-second text-white-50 ">
       <div class="container">
         <p class="text-center text-white">Copyright <i class="bi bi-c-circle"></i> Wszelkie prawa zastrzeżone.

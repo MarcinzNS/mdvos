@@ -35,13 +35,20 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'main',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'main.services.authentication.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = "main.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

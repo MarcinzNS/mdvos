@@ -1,10 +1,11 @@
-nav{
+.main_nav{
 	min-height: 60px;
 	background-color: rgb(24, 24, 24);
   }
 footer{
 	background-color: rgb(24, 24, 24);
   }
+  
   .bg-wyszukaj{
 	background-color: #E0E0E0;
 	padding: 2px;
@@ -25,4 +26,15 @@ footer{
   .bg-body{
 	background-color: #F4F3EA;
   }
+  .btn-primary, .btn-primary:active, .btn-primary:visited {
+    background-color: #333D51 !important;
+	border-color: #333D51 !important;
+}
+.btn-primary:hover
+{
+	background-color: #222C40 !important;
+	border-color:#222C40 !important;
+}
+
+
   

@@ -6,4 +6,4 @@ def profile(request):
     context = {
         "now" : datetime.datetime.now()
     }
-    return render(request, "index.html", context)
+    return render(request, "profile.html", context)
