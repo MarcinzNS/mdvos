@@ -5,79 +5,74 @@
 
 {% block content %}
 <main>
-    <div class="container py-5">
-      <div class="d-flex">
-        <div class="col-3">
+  <div class = "masthead">
+    <div class="container ">
+      <div class="row justify-content-center">
+        <div class="col-xl-4 col-md-8 py-5">
+            <h2>Rejestracja:</h2>
+            <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'registration' %}" method="post">
+              {% csrf_token %}
 
-        </div>
-
-        <div class="col-6 ">
-          <h2>Rejestracja:</h2>
-          <form class="border border-2 rounded-3 p-3" action="{% url 'registration' %}" method="post">
-            {% csrf_token %}
-
-            <div class="row mb-3"> 
-              <div class="col-sm-12">
-                <input type="text" class="form-control" name="first_name" placeholder="Imię" id="inputEmail3">
-              </div>
-            </div>
-
-            <div class="row mb-3">  
-              <div class="col-sm-12">
-                <input type="text" class="form-control" name="last_name" placeholder="Nazwisko" id="inputEmail3">
-              </div>
-            </div>
-
-            <div class="row mb-3">  
-              <div class="col-sm-12">
-                <input type="text" class="form-control" name="username" placeholder="Nazwa użytkownika" id="inputEmail3">
-              </div>
-            </div>
-
-            <div class="row mb-3">  
-              <div class="col-sm-12">
-                <input type="email" class="form-control" name="email" placeholder="Email" id="inputEmail3">
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-sm-12">
-                <input type="password" class="form-control" name="password1" placeholder="Hasło" id="inputPassword3">
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-sm-12">
-                <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło" id="inputPassword3">
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zarejestruj się</button>
-          </form>
-          <br>
-          
-          {% if form.errors %}
-            {% for field in form.errors.values %}
-              {% for error in field %}
-                <div class="alert alert-danger" role="alert">
-                  {{error}}
+              <div class="row mb-3"> 
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" name="first_name" placeholder="Imię" id="inputEmail3">
                 </div>
+              </div>
+
+              <div class="row mb-3">  
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" name="last_name" placeholder="Nazwisko" id="inputEmail3">
+                </div>
+              </div>
+
+              <div class="row mb-3">  
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" name="username" placeholder="Nazwa użytkownika" id="inputEmail3">
+                </div>
+              </div>
+
+              <div class="row mb-3">  
+                <div class="col-sm-12">
+                  <input type="email" class="form-control" name="email" placeholder="Email" id="inputEmail3">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control" name="password1" placeholder="Hasło" id="inputPassword3">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło" id="inputPassword3">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zarejestruj się</button>
+            </form>
+            <br>
+            
+            {% if form.errors %}
+              {% for field in form.errors.values %}
+                {% for error in field %}
+                  <div class="alert alert-danger" role="alert">
+                    {{error}}
+                  </div>
+                {% endfor %}
               {% endfor %}
-            {% endfor %}
-          {% endif %}
+            {% endif %}
 
-          <div class="float-end mt-3">
-              <a href="{% url 'login' %}" class= "link-dark  link-offset-2 ">Wróć do logowania</a>
-          </div>
-        </div>
-        <div class="col-3">
-
-
+            <div class="float-end mt-3">
+                <a href="{% url 'login' %}" class= "link-dark  link-offset-2 ">Wróć do logowania</a>
+            </div>
+          
         </div>
       </div>
 
-
+      
     </div>
+  </div>
   </main>
 {% endblock %}
 {% block footer %}{% endblock %}

@@ -11,8 +11,8 @@ footer{
 	padding: 2px;
   }
   .bg-login{
-	background-color: #D3AC2B;
-	color: white;
+	background-color: rgba(74, 72, 71, 0.05);
+	color: rgb(70, 69, 69);
   }
   .bg-button-register{
 	background-color: #333D51;
@@ -35,6 +35,11 @@ footer{
 	background-color: #222C40 !important;
 	border-color:#222C40 !important;
 }
-
+.masthead{
+	background-image: url(../static/img/17973908.jpg);
+	background-size: cover;
+	height: 100vh;
+	
+}
 
   
