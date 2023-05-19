@@ -13,41 +13,17 @@
             <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'registration' %}" method="post">
               {% csrf_token %}
 
-              <div class="row mb-3"> 
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" name="first_name" placeholder="Imię" id="inputEmail3">
-                </div>
-              </div>
-
-              <div class="row mb-3">  
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" name="last_name" placeholder="Nazwisko" id="inputEmail3">
-                </div>
-              </div>
-
-              <div class="row mb-3">  
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" name="username" placeholder="Nazwa użytkownika" id="inputEmail3">
-                </div>
-              </div>
-
-              <div class="row mb-3">  
-                <div class="col-sm-12">
-                  <input type="email" class="form-control" name="email" placeholder="Email" id="inputEmail3">
-                </div>
-              </div>
-
+              {% for field in form %}
               <div class="row mb-3">
                 <div class="col-sm-12">
-                  <input type="password" class="form-control" name="password1" placeholder="Hasło" id="inputPassword3">
+                  {% if field.field.widget.input_type == "password" %}
+                  <input name="{{field.name}}" class="form-control" placeholder="{{field.label}}" type="password"  autocomplete="new-password"/>
+                  {% else %}
+                  <input name="{{field.name}}" class="form-control" placeholder="{{field.label}}" type="text"/>
+                  {% endif %}
                 </div>
               </div>
-
-              <div class="row mb-3">
-                <div class="col-sm-12">
-                  <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło" id="inputPassword3">
-                </div>
-              </div>
+              {% endfor %}
 
               <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zarejestruj się</button>
             </form>

@@ -42,5 +42,7 @@ def registration(request):
 
             login(request, user)
             return redirect('home')
-
-    return render(request, 'register.html')
+        
+    form = CustomUserCreationForm()
+    context = {'form': form}
+    return render(request, 'register.html', context)

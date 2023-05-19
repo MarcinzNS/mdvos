@@ -9,13 +9,17 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(label='Nazwa użytkownika')
     email = forms.EmailField(label='Email')
     password1 = forms.CharField(
-        label='Hasło',
-        widget=forms.PasswordInput,
+        label=("Hasło"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+    )
+    password2 = forms.CharField(
+        label=("Powtórz hasło"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
     )
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
     # nadpisanie error_messages
     error_messages = {
