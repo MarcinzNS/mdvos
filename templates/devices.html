@@ -66,15 +66,23 @@
             {% for item in data %}
                 <div class="row position-relative border-top rounded mt-2 p-1">
                     <div class="col-md-6 mb-md-0 p-md-4">
-                        <img src="/{{ item.image }}" class="w-100" alt="zdjęcie_telefonu">
+                        <img src="/{{ item.device.image }}" class="w-100" alt="zdjęcie_telefonu">
                     </div>
                     <div class="col-md-6 p-4 ps-md-0">
-                        <h5 class="mt-0">{{ item.name }} {{ item.model }}</h5>
-                        <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ item.size }}"</p></span>
-                        <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ item.processor }}</p></span>
-                        <span class="d-flex"><i class="bi bi-memory me-3"></i><p>{{ item.ram }} GB</p></span>
-                        <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ item.memory }} GB</p></span>
-                        <a href="{% url 'one_device' id=item.id_device %}" class="stretched-link">Czytaj więcej</a>
+                        <h5 class="mt-0">{{ item.device.name }} {{ item.device.model }}</h5>
+                        {% if item.specifications.SCREEN_SIZE %}
+                        <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ item.specifications.SCREEN_SIZE }}"</p></span>
+                        {% endif %}
+                        {% if item.specifications.CPU %}
+                        <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ item.specifications.CPU }}</p></span>
+                        {% endif %}
+                        {% if item.specifications.RAM %}
+                        <span class="d-flex"><i class="bi bi-memory me-3"></i><p>{{ item.specifications.RAM }} GB</p></span>
+                        {% endif %}
+                        {% if item.specifications.DISC %}
+                        <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ item.specifications.DISC }} GB</p></span>
+                        {% endif %}
+                        <a href="{% url 'one_device' id=item.device.id_device %}" class="stretched-link">Czytaj więcej</a>
                     </div>
                 </div>
             {% endfor %}

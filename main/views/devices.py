@@ -2,7 +2,7 @@ from django.shortcuts import render
 from ..services.devices import *
 import math
 
-def devices(request, how_many_item_on_page=2, page=1,):
+def devices(request, category="NOT", how_many_item_on_page=2, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
@@ -17,10 +17,10 @@ def devices(request, how_many_item_on_page=2, page=1,):
         brand_filter = [brand_name for brand_name in context["sidebar"]["brand"] if request.GET.get(brand_name, False)]
         ram_filter = [ram_value for ram_value in context["sidebar"]["ram"] if request.GET.get(f"ram{ram_value}", False)]
         
-    if len(brand_filter)==0 and len(ram_filter)==0:
-        data = getDevicesDataForPage(how_many_item_on_page, page)
+    if len(brand_filter) + len(ram_filter) == 0:
+        data = getDevicesDataForPage(category, how_many_item_on_page, page, [], [])
     else:
-        data = getDevicesFiltredDataForPage(how_many_item_on_page, page, brand_filter, ram_filter)
+        data = getDevicesDataForPage(how_many_item_on_page, page, brand_filter, ram_filter)
     
     how_many_pages = math.ceil(data["how_many_results"]/how_many_item_on_page)
     context |= {

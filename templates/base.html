@@ -37,9 +37,9 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="category" aria-haspopup="true"> Kategorie </a>
                   <div class="dropdown-menu" aria-labelledby="category px-3">
-                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-phone"></i> Telefony </a>
-                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-tablet"></i> Tablety </a>
-                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-laptop"></i> Laptopy </a>
+                    <a class="dropdown-item" href="{% url 'devices' category='PHONE' %}"><i class="bi bi-phone"></i> Telefony </a>
+                    <a class="dropdown-item" href="{% url 'devices' category='TABLET' %}"><i class="bi bi-tablet"></i> Tablety </a>
+                    <a class="dropdown-item" href="{% url 'devices' category='LAPTOP' %}"><i class="bi bi-laptop"></i> Laptopy </a>
                     <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-gear-wide-connected"></i> System operacyjny </a>
                   </div>
                 </li>
