@@ -15,7 +15,15 @@
                     <i class="bi bi-funnel"></i></span>
                 </button>
                 <div class="collapse navbar-collapse" id="filtr">
+                    {% if category and sort_by%}
+                    <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
+                    {% elif category %}
+                    <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
+                    {% elif sort_by %}
+                    <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
+                    {% else %}
                     <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
+                    {% endif %}
                         <p class="h3 mb-2">Filtry</p>
 
                         <p class="h4 pt-3 border-top"> Producent</p>

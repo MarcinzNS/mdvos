@@ -15,10 +15,21 @@
                 <img src="/{{ device.image }}" style="width: 18rem;" class="card-img-top " alt="...">
             </div>
             <div class="col-sm-12  border-start col-md-6">
-                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ specification.size }}"</p></span>
-                <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ specification.processor }}</p></span>
-                <span class="d-flex"><i class="bi bi-memory me-3"></i><p>{{ specification.ram }} GB</p></span>
-                <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ specification.memory }} GB</p></span>
+                {% if specification.SCREEN_SIZE %}
+                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ specification.SCREEN_SIZE }}"</p></span>
+                {% endif %}
+                {% if specification.SCREEN_TYPE %}
+                <span class="d-flex"><i class="bi bi-award me-3"></i><p>{{ specification.SCREEN_TYPE }}</p></span>
+                {% endif %}
+                {% if specification.CPU %}
+                <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ specification.CPU }}</p></span>
+                {% endif %}
+                {% if specification.RAM %}
+                <span class="d-flex"><i class="bi bi-memory me-3"></i><p>{{ specification.RAM }} GB</p></span>
+                {% endif %}
+                {% if specification.DISC %}
+                <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ specification.DISC }} GB</p></span>
+                {% endif %}    
             </div>
         </div>
         <div class="card-body my-3 pt-3 border-top">

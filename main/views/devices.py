@@ -2,11 +2,12 @@ from django.shortcuts import render
 from ..services.devices import *
 import math
 
-def devices(request, category="NOT", how_many_item_on_page=2, page=1,):
+def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
             "ram": [6, 8, 12, 16, 18],
+            "sort_by": {"Sortuj wg daty": "premier", "Sortuj po nazwie": "name", "Sortuj po nazwie modelu": "model"}
         }
     } 
     brand_filter = []
@@ -16,11 +17,8 @@ def devices(request, category="NOT", how_many_item_on_page=2, page=1,):
         urlEnd = GETtoURL(request.GET)
         brand_filter = [brand_name for brand_name in context["sidebar"]["brand"] if request.GET.get(brand_name, False)]
         ram_filter = [ram_value for ram_value in context["sidebar"]["ram"] if request.GET.get(f"ram{ram_value}", False)]
-        
-    if len(brand_filter) + len(ram_filter) == 0:
-        data = getDevicesDataForPage(category, how_many_item_on_page, page, [], [])
-    else:
-        data = getDevicesDataForPage(how_many_item_on_page, page, brand_filter, ram_filter)
+
+    data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter)
     
     how_many_pages = math.ceil(data["how_many_results"]/how_many_item_on_page)
     context |= {
@@ -39,6 +37,9 @@ def devices(request, category="NOT", how_many_item_on_page=2, page=1,):
         },
         "urlEnd": urlEnd
     }
+    if category != "NOT": context |= {"category":category}
+    if sort_by != "NOT": context |= {"sort_by":sort_by}
+    
     return render(request, "devices.html", context)
 
 def GETtoURL(getDict):
