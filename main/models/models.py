@@ -10,16 +10,23 @@ def filepath(request, filename):
     filename = f"{timeNow}-{old_filename_hash}.{extension}"
     return os.path.join('static/uploads/', filename)
 
+
 class OS(models.Model):
     id_os = models.IntegerField(primary_key=True)
-    version = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=30)
+    def __str__(self):
+        return f"{self.name} {self.version}"
+
+
+class OS_version(models.Model):
+    os_version_id = models.IntegerField(primary_key=True)
+    version = models.CharField(max_length=20, unique=True)
     date_start = models.DateField()
     date_end = models.DateField(null=True)
     description = models.CharField(max_length=500, null=True)
     accepted = models.BooleanField()
-    def __str__(self):
-        return f"{self.name} {self.version}"
+    os_id = models.ForeignKey(OS, on_delete=models.CASCADE)
+
 
 class Devices(models.Model):
     id_device = models.IntegerField(primary_key=True)
@@ -51,26 +58,28 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username} {self.first_name} {self.last_name}"
     
+
 class Followed_devices(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
 
+
+class Specification_type(models.Model):
+    id_spec = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=50, null=True)
+
+
 class Specification(models.Model):
     id_spec = models.IntegerField(primary_key=True)
-    processor = models.CharField(max_length=50, null=True)
-    ram = models.IntegerField(null=True)
-    memory = models.IntegerField(null=True)
-    battery = models.IntegerField(null=True)
-    size = models.CharField(max_length=10, null=True)
-    price = models.FloatField(null=True)
-    screen_type = models.CharField(max_length=20, null=True)
+    spec_type_id = models.ForeignKey(Specification_type, on_delete=models.CASCADE)
+    value = models.CharField(max_length=50, null=True)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.processor} {self.ram}/{self.memory}GB {self.size}\'\'"
+
 
 class OS_devices(models.Model):
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
+
 
 class Error_report(models.Model):
     id_error = models.IntegerField(primary_key=True)
@@ -81,6 +90,7 @@ class Error_report(models.Model):
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True)
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE, null=True)
 
+
 class Comment(models.Model):
     id_comment = models.IntegerField(primary_key=True)
     text = models.CharField(max_length=250)
@@ -89,9 +99,10 @@ class Comment(models.Model):
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True)
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE, null=True)
 
+
 class Like(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE, null=True)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True)
     like = models.BooleanField()

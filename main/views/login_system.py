@@ -43,6 +43,4 @@ def registration(request):
             login(request, user)
             return redirect('home')
 
-    else:
-        form = CustomUserCreationForm()
     return render(request, 'register.html')
