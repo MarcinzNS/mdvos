@@ -3,9 +3,8 @@ from ..forms import AddDeviceForm
 
 def add_device(request):
     if request.method == "POST":
-        form = AddDeviceForm(request.POST)
+        form = AddDeviceForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form)
             form.save()
             return redirect('home')
 

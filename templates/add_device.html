@@ -3,27 +3,52 @@
 {% block content %}
 
 <main>
-<div class="container ">
-    <div class="row justify-content-center">
-    <div class="col-xl-6 col-md-8 py-5">
-        <h2>Dodaj nowe urzadzenie:</h2>
-        <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'add_device' %}" method="post">
-            {% csrf_token %}
-
-            {% for field in form %}
-            <div class="row mb-3">
-                <div class="col-sm-12">
-                    <input name="{{field.name}}" class="form-control" placeholder="{{field.label}}" type="text"/>
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-6 col-md-8 py-5">
+            <h2>Dodaj nowe urządzenie:</h2>
+            <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'add_device' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+      
+              <div class="row mb-3">
+                <div class="col-sm-12 mx-auto">
+                  <input name="{{form.brand.name}}" class="form-control" placeholder="{{form.brand.label}}" type="text" autocomplete="off"/>
                 </div>
-            </div>
-            {% endfor %}
-            
-            <button type="submit" class="btn btn-primary col-4 offset-sm-4">Dodaj</button>
-        </form>
-
-    </div>
-    </div>
-</div>
+              </div>
+      
+              <div class="row mb-3">
+                <div class="col-sm-12 mx-auto">
+                  <input name="{{form.model.name}}" class="form-control" placeholder="{{form.model.label}}" type="text" autocomplete="off"/>
+                </div>
+              </div>
+      
+              <div class="row mb-3">
+                <div class="col-sm-12 mx-auto">
+                    <select name="{{ form.device_type.name }}" class="form-select" aria-label="{{ form.device_type.label }}">
+                        {% for value, label in form.device_type.field.choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+      
+              <div class="row mb-3">
+                <div class="col-sm-12 mx-auto">
+                  <input name="{{form.release_date.name}}" class="form-control" placeholder="{{form.release_date.label}}" type="date"/>
+                </div>
+              </div>
+      
+              <div class="row mb-3">
+                <div class="col-sm-12 mx-auto">
+                  <input name="{{form.image.name}}" class="form-control" placeholder="{{form.image.label}}" type="file"/>
+                </div>
+              </div>
+      
+              <button type="submit" class="btn btn-primary col-4 offset-sm-4">Dodaj</button>
+            </form>
+          </div>
+        </div>
+      </div>
 </main>
 
 

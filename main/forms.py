@@ -69,6 +69,7 @@ class CustomUserCreationForm(UserCreationForm):
         "password_mismatch": "Hasła muszą być takie same",
     }
 
+
 class AddDeviceForm(forms.ModelForm):
     brand = forms.CharField(
         label="Marka",
@@ -80,13 +81,26 @@ class AddDeviceForm(forms.ModelForm):
         max_length=50,
     )
 
-    device_type = forms.CharField(
+    device_type = forms.ChoiceField(
         label="Kategoria",
-        max_length=30,
+        choices=[
+            ("PHONE", "Telefon"),
+            ("TABLET", "Tablet"),
+            ("LAPTOP", "Laptop"),
+        ],
     )
-    #release_date = forms.DateField(required=False)
-    #image = forms.ImageField(required=False)
+    release_date = forms.DateField(required=False)
+    image = forms.ImageField(required=False)
 
     class Meta:
         model = Devices
-        fields = ['brand', 'model', 'device_type']
+        fields = ['brand', 'model', 'device_type', 'release_date', 'image']
+
+    def save(self, commit=True):
+        # zapisanie wartości release_date w premier
+        instance = super().save(commit=False)
+        instance.premier = self.cleaned_data['release_date']
+
+        if commit:
+            instance.save()
+        return instance
