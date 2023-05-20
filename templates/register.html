@@ -47,10 +47,6 @@
               <button type="submit" class="btn btn-primary col-6 offset-sm-3">Zarejestruj się</button>
             </form>
             <br>
-            
-            <div class="float-end mt-3">
-                <a href="{% url 'login' %}" class= "link-dark  link-offset-2 ">Wróć do logowania</a>
-            </div>
 
             {% if form.errors %}
               {% for field in form.errors.values %}
@@ -61,6 +57,10 @@
                 {% endfor %}
               {% endfor %}
             {% endif %}
+
+            <div class="float-end mt-3">
+              <a href="{% url 'login' %}" class= "link-dark  link-offset-2 ">Wróć do logowania</a>
+            </div>
           
         </div>
       </div>

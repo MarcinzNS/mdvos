@@ -7,7 +7,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, pag
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
             "ram": [6, 8, 12, 16, 18],
-            "sort_by": {"Sortuj wg daty": "premier", "Sortuj po nazwie": "name", "Sortuj po nazwie modelu": "model"}
+            "sort_by": {"Sortuj wg daty": "premier", "Sortuj po nazwie": "brand", "Sortuj po nazwie modelu": "model"}
         }
     } 
     brand_filter = []

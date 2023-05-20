@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User
+from .models.models import User, Devices
 from django import forms
 
 
@@ -68,4 +68,25 @@ class CustomUserCreationForm(UserCreationForm):
     error_messages = {
         "password_mismatch": "Hasła muszą być takie same",
     }
-    
+
+class AddDeviceForm(forms.ModelForm):
+    brand = forms.CharField(
+        label="Marka",
+        max_length=30,
+    )
+
+    model = forms.CharField(
+        label="Model",
+        max_length=50,
+    )
+
+    device_type = forms.CharField(
+        label="Kategoria",
+        max_length=30,
+    )
+    #release_date = forms.DateField(required=False)
+    #image = forms.ImageField(required=False)
+
+    class Meta:
+        model = Devices
+        fields = ['brand', 'model', 'device_type']

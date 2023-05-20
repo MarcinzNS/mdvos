@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main>
+<div class="container ">
+    <div class="row justify-content-center">
+    <div class="col-xl-6 col-md-8 py-5">
+        <h2>Dodaj nowe urzadzenie:</h2>
+        <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'add_device' %}" method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="row mb-3">
+                <div class="col-sm-12">
+                    <input name="{{field.name}}" class="form-control" placeholder="{{field.label}}" type="text"/>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary col-4 offset-sm-4">Dodaj</button>
+        </form>
+
+    </div>
+    </div>
+</div>
+</main>
+
+
+{% endblock %}
+{% block footer %}{% endblock %}
