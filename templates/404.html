@@ -2,11 +2,13 @@
 
 {% block title %}Produkty{% endblock %}
 
+{% load static %}
+
 {% block content %}
 
 <div class="container py-auto mt-5">
     <p class="fs-1 text-center">
-        {% load static %}<img src="{% static "img/error/error.png" %}" style="width: 18rem;"  alt="Error 404"/>
+        <img src="{% static "img/error/error.png" %}" style="width: 18rem;"  alt="Error 404"/>
 
     </p>
     <p class="fs-1 text-center">ERROR 404</p>

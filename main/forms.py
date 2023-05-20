@@ -4,48 +4,68 @@ from django import forms
 
 
 class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(label='Imię')
-    last_name = forms.CharField(label='Nazwisko')
-    username = forms.CharField(label='Nazwa użytkownika')
-    email = forms.EmailField(label='Email')
+    first_name_max_len = 30
+    last_name_max_len = 30
+    username_max_len = 30
+    email_max_len = 50
+
+    first_name = forms.CharField(
+        label='Imię',
+        required=False,
+        max_length=first_name_max_len,
+        error_messages={
+            'max_length': f"Imię nie może przekraczać {first_name_max_len} znaków",
+        }
+    )
+    last_name = forms.CharField(
+        label='Nazwisko',
+        required=False,
+        max_length=last_name_max_len,
+        error_messages={
+            'max_length': f"Nazwisko nie może przekraczać {last_name_max_len} znaków",
+        }
+    )
+    
+    username = forms.CharField(
+        label='Nazwa użytkownika',
+        max_length=30,
+        error_messages={
+            'required': "Należy wpisać nazwę użytkownika",
+            'max_length': f"Nazwa użytkownika nie może przekraczać {username_max_len} znaków",
+        }
+    )
+
+    email = forms.EmailField(
+        label='Email',
+        max_length=50,
+        error_messages={
+            'required': "Należy wpisać adres email",
+            'max_length': f"Email nie może przekraczać {email_max_len} znaków",
+        }
+    )
+    
     password1 = forms.CharField(
-        label='Hasło',
-        widget=forms.PasswordInput,
+        label=("Hasło"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        error_messages={
+            'required': "Należy wpisać hasło",
+        }
+    )
+    
+    password2 = forms.CharField(
+        label=("Powtórz hasło"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        error_messages={
+            'required': "Należy powtórzyć hasło"
+        }
     )
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
     # nadpisanie error_messages
     error_messages = {
         "password_mismatch": "Hasła muszą być takie same",
     }
-
-    def clean(self):
-        cleaned_data = super().clean()
-        first_name = cleaned_data.get("first_name")
-        last_name = cleaned_data.get("last_name")
-        username = cleaned_data.get('username')
-        email = cleaned_data.get('email')
-        password1 = cleaned_data.get('password1')
-        
-        if User.objects.filter(username=username).exists():
-            self.add_error('username', 'Podana nazwa użytkownika jest już zajęta.')
-
-        if User.objects.filter(email=email).exists():
-            self.add_error('email', 'Podany adres email jest już zajęty.')
-
-        if first_name and len(first_name) > 30:
-            self.add_error('first_name', 'Imię przekracza maksymalną długość 30 znaków.')
-        
-        if last_name and len(last_name) > 30:
-            self.add_error('last_name', 'Nazwisko przekracza maksymalną długość 30 znaków.')
-        
-        if username and len(username) > 50:
-            self.add_error('username', 'Nazwa użytkownika przekracza maksymalną długość 50 znaków.')
-          
-        if password1 and len(password1) > 50:
-            self.add_error('password1', 'Hasło przekracza maksymalną długość 50 znaków.')
-
-        return cleaned_data
+    
