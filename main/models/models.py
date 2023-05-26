@@ -30,15 +30,15 @@ class OS_version(models.Model):
 
 class Devices(models.Model):
     id_device = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30, unique=True)
-    premier = models.DateField()
+    brand = models.CharField(max_length=30, unique=True)
+    premier = models.DateField(null=True)
     device_type = models.CharField(max_length=30)
     model = models.CharField(max_length=50)
     #picture = models.BinaryField(null=True)
     image = models.ImageField(upload_to=filepath, null=True, blank=True)
-    accepted = models.BooleanField()
+    accepted = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.device_type}: {self.name} {self.model}"
+        return f"{self.device_type}: {self.brand} {self.model}"
 
 # class User(models.Model):
 #     id_user = models.IntegerField(primary_key=True)
