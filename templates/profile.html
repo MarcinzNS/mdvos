@@ -6,44 +6,61 @@
 <main>
     <section class="w-auto vh-100" style="background-color: #f4f5f7;">
         <div class="container py-4">
+        
             <div class="row d-flex justify-content-center align-items-center h-100 ">
             <div class="col col-lg-10 mb-4 mb-lg-0">
                 <div class="card mb-3 bg-login border border-2 rounded-3 p-3">
                     <div class="row g-0">
                         
                         <div class="card-body p-4">
-                            <h3>Witaj, {{name}} {{surname}}!</h3>
+                            <h3>Witaj, {{request.user.username}} {{request.user.lastname}}!</h3>
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1">
                             <div class="col-6 mb-3">
                                 <h6>Imie</h6>
-                                <p class="text-muted">{{name}}</p>  
+                                <p class="text-muted">{{request.user.username}}</p>  
                                 <h6>Nazwisko</h6>
-                                <p class="text-muted">{{surname}}</p>  
+                                <p class="text-muted">{{request.user.lastname}}</p>  
                                 <h6>Email</h6>
-                                <p class="text-muted">{{mail}}</p>                               
+                                <p class="text-muted">{{request.user.mail}}</p> 
+                                                            
                             </div>
                             <div class="col-6 mb-3">
-                                
+                                <a href ="#" class = "no">
+                                <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Link do polubionych urządzeń?</p>
+                                </div>
+                                </div>
+                                </a>
                             </div>
                             </div>
                             <h6></h6>
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1">
-                            <div class="col-6 mb-3">
-                                <h6></h6>
-                                <p class="text-muted"></p>
+                                <div class="col-6 mb-3">
+                                    <h6></h6>
+                                    <p class="text-muted"></p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6></h6>
+                                    <p class="text-muted"></p>
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </div>
                             </div>
-                            <div class="col-6 mb-3">
-                                <h6></h6>
-                                <p class="text-muted"></p>
-                            </div>
-                            </div>
-                            <div class="d-flex justify-content-start">
-                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
-                            </div>
+                            <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#edit_modal"><i class='bi bi-pencil'></i> Edytuj dane</button>  
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <button class = "border-0" data-bs-toggle="modal" data-bs-target = "#password_modal">Zmień hasło</button>
+                                </li>
+                            </ol>
+                            </nav>
+                            
+
                         </div>
                     </div>
                 </div>
@@ -53,5 +70,49 @@
         </div>
     </section>
 </main>
+<div class="modal fade" id="edit_modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edytuj dane</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        <p>Imie</p>
+        <input name="{{form.first_name.name}}" class="form-control" placeholder="{{form.first_name.label}}" type="text"/>
+        <p>Nazwisko</p>
+        <input name="{{form.username.name}}" class="form-control" placeholder="{{form.username.label}}" type="text" autocomplete="new-account"/>
+        <p>Email</p>
+        <input name="{{form.email.name}}" class="form-control" placeholder="{{form.email.label}}" type="email" autocomplete="new-account"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-primary">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="password_modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edytuj dane</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        <p>Hasło</p>
+        <input name="{{form.password1.name}}" class="form-control" placeholder="{{form.password1.label}}" type="password" autocomplete="new-account"/>
+        <p>Potwierdź hasło</p>
+        <input name="{{form.password2.name}}" class="form-control" placeholder="{{form.password2.label}}" type="password" autocomplete="new-account"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-primary">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 {% block footer %}{% endblock %}
