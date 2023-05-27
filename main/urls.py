@@ -1,6 +1,6 @@
 from django.urls import path
 from main.views import login_system, profile, add_device
-from main.views import index, categories, devices, error
+from main.views import index, categories, devices, error, favourite
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,6 +22,8 @@ urlpatterns = [
     path('one-device/<int:id>', devices.one_device, name="one_device"),
     path('profile', profile.profile, name="profile"),
     path('error', error.error, name="error"),
+    path('fav/<int:id>/', favourite.favourite_add, name="fav"),
+    path('profile/favourites/', favourite.favourites_list, name='favourites_list'),
 ]
 
 if settings.DEBUG:
