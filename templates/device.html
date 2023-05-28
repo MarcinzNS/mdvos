@@ -44,7 +44,33 @@
             </p>
             <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary">Dodaj do ulubionych</a>
         </div>
-        <div class="card-body my-3 pt-3 border-top">
+
+        <div class="card-body border-top">
+            <table class="table">
+                <tr>
+                    <th scope="row">Nazwa systemu operacyjnego</th>
+                    <th scope="row">Wersja</th>
+                    <th scope="row">Data wprowadzenia</th>
+                    <th scope="row">Data zakończenia wsparcia</th>
+                </tr>
+                
+                {% for os_info_id, os_info in OS_ALL.items %}
+                    <tr>
+                        <td>{{ os_info.name }}</td>
+                        <td>{{ os_info.version }}</td>
+                        <td>{{ os_info.date_start }}</td>
+                        <td>{{ os_info.date_end }}</td>
+                    </tr>
+              
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Brak dostępnych informacji o systemie operacyjnym</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="card-body my-3 pt-3">
 
             <div class="row">
                 <div class="col-sm-12  col-md-4 ps-3 pt-2">

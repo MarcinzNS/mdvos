@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from ..services.devices import *
+from ..services.os import *
+
 import math
 
 def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, page=1,):
@@ -52,5 +54,6 @@ def one_device(request, id):
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
+        "OS_ALL" : getOSAll(id), 
     }
     return render(request, "device.html", context)
