@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from ..services.devices import *
 from ..services.os import *
 
@@ -50,10 +50,23 @@ def GETtoURL(getDict):
         url += f"{key}={getDict[key]}&"
     return url[:-1]
 
+
 def one_device(request, id):
+    device = get_object_or_404(Devices, pk=id)
+    user_dislikes_device = False
+    user_likes_device = False
+    like_count = Like.objects.filter(devices_id=device, like=True).count()
+    dislike_count = Like.objects.filter(devices_id=device, dislike=True).count()
+    if request.user.is_authenticated:
+        user_likes_device = Like.objects.filter(user_id=request.user, devices_id=device, like=True).exists()
+        user_dislikes_device = Like.objects.filter(user_id=request.user, devices_id=device, dislike=True).exists()
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
         "OS_ALL" : getOSAll(id), 
+        'user_dislikes_device': user_dislikes_device,
+        'user_likes_device': user_likes_device,
+        'like_count': like_count,
+        'dislike_count': dislike_count,
     }
     return render(request, "device.html", context)

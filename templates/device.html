@@ -45,6 +45,56 @@
             <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary">Dodaj do ulubionych</a>
         </div>
 
+<!-- Przyciski "Like" i "Dislike" -->
+    <div class="card-body my-3 pt-3 border-top">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <a href="{% url 'fav' device.id_device %}" class="btn btn-outline-primary">Dodaj do ulubionych</a>
+                    {% if user.is_authenticated %}
+                        {% if user_likes_device %}
+                            <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> Unlike
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'add_like' device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bi bi-hand-thumbs-up"></i> Like
+                                </button>
+                            </form>
+                        {% endif %}
+                        <span class="like-count">{{ like_count }}</span> Likes
+                        {% if user_dislikes_device %}
+                            <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-hand-thumbs-down-fill"></i> Undislike
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-hand-thumbs-down"></i> Dislike
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    <span class="dislike-count">{{ dislike_count }}</span> Dislikes
+                </div>
+            
+            </div>
+
+
+
+
+
+
+
         <div class="card-body border-top">
             <table class="table">
                 <tr>
