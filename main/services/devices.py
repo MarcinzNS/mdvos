@@ -1,10 +1,10 @@
-from ..models.models import Devices, Specification
+from ..models.models import Devices, Specification ,Like
 from django.db.models import Q
 
 def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page: int, brand_filter: list, ram_filter: list) -> dict:
     start = (which_page-1)*how_many
 
-    devices = Devices.objects.all()
+    devices = Devices.objects.filter(accepted=True)
     if category != "NOT":
         devices = devices.filter(device_type=category)
     if sort_by != "NOT":
@@ -23,12 +23,12 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
                 {spec['spec_type_id__name']: spec['value'] for spec in device_specifications}
         }
         if len(brand_filter) + len(ram_filter) > 0:
-            if device_data['specifications']["RAM"] in ram_filter or device['name'] in brand_filter:
+            if device_data['specifications']["RAM"] in ram_filter or device['brand'] in brand_filter:
                 result.append(device_data)
         else:
             result.append(device_data)
 
-    return {"data": result, "how_many_results": len(devices)}
+    return {"data": result, "how_many_results": len(result)}
 
 def getDeviceData(id: int) -> dict:
     return Devices.objects.all().filter(id_device=id).values()[0]

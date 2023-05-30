@@ -7,8 +7,11 @@
 
     <div class="col-sm-12 col-md-2"></div>
     <div class="col-sm-12 col-md-8">
-
-        <div class="container"> <p class="h3">{{ device.brand }} {{ device.model }}</p></div>
+        <!-- Przyciski NAZWA PRODUKTU -->
+        <div class="container"> 
+            <p class="h3">{{ device.brand }} {{ device.model }}</p>
+        </div>
+        <!-- Przyciski DANE TECH -->
         <div class="container row mt-3">
 
             <div class="col-sm-12 col-md-6">
@@ -16,7 +19,7 @@
             </div>
             <div class="col-sm-12  border-start col-md-6">
                 {% if specification.SCREEN_SIZE %}
-                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ specification.SCREEN_SIZE }}"</p></span>
+                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i>{{ specification.SCREEN_SIZE }}"</span>
                 {% endif %}
                 {% if specification.SCREEN_TYPE %}
                 <span class="d-flex"><i class="bi bi-award me-3"></i><p>{{ specification.SCREEN_TYPE }}</p></span>
@@ -29,117 +32,243 @@
                 {% endif %}
                 {% if specification.DISC %}
                 <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ specification.DISC }} GB</p></span>
-                {% endif %}    
+                {% endif %} 
+                {% if specification.DISC %} 
+                <span class="d-flex"><i class="bi bi-battery-full"></i><p>{{ specification.DISC }} mAh</p></span>
+                {% endif %} 
+
             </div>
         </div>
+         <!-- Przyciski ULUBIONE TOMEK -->
         <div class="card-body my-3 pt-3 border-top">
-            <p class="card-text">
-                Seria narzo od realme to odpowiedź na prośby użytkowników, którzy potrzebują taniego i wszechstronnego urządzenia. Ostatnią premierą z tej serii był model 50A Prime, który oferuje całkiem niezły stosunek ceny do jakości.
-            </p>
-            <p class="card-text">
-                Pod względem wzornictwa jest to dość spora nowość dla realme, który dopiero od niedawna decyduje się na proste, wręcz kanciaste ramki w swoich smartfonach. Te wykonano z tworzywa sztucznego, natomiast front tego smartfona stanowi oczywiście szkło. Całość jednak prezentuje się zaskakująco dobrze i tak samo też leży w dłoni, nawet pomimo sporego rozmiaru. Model realme narzo 50A Prime działa pod kontrolą Androida 11 z nakładką realme UI 2.0.
-            </p>
-            <p class="card-text">
-                Ten smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
-            </p>
             <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary">Dodaj do ulubionych</a>
         </div>
-
-        <div class="card-body border-top">
-            <table class="table">
-                <tr>
-                    <th scope="row">Nazwa systemu operacyjnego</th>
-                    <th scope="row">Wersja</th>
-                    <th scope="row">Data wprowadzenia</th>
-                    <th scope="row">Data zakończenia wsparcia</th>
-                </tr>
-                
-                {% for os_info_id, os_info in OS_ALL.items %}
-                    <tr>
-                        <td>{{ os_info.name }}</td>
-                        <td>{{ os_info.version }}</td>
-                        <td>{{ os_info.date_start }}</td>
-                        <td>{{ os_info.date_end }}</td>
-                    </tr>
-              
-                {% empty %}
-                    <tr>
-                        <td colspan="4">Brak dostępnych informacji o systemie operacyjnym</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-        
-        <div class="card-body my-3 pt-3">
-
+        <!-- Przyciski "Like" i "Dislike" KONRAD -->
+        <div class="card-body my-3 pt-3 border-top">
+            
             <div class="row">
-                <div class="col-sm-12  col-md-4 ps-3 pt-2">
-                    <p class="fs-5">Nazwa Użytkownika</p>
-                </div>
-                <div class="col-sm-12  col-md-8 ps-3 pt-5">
-                    <p >Jakiś komentarz coś tam nw co blablablabalblabalbalba en smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
-                    </p>
-                    <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#komentarz" aria-controls="komentarz" aria-expanded="false" aria-label="Przełącznik kom">
-                        <p>Dodaj komentarz</p>
-                    </button>
-                    
-                </div>
-                <div class="collapse justify-content-between" id="komentarz">
-                    <form action="#" class="border border-2 rounded-3 p-3 mb-3">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nazwa użytkownika</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1" >
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">TReść komentarza</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Sign in</button>
-                            </div>
-                    </form>
+                <div class="col-sm-6">
+                    {% if user.is_authenticated %}
+                        {% if user_likes_device %}
+                            <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> Unlike
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'add_like' device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bi bi-hand-thumbs-up"></i> Like
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    <span class="like-count">{{ like_count }}</span> Likes
+                    {% if user.is_authenticated %}
+                        {% if user_dislikes_device %}
+                            <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-hand-thumbs-down-fill"></i> Undislike
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-hand-thumbs-down"></i> Dislike
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    <span class="dislike-count">{{ dislike_count }}</span> Dislikes
                 </div>
                 
             </div>
-            <div class="row d-flex">
-                <div class="col-sm-1  col-4 ">
+        </div>
+        <!-- Tabela parametry SEBA -->
+        <div class="card-body my-3 pt-3 border-top">
+            
+            <div class="card-body border-top">
+                <table class="table">
+                    <tr>
+                        <th scope="row">Nazwa systemu operacyjnego</th>
+                        <th scope="row">Wersja</th>
+                        <th scope="row">Data wprowadzenia</th>
+                        <th scope="row">Data zakończenia wsparcia</th>
+                    </tr>
                     
-                </div>
-
-                <div class="col-sm-11  col-8 "></div>
-                    <div class="row border-start border-4">
-                        <div class="col-sm-12  col-md-4 ps-3 pt-2">
-                            <p class="fs-5">Nazwa Użytkownika</p>
-                        </div>
-                        <div class="col-sm-12  col-md-8 ps-3 pt-5">
-                            <p >Jakiś pod komentarz coś tam nw co blablablabalblabalbalba en smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
-                            </p>
+                    {% for os_info_id, os_info in OS_ALL.items %}
+                        <tr>
+                            <td>{{ os_info.name }}</td>
+                            <td>{{ os_info.version }}</td>
+                            <td>{{ os_info.date_start }}</td>
+                            <td>{{ os_info.date_end }}</td>
+                        </tr>
+                
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Brak dostępnych informacji o systemie operacyjnym</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <!-- System Kom KIRAGA -->
+        <div class="card-body my-3 pt-3 border-top">
+            <div class="card-body my-3 pt-3">
+                <!-- KOM -->
+                <div class="row">
+                    <div class="col-sm-12  col-md-4 ps-3 pt-2">
+                        <p class="fs-5">Nazwa Użytkownika</p>
+                    </div>
+                    <div class="col-sm-12  col-md-8 ps-3 pt-5">
+                        <p >Jakiś komentarz coś tam nw co blablablabalblabalbalba en smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
+                        </p>
+                        <div class="row">
+                            <div class="col-4">
+                                <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#komentarz" aria-controls="komentarz" aria-expanded="false" aria-label="Przełącznik kom">
+                                    Dodaj komentarz
+                                </button>
+                            </div>
+                            <div class="col-8">
+                                <div class="row ms-3">
+                            
+                                {% if user.is_authenticated %}
+                                    {% if user_likes_device %}
+                                        <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}" class="col-sm-6 col-md-4">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} Unlike
+                                            </button>
+                                            <!--<span class="like-count">{{ like_count }}</span> Likes-->
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'add_like' device.id_device %}" method="post" class="col-sm-6 col-md-4">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-primary">
+                                                <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
+                                            </button>
+                                        <!--<span class="like-count">{{ like_count }}</span> Likes--> 
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                                
+                                {% if user.is_authenticated %}
+                                    {% if user_dislikes_device %}
+                                        <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-6">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }} Dislike
+                                            </button>
+                                            <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-6">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }} Dislike
+                                            </button>
+                                            <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                                
+                        
+                
+                                </div>
+                            </div>
                         </div>
                         
+                        <div class="collapse justify-content-between" id="komentarz">
+                            <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
+                <div class="row d-flex">
+                    <div class="col-sm-1  col-4 ">
+                        
+                    </div>
+                    <!-- PODKOM -->
+                    <div class="col-sm-11  col-8 ">
+                        
+                        <div class="row border-start border-4">
+                            <div class="col-sm-12  col-md-4 ps-3 pt-2">
+                                <p class="fs-5">Nazwa Użytkownika</p>
+                            </div>
+                            <div class="col-sm-12  col-md-8 ps-3 pt-5">
+                                <p >Jakiś pod komentarz coś tam nw co blablablabalblabalbalba en smartfon może nie powala pod względem wydajności, ale nawet mimo tego, bardzo dobrze radzi sobie w codziennych zadaniach. Na pleckach, w charakterystycznej dla realme wyspie, znalazły się łącznie 3 aparaty. Jednak tylko główny ma tutaj jakiekolwiek znaczenie. Do Waszej dyspozycji jest matryca o rozdzielczości 50 Mpix. Z kolei na froncie, w wycięciu w kształcie kropli wody, znalazła się pojedyncza matryca 8 Mpix.
+                                </p>
+                                <!-- System LIKE/DYS -->
+                                <div class="row ms-3">
+                            
+                                    {% if user.is_authenticated %}
+                                        {% if user_likes_device %}
+                                            <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}" class="col-sm-6 col-md-4">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} Unlike
+                                                </button>
+                                                <!--<span class="like-count">{{ like_count }}</span> Likes-->
+                                            </form>
+                                        {% else %}
+                                            <form action="{% url 'add_like' device.id_device %}" method="post" class="col-sm-6 col-md-4">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-primary">
+                                                    <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
+                                                </button>
+                                            <!--<span class="like-count">{{ like_count }}</span> Likes--> 
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
+                                    
+                                    {% if user.is_authenticated %}
+                                        {% if user_dislikes_device %}
+                                            <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-4">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }} Dislike
+                                                </button>
+                                                <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                            </form>
+                                        {% else %}
+                                            <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-4">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-danger">
+                                                    <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }} Dislike
+                                                </button>
+                                                <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- DODAWANIE KOM -->
+                <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                        </div>
+                </form>
             </div>
-            <form action="#" class="border border-2 rounded-3 p-3 mb-3">
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nazwa użytkownika</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" >
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">TReść komentarza</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                    </div>
-            </form>
-            
-            
-            
         </div>
-        
-
-
     </div>
     <div class="col-sm-12 col-md-2"></div>
     </main>
