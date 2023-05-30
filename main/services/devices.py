@@ -1,4 +1,4 @@
-from ..models.models import Devices, Specification
+from ..models.models import Devices, Specification ,Like
 from django.db.models import Q
 
 def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page: int, brand_filter: list, ram_filter: list) -> dict:
