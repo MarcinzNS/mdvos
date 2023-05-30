@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-12  border-start col-md-6">
                 {% if specification.SCREEN_SIZE %}
-                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ specification.SCREEN_SIZE }}"</p></span>
+                <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i>{{ specification.SCREEN_SIZE }}"</span>
                 {% endif %}
                 {% if specification.SCREEN_TYPE %}
                 <span class="d-flex"><i class="bi bi-award me-3"></i><p>{{ specification.SCREEN_TYPE }}</p></span>
@@ -32,7 +32,11 @@
                 {% endif %}
                 {% if specification.DISC %}
                 <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ specification.DISC }} GB</p></span>
-                {% endif %}    
+                {% endif %} 
+                {% if specification.DISC %} 
+                <span class="d-flex"><i class="bi bi-battery-full"></i><p>{{ specification.DISC }} mAh</p></span>
+                {% endif %} 
+
             </div>
         </div>
          <!-- Przyciski ULUBIONE TOMEK -->
