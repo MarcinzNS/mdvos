@@ -44,6 +44,8 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, pag
     if category != "NOT": context |= {"category":category}
     if sort_by != "NOT": context |= {"sort_by":sort_by}
     
+    request.session['next_page'] = request.get_full_path()
+    
     return render(request, "devices.html", context)
 
 def GETtoURL(getDict):
