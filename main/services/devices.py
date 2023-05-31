@@ -9,7 +9,7 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
         devices = devices.filter(device_type=category)
     if sort_by != "NOT":
         devices = devices.order_by(sort_by)
-    devices = devices.values()[start:start+how_many]
+    devices = devices.values()
 
     specifications = list(Specification.objects.values('spec_type_id__name', 'value', "devices_id"))
 
@@ -28,7 +28,7 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
         else:
             result.append(device_data)
 
-    return {"data": result, "how_many_results": len(result)}
+    return {"data": result[start:start+how_many], "how_many_results": len(result)}
 
 def getDeviceData(id: int) -> dict:
     return Devices.objects.all().filter(id_device=id).values()[0]

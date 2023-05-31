@@ -77,7 +77,7 @@ class Specification(models.Model):
         return f"{self.value}"
 
 class OS_devices(models.Model):
-    os_id = models.ForeignKey(OS, on_delete=models.CASCADE)
+    os_id = models.ForeignKey(OS_version, on_delete=models.CASCADE)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE)
 
 class Error_report(models.Model):

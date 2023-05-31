@@ -23,6 +23,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, pag
     data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter)
     
     how_many_pages = math.ceil(data["how_many_results"]/how_many_item_on_page)
+    
     context |= {
         "data": data["data"],
         "how_many_pages": [i+1 for i in range(how_many_pages)],
