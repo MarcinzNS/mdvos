@@ -102,6 +102,9 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'main.services.validators.MinimumLengthValidator',
+        'OPTIONS': {
+            "min_length": 8,
+        }
     },
 ]
 

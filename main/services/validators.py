@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
+from django.core import validators
 from django.utils.translation import ngettext
+from django.utils.deconstruct import deconstructible
 
 class MinimumLengthValidator:
 
@@ -26,3 +28,10 @@ class MinimumLengthValidator:
             f"Hasło musi zawierać co najmniej {self.min_length} znaków.",
             self.min_length,
         )
+    
+
+@deconstructible
+class UsernameValidator(validators.RegexValidator):
+    regex = r"^[\w.@+-]+\Z"
+    message = f"Nazwa użytkownika może zawierać tylko litery, cyfry oraz znaki @ . + - _"
+    flags = 0
