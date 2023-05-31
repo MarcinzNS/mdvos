@@ -23,8 +23,11 @@ footer{
 	color:#FFFFFF;
 	height: 100%
   }
-  .bg-body{
+  .bg-body.light {
 	background-color: #F4F3EA;
+  }
+  .bg-body.dark {
+	background-color: #333D51;
   }
   .btn-primary, .btn-primary:active, .btn-primary:visited {
     background-color: #333D51 !important;
