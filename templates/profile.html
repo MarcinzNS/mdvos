@@ -13,25 +13,31 @@
                     <div class="row g-0">
                         
                         <div class="card-body p-4 ">
-                            <h3>Witaj, {{request.user.username}} {{request.user.lastname}}!</h3>
+                            <h3>Witaj, {{request.user.username}}!</h3>
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1">
                             <div class="col-6 mb-3 px-5">
                                 <h6>Imie</h6>
-                                <p class="text-muted">{{request.user.username}}</p>  
+                                <p class="text-muted">{{request.user.first_name}}</p>  
                                 <h6>Nazwisko</h6>
-                                <p class="text-muted">{{request.user.lastname}}</p>  
+                                <p class="text-muted">{{request.user.last_name}}</p>  
                                 <h6>Email</h6>
-                                <p class="text-muted">{{request.user.mail}}</p> 
+                                <p class="text-muted">{{request.user.email}}</p> 
                                                             
                             </div>
                             <div class="col-6 mb-3">
                                 <a href ="#" class = "no">
-                                <div class="card" style="width: 18rem;">
+                                <div class="card border-0" style="width: 18rem;">
                                 <img src="..." class="card-img-top" alt="...">
                                 <div class="card-body">
                                    <!-- <p class="card-text">Link do polubionych urządzeń?</p>-->
                                     <a href ="{% url 'favourites_list' %}">Ulubione</a>
+                                </div>
+                                <hr class="mt-0 mb-4">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                   <!-- <p class="card-text">Link do polubionych urządzeń?</p>-->
+                                    <a href ="{% url 'favourites_list' %}">Śledzone</a>
                                 </div>
                                 </div>
                                 </a>
@@ -78,14 +84,14 @@
         <h5 class="modal-title">Edytuj dane</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" method="post">
         {% csrf_token %}
         <p>Imie</p>
         <input name="{{form.first_name.name}}" class="form-control" placeholder="{{form.first_name.label}}" type="text"/>
         <p>Nazwisko</p>
-        <input name="{{form.username.name}}" class="form-control" placeholder="{{form.username.label}}" type="text" autocomplete="new-account"/>
+        <input name="{{form.username.name}}" class="form-control" placeholder="{{form.username.label}}" type="text" autocomplete="edited-account"/>
         <p>Email</p>
-        <input name="{{form.email.name}}" class="form-control" placeholder="{{form.email.label}}" type="email" autocomplete="new-account"/>
+        <input name="{{form.email.name}}" class="form-control" placeholder="{{form.email.label}}" type="email" autocomplete="edited-account"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
