@@ -11,66 +11,94 @@
         <div class="col-sm-12 col-md-3">
             <nav class="navbar navbar-light navbar-expand-xl ">
                 
-                <button class="navbar-toggler me-3" type="button" data-toggle="collapse" data-target="#filtr" aria-controls="filtr" aria-expanded="false" aria-label="Przełącznik filtra">
-                    <i class="bi bi-funnel"></i></span>
+                <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtr" aria-controls="filtr" aria-expanded="false" aria-label="Przełącznik filtra">
+                    <!--<i class="bi bi-funnel"></i></span>-->
+                    Filtruj
                 </button>
-                <div class="collapse navbar-collapse" id="filtr">
-                    {% if category and sort_by%}
-                    <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
-                    {% elif category %}
-                    <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
-                    {% elif sort_by %}
-                    <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
-                    {% else %}
-                    <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" class="border border-2 rounded-3 p-3 me-2">
-                    {% endif %}
-                        <p class="h3 mb-2">Filtry</p>
+                <div class="collapse navbar-collapse mt-2 border border-2 rounded-3 p-3 me-2" id="filtr">
+                    <div class="row">
+                        <div class="col-12">
+                            {% if category and sort_by%}
+                            <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                            {% elif category %}
+                            <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                            {% elif sort_by %}
+                            <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                            {% else %}
+                            <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                            {% endif %}
+                                <p class="h3 mb-2">Filtry</p>
 
-                        <p class="h4 pt-3 border-top"> Producent</p>
-                        <div class="row mb-3">
-                            <div class="col-sm-10 offset-sm-2">
-                                {% for item in sidebar.brand %}
-                                <div class="form-check">
-                                    {% if item in filters.brand %}
-                                    <input class="form-check-input" type="checkbox" name="{{ item }}" value="on" id="PXiaiomi" checked>
-                                    {% else %}
-                                    <input class="form-check-input" type="checkbox" name="{{ item }}" id="PXiaiomi">
-                                    {% endif %}
-                                    <label class="form-check-label" for="gridCheck1">
-                                        {{ item }}
-                                    </label>
+                                <p class="h4 pt-3 border-top"> Producent</p>
+                                <div class="row mb-3">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        {% for item in sidebar.brand %}
+                                        <div class="form-check">
+                                            {% if item in filters.brand %}
+                                            <input class="form-check-input" type="checkbox" name="{{ item }}" value="on" id="PXiaiomi" checked>
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="{{ item }}" id="PXiaiomi">
+                                            {% endif %}
+                                            <label class="form-check-label" for="gridCheck1">
+                                                {{ item }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                {% endfor %}
-                            </div>
-                        </div>
 
-                        <p class="h4 pt-3 border-top"> Pamięć RAM</p>
-                        <div class="row mb-3">
-                            <div class="col-sm-10 offset-sm-2">
-                                {% for item in sidebar.ram %}
-                                <div class="form-check">
-                                    {% if item in filters.ram %}
-                                    <input class="form-check-input" type="checkbox" name="ram{{ item }}" value="on" id="PXiaiomi" checked>
-                                    {% else %}
-                                    <input class="form-check-input" type="checkbox" name="ram{{ item }}" id="PXiaiomi">
-                                    {% endif %}
-                                    <label class="form-check-label" for="gridCheck1">
-                                        {{ item }}
-                                    </label>
+                                <p class="h4 pt-3 border-top"> Pamięć RAM</p>
+                                <div class="row mb-3">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        {% for item in sidebar.ram %}
+                                        <div class="form-check">
+                                            {% if item in filters.ram %}
+                                            <input class="form-check-input" type="checkbox" name="ram{{ item }}" value="on" id="PXiaiomi" checked>
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="ram{{ item }}" id="PXiaiomi">
+                                            {% endif %}
+                                            <label class="form-check-label" for="gridCheck1">
+                                                {{ item }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                {% endfor %}
-                            </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-primary float-end">Filtruj</button>
-                        <div class="clearfix"></div>
-        
-                    </form>
+                                <button type="submit" class="btn btn-primary float-end">Filtruj</button>
+                                <div class="clearfix"></div>
+
+                                
+                                <div class="collapse navbar-collapse mt-2" id="sortuj">
+                                    <a class="dropdown-item" href="#"> </a>
+                                    <a class="dropdown-item" href="#">  </a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 border-top border-3 pt-3 mt-3">
+                            <form action="#">
+                                <div class="mb-3">
+                                    <select id="disabledSelect" class="form-select">
+                                      <option>Sortuj wg daty</option>
+                                      <option>Sortuj po nazwie</option>
+                                      <option>Sortuj po nazwie modelu</option>
+                                    </select>
+                                  </div>
+                                <button type="submit" class="btn btn-primary float-end">Sortuj</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    
+                    
+
                 </div>
                 
-            </nav>      
+                
+            </nav>    
         </div>
         <div class="col-sm-12 col-md-7 ">
+            
             {% for item in data %}
                 <div class="row position-relative border-top rounded mt-2 p-1">
                     <div class="col-md-6 mb-md-0 p-md-4">
