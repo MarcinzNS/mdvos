@@ -2,6 +2,7 @@ from django.db import models
 import datetime, os
 import hashlib
 from django.contrib.auth.models import AbstractUser
+from ..services.validators import UsernameValidator
 
 def filepath(request, filename):
     extension = filename.split(".")[-1]
@@ -53,7 +54,9 @@ class Devices(models.Model):
 #         return f"{self.name} {self.lastname}"
 
 class User(AbstractUser):
-    # imie, nazwisko i username są dziedziczone z AbstractUser
+    
+    # Sprawdza czy wprowadzono poprawną nazwę użytkownika
+    username_validator = UsernameValidator()    
 
     def __str__(self):
         return f"{self.username} {self.first_name} {self.last_name}"

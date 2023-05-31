@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from .models.models import User, Devices
 from django import forms
+from .services.validators import UsernameValidator
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -8,6 +9,7 @@ class CustomUserCreationForm(UserCreationForm):
     last_name_max_len = 30
     username_max_len = 30
     email_max_len = 50
+    username_validator = UsernameValidator()
 
     first_name = forms.CharField(
         label='Imię',
@@ -29,6 +31,7 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label='Nazwa użytkownika',
         max_length=30,
+        validators=[username_validator],
         error_messages={
             'required': "Należy wpisać nazwę użytkownika",
             'max_length': f"Nazwa użytkownika nie może przekraczać {username_max_len} znaków",
@@ -58,7 +61,7 @@ class CustomUserCreationForm(UserCreationForm):
         label=("Powtórz hasło"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
-            'required': "Należy powtórzyć hasło"
+            'required': "Należy powtórzyć hasło",
         }
     )
     
