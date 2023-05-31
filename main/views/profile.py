@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 import datetime
 from ..forms import EditUserForm
 from main.models.models import User
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 def profile(request):
     if not request.user.is_authenticated:
+        request.session['next_page'] = request.get_full_path()
         return redirect('login')
     
     form = EditUserForm()

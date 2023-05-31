@@ -62,9 +62,11 @@ def one_device(request, id):
     device = Devices.objects.get(id_device=id)
     comments = Comment.objects.filter(devices_id=device)
     main_comment_id=Comment.objects.filter(devices_id=device)
+
     if request.user.is_authenticated:
         user_likes_device = Like.objects.filter(user_id=request.user, devices_id=device, like=True).exists()
         user_dislikes_device = Like.objects.filter(user_id=request.user, devices_id=device, dislike=True).exists()
+
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
@@ -75,6 +77,8 @@ def one_device(request, id):
         'dislike_count': dislike_count,
         'comments': comments,
         'podkom':main_comment_id,
-        
     }
+
+    request.session['next_page'] = request.get_full_path()
+    
     return render(request, "device.html", context)

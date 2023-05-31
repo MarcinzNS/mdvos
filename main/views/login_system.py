@@ -13,11 +13,16 @@ def loginUser(request):
     if request.method == "POST":
         email = request.POST.get("email").lower()
         password = request.POST.get("password")
+        next_page = request.session.get('next_page')
+
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect('home')
         else:
             messages.error(request, "Błędne dane logowania")
 
@@ -25,8 +30,14 @@ def loginUser(request):
 
 
 def logoutUser(request):
+
+    next_page = request.session.get('next_page')
     logout(request)
-    return redirect('home')
+
+    if next_page:
+        return redirect(next_page)
+    else:
+        return redirect('home')
 
 
 def registration(request):
@@ -40,9 +51,13 @@ def registration(request):
             # w tym momencie django samo jeszcze nie ogarnia że trzbea użyć EmailBackend
             user.backend = "main.services.authentication.EmailBackend"
 
+            next_page = request.session.get('next_page')
             login(request, user)
-            return redirect('home')
-        
+
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect('home')
         else:
             return render(request, 'register.html', {'form': form})
         
