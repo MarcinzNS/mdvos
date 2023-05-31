@@ -84,11 +84,12 @@
         <h5 class="modal-title">Edytuj dane</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form class="modal-body" method="post">
+      <form class="modal-body " method="post">
         {% csrf_token %}
-        <input name="{{form.first_name.name}}" class="form-control" placeholder="{{form.first_name.label}}" type="text"/>
-        <input name="{{form.last_name.name}}" class="form-control" placeholder="{{form.last_name.label}}" type="text" autocomplete="edited-account"/>
-        <input name="{{form.email.name}}" class="form-control" placeholder="{{form.email.label}}" type="email" autocomplete="edited-account"/>
+        <input name="{{form.first_name.name}}" class="form-control my-2" placeholder="{{form.first_name.label}}" type="text"/>
+        <input name="{{form.last_name.name}}" class="form-control my-2" placeholder="{{form.last_name.label}}" type="text" autocomplete="edited-account"/>
+        <input name="{{form.username.name}}" class="form-control my-2" placeholder="{{form.username.label}}" type="text" autocomplete="edited-account"/>
+        <input name="{{form.email.name}}" class="form-control my-2" placeholder="{{form.email.label}}" type="email" autocomplete="edited-account"/>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
           <button type="submit" class="btn btn-primary" name="save_edit">Zapisz</button>
@@ -106,10 +107,17 @@
       </div>
       <form class="modal-body">
         {% csrf_token %}
-        <p>Hasło</p>
-        <input name="{{form.password1.name}}" class="form-control" placeholder="{{form.password1.label}}" type="password" autocomplete="new-account"/>
-        <p>Potwierdź hasło</p>
-        <input name="{{form.password2.name}}" class="form-control" placeholder="{{form.password2.label}}" type="password" autocomplete="new-account"/>
+          <div class="mb-3">
+          <input type="password" name="old_password"  placeholder="{{form.old_password.label}}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="id_new_password1" class="form-label">Nowe hasło</label>
+          <input type="password" name="password1" id="id_new_password1" placeholder="{{form.password1.label}}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="id_new_password2" class="form-label">Powtórz nowe hasło</label>
+          <input type="password" name="password2" id="id_new_password2" placeholder="{{form.password2.label}}" class="form-control" required>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
           <button type="button" class="btn btn-primary" name="save_password_change">Zapisz</button>

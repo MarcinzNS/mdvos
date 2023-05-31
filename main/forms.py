@@ -125,6 +125,23 @@ class EditUserForm(forms.ModelForm):
         label='Nazwisko',
         required=False,
     )
+    username = forms.CharField(
+        label='Nazwa użytkownika',
+        required=False,
+    )
+    old_password = forms.CharField(
+        label='Stare hasło',
+        required=False,
+    )
+    password1 = forms.CharField(
+        label='Nowe hasło',
+        required=False,
+    )
+
+    password2= forms.CharField(
+        label='Powtórz hasło',
+        required=True,
+    )
 
     def save(self, commit=True):
         instance = super().save(commit=False)
