@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from ..services.devices import *
 from ..services.os import *
+from main.models.models import Comment
 
 import math
 
@@ -58,6 +59,9 @@ def one_device(request, id):
     user_likes_device = False
     like_count = Like.objects.filter(devices_id=device, like=True).count()
     dislike_count = Like.objects.filter(devices_id=device, dislike=True).count()
+    device = Devices.objects.get(id_device=id)
+    comments = Comment.objects.filter(devices_id=device)
+    main_comment_id=Comment.objects.filter(devices_id=device)
     if request.user.is_authenticated:
         user_likes_device = Like.objects.filter(user_id=request.user, devices_id=device, like=True).exists()
         user_dislikes_device = Like.objects.filter(user_id=request.user, devices_id=device, dislike=True).exists()
@@ -69,5 +73,8 @@ def one_device(request, id):
         'user_likes_device': user_likes_device,
         'like_count': like_count,
         'dislike_count': dislike_count,
+        'comments': comments,
+        'podkom':main_comment_id,
+        
     }
     return render(request, "device.html", context)
