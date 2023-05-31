@@ -33,13 +33,15 @@ def profile(request):
 
         elif "save_edit" in request.POST:
             user = request.user
+
+            # nie działają polskie znaki
             
             if len(request.POST['first_name']):
                 user.first_name = request.POST['first_name']
             
             if len(request.POST['last_name']):
                 user.last_name = request.POST['last_name']
-
+            
             if len(request.POST['username']):
                 new_username = request.POST['username']
 
