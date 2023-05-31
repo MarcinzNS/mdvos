@@ -191,7 +191,7 @@
                 <div class="card-body my-3 pt-3">
                     <!-- KOM -->
                     {% for comment in comments %}
-                    <div class=" border border-2 rounded-3 p-2">
+                    <div class=" border border-2 rounded-3 mb-2 p-2">
                         
                         <!-- KOM -->
                         <div class="row">
@@ -209,6 +209,7 @@
                                             Rozwiń komentarze
                                         </button>
                                         <div class=" d-flex">
+                                            <!--
                                             <div class="ms-3">
                                                 {% if user.is_authenticated %}
                                                 {% if user_likes_device %}
@@ -217,7 +218,6 @@
                                                         <button type="submit" class="btn btn-primary" >
                                                             <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }}
                                                         </button>
-                                                        <!--<span class="like-count">{{ like_count }}</span> Likes-->
                                                     </form>
                                                 {% else %}
                                                     <form action="{% url 'add_like' device.id_device %}" method="post" >
@@ -225,12 +225,12 @@
                                                         <button type="submit" class="btn btn-outline-primary">
                                                             <i class="bi bi-hand-thumbs-up"></i> {{ like_count }}
                                                         </button>
-                                                    <!--<span class="like-count">{{ like_count }}</span> Likes--> 
                                                     </form>
                                                 {% endif %}
                                             {% endif %}
                                             </div>
-                                            
+                                            -->
+                                            <!--
                                             <div class="ms-3">
                                                 {% if user.is_authenticated %}
                                                 {% if user_dislikes_device %}
@@ -239,7 +239,7 @@
                                                         <button type="submit" class="btn btn-danger">
                                                             <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }}
                                                         </button>
-                                                        <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                                        
                                                     </form>
                                                 {% else %}
                                                     <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="">
@@ -247,11 +247,13 @@
                                                         <button type="submit" class="btn btn-outline-danger">
                                                             <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }}
                                                         </button>
-                                                        <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                                        
                                                     </form>
                                                 {% endif %}
                                             {% endif %}
+                                            
                                             </div>
+                                            -->
                                         </div>
                                     </div>
                                     
@@ -290,7 +292,7 @@
                                     </div>
                                     <div class="col-sm-12  col-md-8 ps-3 pt-5">
                                         <p >{{ reply.text }}</p>
-                                        <!-- System LIKE/DYS -->
+                                        <!-- System LIKE/DYS 
                                         <div class="row ms-3">
                                     
                                             {% if user.is_authenticated %}
@@ -300,7 +302,7 @@
                                                         <button type="submit" class="btn btn-primary">
                                                             <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} Unlike
                                                         </button>
-                                                        <!--<span class="like-count">{{ like_count }}</span> Likes-->
+                                                        
                                                     </form>
                                                 {% else %}
                                                     <form action="{% url 'add_like' device.id_device %}" method="post" class="col-sm-6 col-md-4">
@@ -308,7 +310,7 @@
                                                         <button type="submit" class="btn btn-outline-primary">
                                                             <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
                                                         </button>
-                                                    <!--<span class="like-count">{{ like_count }}</span> Likes--> 
+                                                    
                                                     </form>
                                                 {% endif %}
                                             {% endif %}
@@ -320,7 +322,7 @@
                                                         <button type="submit" class="btn btn-danger">
                                                             <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }} Dislike
                                                         </button>
-                                                        <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                                    
                                                     </form>
                                                 {% else %}
                                                     <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-4">
@@ -328,13 +330,13 @@
                                                         <button type="submit" class="btn btn-outline-danger">
                                                             <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }} Dislike
                                                         </button>
-                                                        <!--<span class="dislike-count">{{ dislike_count }}</span> Dislikes-->
+                                                        
                                                     </form>
                                                 {% endif %}
                                             {% endif %}
                                         </div>
+                                    </div>-->
                                     </div>
-                                    
                                 </div>
                                 {% endfor %}
                             </div>
