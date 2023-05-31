@@ -58,7 +58,7 @@ class CustomUserCreationForm(UserCreationForm):
         label=("Powtórz hasło"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
-            'required': "Należy powtórzyć hasło"
+            'required': "Należy powtórzyć hasło",
         }
     )
     
