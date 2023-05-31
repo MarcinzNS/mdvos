@@ -84,19 +84,16 @@
         <h5 class="modal-title">Edytuj dane</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" method="post">
+      <form class="modal-body" method="post">
         {% csrf_token %}
-        <p>Imie</p>
         <input name="{{form.first_name.name}}" class="form-control" placeholder="{{form.first_name.label}}" type="text"/>
-        <p>Nazwisko</p>
-        <input name="{{form.username.name}}" class="form-control" placeholder="{{form.username.label}}" type="text" autocomplete="edited-account"/>
-        <p>Email</p>
+        <input name="{{form.last_name.name}}" class="form-control" placeholder="{{form.last_name.label}}" type="text" autocomplete="edited-account"/>
         <input name="{{form.email.name}}" class="form-control" placeholder="{{form.email.label}}" type="email" autocomplete="edited-account"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-primary">Zapisz</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="submit" class="btn btn-primary" name="save_edit">Zapisz</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -107,17 +104,17 @@
         <h5 class="modal-title">Edytuj dane</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <form class="modal-body">
         {% csrf_token %}
         <p>Hasło</p>
         <input name="{{form.password1.name}}" class="form-control" placeholder="{{form.password1.label}}" type="password" autocomplete="new-account"/>
         <p>Potwierdź hasło</p>
         <input name="{{form.password2.name}}" class="form-control" placeholder="{{form.password2.label}}" type="password" autocomplete="new-account"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-primary">Zapisz</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-primary" name="save_password_change">Zapisz</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

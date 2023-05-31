@@ -32,15 +32,17 @@ class CustomUserCreationForm(UserCreationForm):
         error_messages={
             'required': "Należy wpisać nazwę użytkownika",
             'max_length': f"Nazwa użytkownika nie może przekraczać {username_max_len} znaków",
+            "unique": f"Podana nazwa użytkownika jest już zajęta",
         }
     )
 
     email = forms.EmailField(
         label='Email',
-        max_length=50,
+        max_length=email_max_len,
         error_messages={
             'required': "Należy wpisać adres email",
             'max_length': f"Email nie może przekraczać {email_max_len} znaków",
+            "unique": f"Konto o podanym adresie email już istnieje.",
         }
     )
     
@@ -104,3 +106,26 @@ class AddDeviceForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class EditUserForm(forms.ModelForm):
+    email = forms.EmailField(
+        label='Email',
+        required=False,
+    )
+
+    first_name = forms.CharField(
+        label='Imię',
+        required=False
+    )
+    last_name = forms.CharField(
+        label='Nazwisko',
+        required=False,
+    )
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+    
+    class Meta:
+        model=User
+        fields = ['first_name', 'last_name', 'email'] 
