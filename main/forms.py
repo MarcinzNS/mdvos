@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from .models.models import User, Devices
 from django import forms
-from .services.validators import UsernameValidator
+from .services.validators import *
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -10,7 +10,7 @@ class CustomUserCreationForm(UserCreationForm):
     username_max_len = 30
     email_max_len = 50
     username_validator = UsernameValidator()
-
+    
     first_name = forms.CharField(
         label='Imię',
         required=False,
@@ -77,13 +77,19 @@ class CustomUserCreationForm(UserCreationForm):
 
 class AddDeviceForm(forms.ModelForm):
     brand = forms.CharField(
-        label="Marka",
+        label="Marka*",
         max_length=30,
+        error_messages={
+            'required': "Należy podać markę",
+        },
     )
 
     model = forms.CharField(
-        label="Model",
+        label="Model*",
         max_length=50,
+        error_messages={
+            'required': "Należy podać model",
+        },
     )
 
     device_type = forms.ChoiceField(
@@ -95,7 +101,13 @@ class AddDeviceForm(forms.ModelForm):
         ],
     )
     release_date = forms.DateField(required=False)
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(
+        required=False,
+        validators=[validate_image_format, validate_image_size],    
+        error_messages= {
+            "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
+        }    
+    )
 
     class Meta:
         model = Devices

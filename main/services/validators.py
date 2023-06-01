@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.core import validators
 from django.utils.translation import ngettext
 from django.utils.deconstruct import deconstructible
+from PIL import Image
 
 class MinimumLengthValidator:
 
@@ -35,3 +36,14 @@ class UsernameValidator(validators.RegexValidator):
     regex = r"^[\w.@+-]+\Z"
     message = f"Nazwa użytkownika może zawierać tylko litery, cyfry oraz znaki @ . + - _"
     flags = 0
+
+
+def validate_image_size(image):
+    if image.size > 1024 * 1024:
+        raise ValidationError("Maksymalny rozmiar pliku to 1 MB.")
+    
+def validate_image_format(image):
+    with Image.open(image) as img:
+        if img.format != "PNG":
+            raise ValidationError("Podany obraz musi być w formacie PNG")
+    
