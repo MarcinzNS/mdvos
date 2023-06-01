@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     username = forms.CharField(
-        label='Nazwa użytkownika',
+        label='Nazwa użytkownika*',
         max_length=30,
         validators=[username_validator],
         error_messages={
@@ -40,7 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     email = forms.EmailField(
-        label='Email',
+        label='Email*',
         max_length=email_max_len,
         error_messages={
             'required': "Należy wpisać adres email",
@@ -50,7 +50,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     password1 = forms.CharField(
-        label=("Hasło"),
+        label=("Hasło*"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
             'required': "Należy wpisać hasło",
@@ -58,7 +58,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     password2 = forms.CharField(
-        label=("Powtórz hasło"),
+        label=("Powtórz hasło*"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
             'required': "Należy powtórzyć hasło",

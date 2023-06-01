@@ -51,13 +51,9 @@ def registration(request):
             # w tym momencie django samo jeszcze nie ogarnia że trzbea użyć EmailBackend
             user.backend = "main.services.authentication.EmailBackend"
 
-            next_page = request.session.get('next_page')
-            login(request, user)
+            messages.success(request, "Pomyślnie założono konto")
+            return render(request, 'login.html', {'form': form})
 
-            if next_page:
-                return redirect(next_page)
-            else:
-                return redirect('home')
         else:
             return render(request, 'register.html', {'form': form})
         
