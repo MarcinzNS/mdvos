@@ -31,7 +31,7 @@ class OS_version(models.Model):
 
 class Devices(models.Model):
     id_device = models.AutoField(primary_key=True)
-    brand = models.CharField(max_length=30, unique=True)
+    brand = models.CharField(max_length=30, unique=False)
     premier = models.DateField(null=True)
     device_type = models.CharField(max_length=30)
     model = models.CharField(max_length=50)

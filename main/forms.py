@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices
+from .models.models import User, Devices, Specification, Specification_type
 from django import forms
 from .services.validators import *
 
@@ -76,6 +76,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class AddDeviceForm(forms.ModelForm):
+
     brand = forms.CharField(
         label="Marka*",
         max_length=30,
@@ -121,6 +122,40 @@ class AddDeviceForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+
+
+class AddDeviceSpecsForm(forms.Form):
+
+    cpu = forms.CharField(
+        label='CPU',
+        max_length=50,
+        required=False,
+    )
+
+    ram = forms.CharField(
+        label='RAM',
+        max_length=50,
+        required=False,
+    )
+
+    screen_size = forms.CharField(
+        label='Rozmiar ekranu',
+        max_length=50,
+        required=False,
+    )
+
+    battery = forms.CharField(
+        label='Bateria',
+        max_length=50,
+        required=False,
+    )
+
+    disk_size = forms.CharField(
+        label='Rozmiar dysku',
+        max_length=50,
+        required=False,
+    )
 
 
 class EditUserForm(forms.ModelForm):
