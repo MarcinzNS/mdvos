@@ -48,14 +48,14 @@
                             <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} UnLike
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ like.like_count }} UnLike
                                 </button>
                             </form>
                         {% else %}
                             <form action="{% url 'add_like' device.id_device %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-primary">
-                                    <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
+                                    <i class="bi bi-hand-thumbs-up"></i> {{ like.like_count }} Like
                                 </button>
                             </form>
                         {% endif %}
@@ -80,14 +80,14 @@
                                 <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
-                                        <i class="bi bi-hand-thumbs-down-fill"></i> Undislike
+                                        <i class="bi bi-hand-thumbs-down-fill"></i> {{ like.dislike_count }} Undislike
                                     </button>
                                 </form>
                             {% else %}
                                 <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-danger">
-                                        <i class="bi bi-hand-thumbs-down"></i> Dislike
+                                        <i class="bi bi-hand-thumbs-down"></i> {{ like.dislike_count }} Dislike
                                     </button>
                                 </form>
                             {% endif %}
