@@ -56,25 +56,12 @@ def GETtoURL(getDict):
 
 
 def one_device(request, id):
-    device = get_object_or_404(Devices, pk=id)
-    user_dislikes_device = False
-    user_likes_device = False
-    like_count = Like.objects.filter(devices_id=device, like=True).count()
-    dislike_count = Like.objects.filter(devices_id=device, dislike=True).count()
-   
-
-    if request.user.is_authenticated:
-        user_likes_device = Like.objects.filter(user_id=request.user, devices_id=device, like=True).exists()
-        user_dislikes_device = Like.objects.filter(user_id=request.user, devices_id=device, dislike=True).exists()
-
+    
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
-        "OS_ALL" : getOSAll(id), 
-        'user_dislikes_device': user_dislikes_device,
-        'user_likes_device': user_likes_device,
-        'like_count': like_count,
-        'dislike_count': dislike_count,
+        "OS_ALL" : getOSAll(id),
+        "like": getDeviceLike(request, id),
         'comments': getComments(id),
         'main_comment_id': getMCid(id),
         'username': getCommentsUsername(id),

@@ -44,7 +44,7 @@
                 <div class=" d-flex">
                     <div class="me-2">
                     {% if user.is_authenticated %}
-                        {% if user_likes_device %}
+                        {% if like.user_likes_device %}
                             <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">
@@ -61,7 +61,7 @@
                         {% endif %}
                     {% else %}
                         <button type="submit" class="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#alert" aria-controls="alert" aria-expanded="false" aria-label="alert">
-                            <i class="bi bi-hand-thumbs-up"></i> {{ like_count }}
+                            <i class="bi bi-hand-thumbs-up"></i> {{ like.like_count }}
                         </button>
                     {% endif %}
                     </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="me-2">
                         {% if user.is_authenticated %}
-                            {% if user_dislikes_device %}
+                            {% if like.user_dislikes_device %}
                                 <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
@@ -94,7 +94,7 @@
 
                             {% else %}
                             <button type="submit" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#alert" aria-controls="alert" aria-expanded="false" aria-label="alert">
-                                <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }}
+                                <i class="bi bi-hand-thumbs-down"></i> {{ like.dislike_count }}
                             </button>
                            
                         {% endif %}
