@@ -18,7 +18,7 @@
                             <h3>Witaj, {{request.user.username}}!</h3>
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1">
-                            <div class="col-3 mb-3 px-5">
+                            <div class="col-5 mb-3 px-5">
                                 <h6>Imie</h6>
                                 <p class="text-muted">{{request.user.first_name}}</p>  
                                 <h6>Nazwisko</h6>
@@ -27,30 +27,25 @@
                                 <p class="text-muted">{{request.user.email}}</p> 
                                                             
                             </div>
-                            <div class="col-9 mb-3">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <a href ="#" class = "no">
-                                                    <div class="card border-0" style="width: 18rem;">
-                                                        <img src="{% static "" %}" class="img-thumbnail " alt="...">
+                            <div class="col-7 mb-3">
+                            <div class="d-flex flex-row mb-3">
+                                                <a href ="{% url 'favourites_list' %}" class = "no">
+                                                    <div class="card border-0 p-2" style="width: 18rem;">
+                                                        <img src="{% static "img/profile/liked.png" %}" class="img-thumbnail " alt="...">
                                                         <div class="card-body">
-                                                            <a href ="{% url 'favourites_list' %}">Ulubione</a>
+                                                            <p>Ulubione</p>
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a href ="#" class = "no">
-                                                    <div class="card border-0" style="width: 18rem;">
-                                                        <img src="{% static "" %}" class="img-thumbnail " alt="...">
+                                                <a href ="{% url 'favourites_list' %}" class = "no">
+                                                    <div class="card border-0 p-2" style="width: 18rem;">
+                                                        <img src="{% static "img/profile/sledzone.png" %}" class="img-thumbnail " alt="...">
                                                         <div class="card-body">
-                                                            <a href ="{% url 'favourites_list' %}">Śledzone</a>
+                                                            <h6>Śledzone</h6>
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
                             
                             </div>
                             <h6></h6>
