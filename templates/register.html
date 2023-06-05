@@ -51,10 +51,22 @@
             {% if form.errors %}
               {% for field in form.errors.values %}
                 {% for error in field %}
-                  <div class="alert alert-danger" role="alert">
+                  <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
                     {{error}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                   </div>
                 {% endfor %}
+              {% endfor %}
+            {% endif %}
+
+            {% if messages %}
+              {% for message in messages %}
+                {% if message.tags == 'success' %}
+                  <div class="alert alert-success d-flex justify-content-between align-items-center" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                {% endif %}
               {% endfor %}
             {% endif %}
 

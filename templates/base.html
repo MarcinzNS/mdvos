@@ -41,7 +41,7 @@
                     <a class="dropdown-item" href="{% url 'devices' category='PHONE' %}"><i class="bi bi-phone"></i> Telefony </a>
                     <a class="dropdown-item" href="{% url 'devices' category='TABLET' %}"><i class="bi bi-tablet"></i> Tablety </a>
                     <a class="dropdown-item" href="{% url 'devices' category='LAPTOP' %}"><i class="bi bi-laptop"></i> Laptopy </a>
-                    <a class="dropdown-item" href="{% url 'devices' %}"><i class="bi bi-gear-wide-connected"></i> System operacyjny </a>
+                    <a class="dropdown-item" href="{% url 'os' %}"><i class="bi bi-gear-wide-connected"></i> System operacyjny </a>
                   </div>
                 </li>
               </ul>
@@ -49,9 +49,17 @@
 
             <div class="col-sm-12 col-xl-6 ">
               <div class="row ">
-                <div class=" col-xl-2">
+                <div class=" col-xl-3 ">
+                  <ul class="navbar-nav mx-3">
+                    <li class="nav-item">
+                    
+                    <a class="nav-link text" href="{% url 'add_device' %}" >Dodaj produkt</a>
+                  </li>
+                  </ul>
+                  
+                 
                 </div>
-                <div class="col-sm-6 col-xl-7">
+                <div class="col-sm-6 col-xl-6">
                   <form class="form-inline mx-3 my-2">
                     <div class="input-group">
                       <div class="form-control d-flex bg-wyszukaj">

@@ -7,7 +7,7 @@
 
     <div class="row justify-content-center mt-5">
         <div class="col-sm-12 col-md-8 ">
-            <!-- Przyciski NAZWA PRODUKTU -->
+            <!-- NAZWA PRODUKTU -->
             <div class="container"> 
                 <p class="h3">{{ device.brand }} {{ device.model }}</p>
             </div>
@@ -42,29 +42,57 @@
              <!-- Przyciski ULUBIONE TOMEK -->
             <div class="card-body my-3 pt-3 border-top">
                 <div class=" d-flex">
+                    <!-- LIKE -->
                     <div class="me-2">
                     {% if user.is_authenticated %}
-                        {% if user_likes_device %}
+                        {% if like.user_likes_device %}
                             <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} UnLike
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ like.like_count }} UnLike
                                 </button>
                             </form>
                         {% else %}
                             <form action="{% url 'add_like' device.id_device %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-primary">
-                                    <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
+                                    <i class="bi bi-hand-thumbs-up"></i> {{ like.like_count }} Like
                                 </button>
                             </form>
                         {% endif %}
                     {% else %}
                         <button type="submit" class="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#alert" aria-controls="alert" aria-expanded="false" aria-label="alert">
-                            <i class="bi bi-hand-thumbs-up"></i> {{ like_count }}
+                            <i class="bi bi-hand-thumbs-up"></i> {{ like.like_count }}
                         </button>
                     {% endif %}
                     </div>
+                    <!-- UNLIKE -->
+                    <div class="me-2">
+                        {% if user.is_authenticated %}
+                            {% if like.user_dislikes_device %}
+                                <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-hand-thumbs-down-fill"></i> {{ like.dislike_count }} Undislike
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="bi bi-hand-thumbs-down"></i> {{ like.dislike_count }} Dislike
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            {% else %}
+                            <button type="submit" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#alert" aria-controls="alert" aria-expanded="false" aria-label="alert">
+                                <i class="bi bi-hand-thumbs-down"></i> {{ like.dislike_count }}
+                            </button>
+                           
+                        {% endif %}
+                    </div>
+                    <!-- OBSERW -->
                     <div class="me-2">
                         {% if user.is_authenticated %}
                             <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary"><i class="bi bi-heart"></i> Dodaj do ulubionych</a>
@@ -74,31 +102,7 @@
                             </button>
                         {% endif %}
                     </div>
-                    <div class="me-2">
-                        {% if user.is_authenticated %}
-                            {% if user_dislikes_device %}
-                                <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="bi bi-hand-thumbs-down-fill"></i> Undislike
-                                    </button>
-                                </form>
-                            {% else %}
-                                <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-outline-danger">
-                                        <i class="bi bi-hand-thumbs-down"></i> Dislike
-                                    </button>
-                                </form>
-                            {% endif %}
-
-                            {% else %}
-                            <button type="submit" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#alert" aria-controls="alert" aria-expanded="false" aria-label="alert">
-                                <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }}
-                            </button>
-                           
-                        {% endif %}
-                    </div>
+                    
                     
                 </div>
                 <div class="collapse alert alert-primary mt-3" role="alert" id="alert">
@@ -187,176 +191,91 @@
             </div>
             <!-- System Kom KIRAGA -->
             <div class="card-body my-3 pt-3">
-                
-                <div class="card-body my-3 pt-3">
+                <!-- KOM -->
+                {% for comment in comments %}
+                <div class="border border-2 rounded-3 mb-2 p-2">
                     <!-- KOM -->
-                    {% for comment in comments %}
-                    <div class=" border border-2 rounded-3 mb-2 p-2">
-                        
-                        <!-- KOM -->
-                        <div class="row">
-                            <div class="col-sm-12  col-md-4 ps-3 pt-2">
-                                <p class="fs-5">{{ comment.user.username }}</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 ps-3 pt-2">
+                            <p class="fs-5">{{ comment.username }}</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8 ps-3 pt-5">
+                            <p>{{ comment.text }}</p>
+                            <div class="row">
+                                <div class="container d-flex">
+                                    <button class="btn btn-primary mb-2 ms-3" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#komentarz-{{ comment.id_comment }}" aria-controls="komentarz-{{ comment.id_comment }}"
+                                        aria-expanded="false" aria-label="Przełącznik kom">
+                                        Dodaj komentarz
+                                    </button>
+                                    <button class="btn btn-primary mb-2 ms-3" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#podkomentarz-{{ comment.id_comment }}" aria-controls="podkomentarz-{{ comment.id_comment }}"
+                                        aria-expanded="false" aria-label="Przełącznik podkom">
+                                        Rozwiń komentarze
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-sm-12  col-md-8 ps-3 pt-5">
-                                <p >{{ comment.text }}</p>
-                                <div class="row">
-                                    <div class="container d-flex">
-                                        <button class="btn btn-primary mb-2 ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#komentarz" aria-controls="komentarz" aria-expanded="false" aria-label="Przełącznik kom">
-                                            Dodaj komentarz
-                                        </button>
-                                        <button class="btn btn-primary mb-2 ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#podkomentarz" aria-controls="podkomentarz" aria-expanded="false" aria-label="Przełącznik podkom">
-                                            Rozwiń komentarze
-                                        </button>
-                                        <div class=" d-flex">
-                                            <!--
-                                            <div class="ms-3">
-                                                {% if user.is_authenticated %}
-                                                {% if user_likes_device %}
-                                                    <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-primary" >
-                                                            <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }}
-                                                        </button>
-                                                    </form>
-                                                {% else %}
-                                                    <form action="{% url 'add_like' device.id_device %}" method="post" >
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-outline-primary">
-                                                            <i class="bi bi-hand-thumbs-up"></i> {{ like_count }}
-                                                        </button>
-                                                    </form>
-                                                {% endif %}
-                                            {% endif %}
-                                            </div>
-                                            -->
-                                            <!--
-                                            <div class="ms-3">
-                                                {% if user.is_authenticated %}
-                                                {% if user_dislikes_device %}
-                                                    <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post" class="">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-danger">
-                                                            <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }}
-                                                        </button>
-                                                        
-                                                    </form>
-                                                {% else %}
-                                                    <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-outline-danger">
-                                                            <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }}
-                                                        </button>
-                                                        
-                                                    </form>
-                                                {% endif %}
-                                            {% endif %}
-                                            
-                                            </div>
-                                            -->
-                                        </div>
+            
+                            <div class="collapse justify-content-between" id="komentarz-{{ comment.id_comment }}">
+                                {% if user.is_authenticated %}
+                                <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
                                     </div>
-                                    
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                                    </div>
+                                </form>
+                                {% else %}
+                                <div class="border border-2 rounded-3 p-3 ">
+                                    <p>Aby dodać komentarz musisz być zalogowany</p>
+                                    <a class="btn btn-primary" href="{% url 'login' %}"> Zaloguj się </a>
+                                    <a class="btn btn-primary" href="{% url 'registration' %}"> Zarejestruj się </a>
                                 </div>
-                                
-                                <div class="collapse justify-content-between" id="komentarz">
-                                    {% if user.is_authenticated %}
-                                        <form action="#" class="border border-2 rounded-3 p-3 mb-3">
-                                            <div class="mb-3">
-                                                <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
-                                            </div>
-                                        </form>
-                                    {% else %}
-                                        <div class=" border border-2 rounded-3 p-3 ">
-                                            <p>Aby dodać komentarz musisz być zalogowany</p>
-                                            <a class="btn btn-primary" href="{% url 'login' %}"> Zaloguj się </a>
-                                            <a class="btn btn-primary" href="{% url 'registration' %}"> Zarejestruj się </a>
-                                        </div>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
-                        <!-- PODKOM -->
-                        <div class="row">
-                            <div class="col-sm-1  col-md-4 ">
-                            </div>
-                            <div class="col-sm-11  col-md-8 ">
-                                {% for reply in comment.get_replies %}
-                                <div class="collapse row border-start border-4" id="podkomentarz">
-                                    <div class="col-sm-12  col-md-4 ps-3 pt-2">
-                                        <p class="fs-5">{{ reply.user.username }}</p>
-                                    </div>
-                                    <div class="col-sm-12  col-md-8 ps-3 pt-5">
-                                        <p >{{ reply.text }}</p>
-                                        <!-- System LIKE/DYS 
-                                        <div class="row ms-3">
-                                    
-                                            {% if user.is_authenticated %}
-                                                {% if user_likes_device %}
-                                                    <form action="{% url 'remove_like' device.id_device %}" data-post-id="{{ post.id }}" class="col-sm-6 col-md-4">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-primary">
-                                                            <i class="bi bi-hand-thumbs-up-fill"></i> {{ like_count }} Unlike
-                                                        </button>
-                                                        
-                                                    </form>
-                                                {% else %}
-                                                    <form action="{% url 'add_like' device.id_device %}" method="post" class="col-sm-6 col-md-4">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-outline-primary">
-                                                            <i class="bi bi-hand-thumbs-up"></i> {{ like_count }} Like
-                                                        </button>
-                                                    
-                                                    </form>
-                                                {% endif %}
-                                            {% endif %}
-                                            
-                                            {% if user.is_authenticated %}
-                                                {% if user_dislikes_device %}
-                                                    <form action="{% url 'remove_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-4">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-danger">
-                                                            <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislike_count }} Dislike
-                                                        </button>
-                                                    
-                                                    </form>
-                                                {% else %}
-                                                    <form action="{% url 'add_dislike' device_id=device.id_device %}" method="post" class="col-sm-6 col-md-4">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-outline-danger">
-                                                            <i class="bi bi-hand-thumbs-down"></i> {{ dislike_count }} Dislike
-                                                        </button>
-                                                        
-                                                    </form>
-                                                {% endif %}
-                                            {% endif %}
-                                        </div>
-                                    </div>-->
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        
                     </div>
-                    {% endfor %}
-                    <!-- DODAWANIE KOM -->
-                    <form action="#" class="border border-2 rounded-3 p-3 mb-3">
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            
+                    <!-- PODKOM -->
+                    <div class="row">
+                        <div class="col-sm-1 col-md-4">
                         </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                        <div class="col-sm-11 col-md-8">
+                            {% for under_comment in comment.under_comments %}
+                                <div class="collapse row border-start border-bottom border-4" id="podkomentarz-{{ comment.id_comment }}">
+                                    <div class="col-sm-12 col-md-4 ps-3 pt-2">
+                                        <p class="fs-5">{{ under_comment.username }}</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-8 ps-3 pt-5">
+                                        <p>{{ under_comment.text }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    </form>
+                    </div>
                 </div>
-                
+                {% endfor %}
+            
+                <!-- DODAWANIE KOM -->
+                <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                    </div>
+                </form>
             </div>
+            
+            
+            
+            
+            
+            
         </div>
     </div>
     

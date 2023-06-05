@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices
+from .models.models import User, Devices, Specification, Specification_type
 from django import forms
-from .services.validators import UsernameValidator
+from .services.validators import *
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -10,7 +10,7 @@ class CustomUserCreationForm(UserCreationForm):
     username_max_len = 30
     email_max_len = 50
     username_validator = UsernameValidator()
-
+    
     first_name = forms.CharField(
         label='Imię',
         required=False,
@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     username = forms.CharField(
-        label='Nazwa użytkownika',
+        label='Nazwa użytkownika*',
         max_length=30,
         validators=[username_validator],
         error_messages={
@@ -40,7 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     email = forms.EmailField(
-        label='Email',
+        label='Email*',
         max_length=email_max_len,
         error_messages={
             'required': "Należy wpisać adres email",
@@ -50,7 +50,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     password1 = forms.CharField(
-        label=("Hasło"),
+        label=("Hasło*"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
             'required': "Należy wpisać hasło",
@@ -58,7 +58,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     
     password2 = forms.CharField(
-        label=("Powtórz hasło"),
+        label=("Powtórz hasło*"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         error_messages={
             'required': "Należy powtórzyć hasło",
@@ -76,14 +76,21 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class AddDeviceForm(forms.ModelForm):
+
     brand = forms.CharField(
-        label="Marka",
+        label="Marka*",
         max_length=30,
+        error_messages={
+            'required': "Należy podać markę",
+        },
     )
 
     model = forms.CharField(
-        label="Model",
+        label="Model*",
         max_length=50,
+        error_messages={
+            'required': "Należy podać model",
+        },
     )
 
     device_type = forms.ChoiceField(
@@ -95,7 +102,13 @@ class AddDeviceForm(forms.ModelForm):
         ],
     )
     release_date = forms.DateField(required=False)
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(
+        required=False,
+        validators=[validate_image_format, validate_image_size],    
+        error_messages= {
+            "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
+        }    
+    )
 
     class Meta:
         model = Devices
@@ -109,6 +122,40 @@ class AddDeviceForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+
+
+class AddDeviceSpecsForm(forms.Form):
+
+    cpu = forms.CharField(
+        label='CPU',
+        max_length=50,
+        required=False,
+    )
+
+    ram = forms.CharField(
+        label='RAM',
+        max_length=50,
+        required=False,
+    )
+
+    screen_size = forms.CharField(
+        label='Rozmiar ekranu',
+        max_length=50,
+        required=False,
+    )
+
+    battery = forms.CharField(
+        label='Bateria',
+        max_length=50,
+        required=False,
+    )
+
+    disk_size = forms.CharField(
+        label='Rozmiar dysku',
+        max_length=50,
+        required=False,
+    )
 
 
 class EditUserForm(forms.ModelForm):
