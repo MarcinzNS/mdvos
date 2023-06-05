@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
 
 def profile(request):
     if not request.user.is_authenticated:
@@ -19,18 +20,21 @@ def profile(request):
 
     if request.method == "POST":       
         if "save_password_change" in request.POST:
-            form = PasswordChangeForm(user, request.POST)
-            if form.is_valid():
-                new_password1 = form.cleaned_data['password1']
-                new_password2 = form.cleaned_data['password2']
-                if new_password1 == new_password2:
-                    user.set_password(new_password1)
-                    user.save()
-                    update_session_auth_hash(request, user)
-                    messages.success(request, 'Twoje hasło zostało zmienione.')
-                    return redirect('profile')
-                else:
-                    messages.error(request, 'Podane hasła nie są identyczne.')
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                old_password = password_form.cleaned_data['old_password']
+                if request.user.check_password(old_password):
+                    new_password1 = password_form.cleaned_data['password1']
+                    new_password2 = password_form.cleaned_data['password2']
+                    if new_password1 == new_password2:
+                        request.user.set_password(new_password1)
+                        request.user.save()
+                        update_session_auth_hash(request, request.user)
+                        messages.success(request, 'Twoje hasło zostało zmienione.')
+                        return redirect('profile')
+                    else:
+                        messages.error(request, 'Podane hasła nie są identyczne.')
+
 
         elif "save_edit" in request.POST:
             user = request.user
@@ -39,9 +43,11 @@ def profile(request):
             
             if len(request.POST['first_name']):
                 user.first_name = request.POST['first_name']
+                user.save()
             
             if len(request.POST['last_name']):
                 user.last_name = request.POST['last_name']
+                user.save()
             
             if len(request.POST['username']):
                 new_username = request.POST['username']
@@ -50,6 +56,7 @@ def profile(request):
                     messages.error(request, "Nazwa użytkownika już istnieje")
                 else:
                     user.username = new_username
+                    user.save()
 
             if len(request.POST['email']):
                 new_email = request.POST['email']
@@ -57,9 +64,10 @@ def profile(request):
                 if User.objects.filter(email=new_email).exists():
                     pass
                 else:
-                    user.email = new_email   
+                    user.email = new_email  
+                    user.save()
 
-            user.save()
+            
             
 
     return render(request, "profile.html", context)
