@@ -59,96 +59,45 @@ def getDeviceLike(request,id: int) ->dict:
 
 
 def getComments(id: int) -> dict:
-    comments = Comment.objects.filter(devices_id=id).values()
+    comments = Comment.objects.filter(devices_id=id, main_comment_id='0').values()
     return comments
 
-def getMCid(id: int) -> dict:
-    main_comment_ids = Comment.objects.filter(devices_id=id).values('main_comment_id')
-    return main_comment_ids
+def getCommentUsername(comment_id: int) -> str:
+    comment = Comment.objects.filter(id_comment=comment_id).select_related('user_id').first()
+    if comment:
+        return comment.user_id.username
+    return ""
 
+def getUnderComments(comment_id: int):
+    under_comments = Comment.objects.filter(main_comment_id=comment_id).select_related('user_id').values('id_comment', 'text', 'user_id__username')
+    return list(under_comments)
 
-    comments = Comment.objects.filter(devices_id=id).select_related('user_id')
-    result = [{'id_comment': comment.id_comment, 'text': comment.text, 'username': comment.user_id.username} for comment in comments]
-    return result
+def getMCData(id: int) -> dict:
+    main_comments = Comment.objects.filter(devices_id=id, main_comment_id=0).select_related('user_id')
+    main_comments_data = [{'id_comment': comment.id_comment, 'text': comment.text, 'username': comment.user_id.username} for comment in main_comments]
+    return main_comments_data
 
-#def getUnderComments(id: int) -> dict:
-    under_comments = Comment.objects.filter(main_comment_id=id).values()
-    return under_comments
-
-def getCommentsUsername(id: int) -> dict:
-    comments = Comment.objects.filter(devices_id=id).select_related('user_id')
-    result = []
-    for comment in comments:
-        result.append({
-            'id_comment': comment.id_comment,
-            'text': comment.text,
-            'username': comment.user_id.username if comment.user_id else None
-        })
-    return result
-    comments = Comment.objects.filter(devices_id=id).select_related('user_id')
-    result = [{'id_comment': comment.id_comment, 'text': comment.text, 'username': comment.user_id.username} for comment in comments]
-    return result
-
-#def getCommentsWithUnderComments(id: int) -> dict:
+def getCommentsWithUnderComments(id: int) -> dict:
+    main_comments_data = getMCData(id)
     comments = getComments(id)
-    main_comment_ids = getMCid(id)
-    under_comments = getUnderComments(id)
+    comments_username=getCommentUsername(id)
+    under_comments = []
     comments_dict = {}
 
-    for comment in comments:
-        comment_id = comment['id_comment']
-        comments_dict[comment_id] = {
-            'comment': comment,
-            'under_comments': []
-        }
-
-    for under_comment in under_comments:
-        main_comment_id = under_comment['main_comment_id']
-        if main_comment_id in comments_dict:
-            comments_dict[main_comment_id]['under_comments'].append(under_comment)
-
-    comments_with_under_comments = []
-    for comment_id in main_comment_ids:
-        comment_id = comment_id['main_comment_id']
-        if comment_id in comments_dict:
-            comments_with_under_comments.append(comments_dict[comment_id])
-
-    return comments_with_under_comments
-
-    comments = getComments(id)
-    main_comment_ids = getMCid(id)
-    under_comments = getUnderComments(id)
-    comments_dict = {}
-
-    for comment in comments:
-        comment_id = comment['id_comment']
-        comments_dict[comment_id] = {
-            'comment': comment,
-            'under_comments': []
-        }
-
-    for under_comment in under_comments:
-        main_comment_id = under_comment['main_comment_id']
-        if main_comment_id in comments_dict:
-            comments_dict[main_comment_id]['under_comments'].append(under_comment)
-
-    return comments_dict
-
-    comments = getComments(id)
-    under_comments = getUnderComments(id)
-    comments_dict = {}
-    
     for comment in comments:
         comment_id = comment['id_comment']
         comments_dict[comment_id] = {
             'id_comment': comment_id,
             'text': comment['text'],
-            'username': comment['username'],
+            'username': comments_username,
             'under_comments': []
         }
-    
-    for under_comment in under_comments:
-        main_comment_id = under_comment['main_comment_id']
-        comments_dict[main_comment_id]['under_comments'].append(under_comment)
-    
+
+    for main_comment in main_comments_data:
+        main_comment_id = main_comment['id_comment']
+        if main_comment_id in comments_dict:
+            comments_dict[main_comment_id]['under_comments'] = getUnderComments(main_comment_id)
+
+
     return list(comments_dict.values())
+

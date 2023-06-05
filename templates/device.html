@@ -7,7 +7,7 @@
 
     <div class="row justify-content-center mt-5">
         <div class="col-sm-12 col-md-8 ">
-            <!-- Przyciski NAZWA PRODUKTU -->
+            <!-- NAZWA PRODUKTU -->
             <div class="container"> 
                 <p class="h3">{{ device.brand }} {{ device.model }}</p>
             </div>
@@ -42,6 +42,7 @@
              <!-- Przyciski ULUBIONE TOMEK -->
             <div class="card-body my-3 pt-3 border-top">
                 <div class=" d-flex">
+                    <!-- LIKE -->
                     <div class="me-2">
                     {% if user.is_authenticated %}
                         {% if like.user_likes_device %}
@@ -65,15 +66,7 @@
                         </button>
                     {% endif %}
                     </div>
-                    <div class="me-2">
-                        {% if user.is_authenticated %}
-                            <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary"><i class="bi bi-heart"></i> Dodaj do ulubionych</a>
-                        {% else %}
-                            <button type="submit" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#alert-ulub" aria-controls="alert-ulub" aria-expanded="false" aria-label="alert-ulub">
-                                <i class="bi bi-heart"></i></i> Dodaj do ulubionych
-                            </button>
-                        {% endif %}
-                    </div>
+                    <!-- UNLIKE -->
                     <div class="me-2">
                         {% if user.is_authenticated %}
                             {% if like.user_dislikes_device %}
@@ -99,6 +92,17 @@
                            
                         {% endif %}
                     </div>
+                    <!-- OBSERW -->
+                    <div class="me-2">
+                        {% if user.is_authenticated %}
+                            <a href ="{% url 'fav' device.id_device %}" class= "btn btn-outline-primary"><i class="bi bi-heart"></i> Dodaj do ulubionych</a>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#alert-ulub" aria-controls="alert-ulub" aria-expanded="false" aria-label="alert-ulub">
+                                <i class="bi bi-heart"></i></i> Dodaj do ulubionych
+                            </button>
+                        {% endif %}
+                    </div>
+                    
                     
                 </div>
                 <div class="collapse alert alert-primary mt-3" role="alert" id="alert">
@@ -240,15 +244,15 @@
                         <div class="col-sm-1 col-md-4">
                         </div>
                         <div class="col-sm-11 col-md-8">
-                            {% for reply in comment.under_comments %}
-                            <div class="collapse row border-start border-4" id="podkomentarz-{{ comment.id_comment }}">
-                                <div class="col-sm-12 col-md-4 ps-3 pt-2">
-                                    <p class="fs-5">{{ reply.username }}</p>
+                            {% for under_comment in comment.under_comments %}
+                                <div class="collapse row border-start border-bottom border-4" id="podkomentarz-{{ comment.id_comment }}">
+                                    <div class="col-sm-12 col-md-4 ps-3 pt-2">
+                                        <p class="fs-5">{{ under_comment.username }}</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-8 ps-3 pt-5">
+                                        <p>{{ under_comment.text }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-12 col-md-8 ps-3 pt-5">
-                                    <p>{{ reply.text }}</p>
-                                </div>
-                            </div>
                             {% endfor %}
                         </div>
                     </div>
