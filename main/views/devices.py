@@ -71,6 +71,7 @@ def one_device(request, id):
         "OS_ALL" : getOSAll(id),
         "like": getDeviceLike(request, id),
         'comments': getCommentsWithUnderComments(id),
+        "OS_chart": getOSChart(id),
     }
 
     request.session['next_page'] = request.get_full_path()

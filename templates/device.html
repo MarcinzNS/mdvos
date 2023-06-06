@@ -3,18 +3,9 @@
 {% block title %}Produkty{% endblock %}
 
 {% block content %}
-<script>
-    // Dane wykresu
-    var data = [
-      ["2019-01-01", 5],
-      ["2019-02-01", 10],
-      ["2019-03-01", 8],
-      // Dodaj więcej danych tutaj
-    ];
-  
-    // Renderowanie wykresu
-    Chartkick.charts.Line("chart", data);
-</script>
+
+    
+
 <main class=" container">
 
     <div class="row justify-content-center mt-5">
@@ -201,8 +192,16 @@
                     </table>
                 </div>
             </div>
+            <!-- Wykres info Kiraga -->
             <div class="card-body my-3 pt-3">
-                <div id="chart"></div>
+                <div class="container">
+                    <div class="row justify-content-center ">
+                        
+                            <canvas id="Wsparcie"></canvas>
+                        
+                        
+                    </div>
+                </div>
             </div>
             <!-- System Kom KIRAGA -->
             <div class="card-body my-3 pt-3">
@@ -303,4 +302,72 @@
     
    
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        draw();
+        });
+        var lista = JSON.parse('{{ OS_chart|safe }}');
+        //print("wczytanie");
+
+        function konwersja(data){
+            var transformedList = [];
+            var keys = Object.keys(data);
+            
+            for (var i = 0; i < keys.length; i++) {
+                
+                
+                var start = (parseInt(data[keys[i]].start)-2013);
+                var end = (parseInt(data[keys[i]].koniec)-2013);
+                if(start==end){
+                    start=start*50-10;
+                    end=20;
+                }
+                else{
+                    end=(end-start)*50;
+                    start=start*50;
+                }
+                    
+               // var key = parseInt(keys[i]);
+                
+                transformedList.push([start, end]);
+            }
+            
+            return transformedList;
+        }
+        
+        function draw() {
+            var tablica=konwersja(lista)
+            //var tablica=[[100,300],[150,300],[200,300],[250,300]]
+            console.log(tablica);
+            console.log(tablica.length)
+            const canvas = document.getElementById("Wsparcie");
+            const ctx = canvas.getContext("2d");
+            const height = tablica.length * 50;
+        
+            canvas.width = 600;
+            canvas.height = height;
+        
+            var h = 200 - tablica.length * 20;
+        
+            ctx.fillStyle = "rgb(255, 255, 255)";
+            ctx.fillRect(20, 260 - h, 660, 5);
+            ctx.font = "16px Arial";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+            for (var i = 0; i < 6; i++) {
+                ctx.fillStyle = "rgb(200, 200, 200)";
+                ctx.fillRect(49 + i * 100, 20, 3, 240 - h);
+                ctx.fillRect(100 + i * 100, 20, 1, 240 - h);
+                ctx.fillStyle = "rgb(20, 20, 20)";
+                ctx.fillRect(48 + i * 100, 255 - h, 5, 10);
+                ctx.fillText((2014 + i * 2).toString(), 32 + i *100, 285 - h);
+            }
+        
+            for (var i = 0; i < tablica.length; i++) {
+                var wysokosc = 230 - i * 30 - h;
+                ctx.fillStyle = "rgb(24, 24, 24)";                
+                ctx.fillRect(tablica[i][0], wysokosc, tablica[i][1], 20);               
+            }
+        }
+    </script>
 {% endblock %}
