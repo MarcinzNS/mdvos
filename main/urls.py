@@ -24,6 +24,7 @@ urlpatterns = [
     path('error404', error.error404, name="error404"),
     path('error503', error.error503, name="error503"),
     path('os', os.os, name="os"),
+    path('add_MainComment/', devices.add_MainComment, name='add_MainComment'),
     path('fav/<int:id>/', favourite.favourite_add, name="fav"),
     path('profile/favourites/', favourite.favourites_list, name='favourites_list'),
     path('device/<int:device_id>/like/', like_devices.add_like, name='add_like'),

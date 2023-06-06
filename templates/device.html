@@ -3,6 +3,18 @@
 {% block title %}Produkty{% endblock %}
 
 {% block content %}
+<script>
+    // Dane wykresu
+    var data = [
+      ["2019-01-01", 5],
+      ["2019-02-01", 10],
+      ["2019-03-01", 8],
+      // Dodaj więcej danych tutaj
+    ];
+  
+    // Renderowanie wykresu
+    Chartkick.charts.Line("chart", data);
+</script>
 <main class=" container">
 
     <div class="row justify-content-center mt-5">
@@ -53,7 +65,7 @@
                                 </button>
                             </form>
                         {% else %}
-                            <form action="{% url 'add_like' device.id_device %}" method="post">
+                            <form action="{% url 'add_like' device.id_device %}" method="post" id="like">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-primary">
                                     <i class="bi bi-hand-thumbs-up"></i> {{ like.like_count }} Like
@@ -189,6 +201,9 @@
                     </table>
                 </div>
             </div>
+            <div class="card-body my-3 pt-3">
+                <div id="chart"></div>
+            </div>
             <!-- System Kom KIRAGA -->
             <div class="card-body my-3 pt-3">
                 <!-- KOM -->
@@ -247,7 +262,7 @@
                             {% for under_comment in comment.under_comments %}
                                 <div class="collapse row border-start border-bottom border-4" id="podkomentarz-{{ comment.id_comment }}">
                                     <div class="col-sm-12 col-md-4 ps-3 pt-2">
-                                        <p class="fs-5">{{ under_comment.username }}</p>
+                                        <p class="fs-5">{{ under_comment.user_id__username }}</p>
                                     </div>
                                     <div class="col-sm-12 col-md-8 ps-3 pt-5">
                                         <p>{{ under_comment.text }}</p>
@@ -260,20 +275,27 @@
                 {% endfor %}
             
                 <!-- DODAWANIE KOM -->
-                <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                <form action="{% url 'add_MainComment' %}" class="border border-2 rounded-3 p-3 mb-3" id="main-comment-form" method="POST">
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea name="{{form.comment_text.name}}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                        <button type="submit" class="btn btn-primary" name="add_comment">Dodaj komentarz</button>
                     </div>
                 </form>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-success d-flex justify-content-between align-items-center" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
-            
-            
-            
-            
             
             
         </div>

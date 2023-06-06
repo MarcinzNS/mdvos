@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices, Specification, Specification_type
+from .models.models import User, Devices, Comment,Specification, Specification_type
 from django import forms
 from .services.validators import *
 
@@ -196,3 +196,32 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model=User
         fields = ['first_name', 'last_name', 'email'] 
+
+
+class CommentForm(forms.ModelForm):
+
+    comment_text = forms.CharField(
+        max_length=250,
+        required=True,
+        error_messages={
+            'required': 'Pole jest wymagane'
+        } 
+    )
+
+    class Meta:
+        model = Comment  # Dodaj właściwą klasę modelu
+        fields = ['comment_text']  # Dodaj pola, które chcesz uwzględnić w formularzu
+
+    def save(self, commit=True):
+        # zapisanie wartości release_date w premier
+        instance = super().save(commit=False)
+        instance.text = self.cleaned_data['comment_text']
+        instance.user_id = 1
+        instance.os_id=None
+        instance.main_comment_id=0
+
+        if commit:
+            instance.save()
+        return instance
+
+
