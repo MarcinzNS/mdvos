@@ -224,4 +224,31 @@ class CommentForm(forms.ModelForm):
             instance.save()
         return instance
 
+class UnderCommentForm(forms.ModelForm):
+
+    comment_text = forms.CharField(
+        max_length=250,
+        required=True,
+        error_messages={
+            'required': 'Wpisz treść podkomentarza'
+        } 
+    )
+
+
+    class Meta:
+        model = Comment  # Dodaj właściwą klasę modelu
+        fields = ['comment_text']  # Dodaj pola, które chcesz uwzględnić w formularzu
+
+    def save(self, device_id, request, main_id, os_id=None, commit=True):
+        instance = super().save(commit=False)
+        instance.text = self.cleaned_data['comment_text']
+        instance.user_id = request.user
+        instance.os_id=os_id
+        instance.main_comment_id=main_id
+        instance.devices_id = Devices.objects.get(id_device=device_id)
+
+        if commit:
+            instance.save()
+        return instance
+
 

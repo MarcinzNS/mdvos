@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from ..services.devices import *
 from ..services.os import *
-from ..forms import CommentForm
+from ..forms import CommentForm, UnderCommentForm
 
 from django.shortcuts import render
 from django.contrib import messages
@@ -72,7 +72,8 @@ def one_device(request, id):
         "like": getDeviceLike(request, id),
         'comments': getCommentsWithUnderComments(id),
         "OS_chart": getOSChart(id),
-        "main_comment_form": CommentForm()
+        "main_comment_form": CommentForm(),
+        "under_comment_form":UnderCommentForm()
     }
 
     request.session['next_page'] = request.get_full_path()
@@ -90,6 +91,26 @@ def add_MainComment(request, device_id):
         if form.is_valid():
 
             form.save(device_id, request)
+            messages.success(request, "Pomyślnie dodany do bazy danych.")
+
+        else:
+            messages.error(request,form.errors)
+            
+            
+    else:   
+        print(form.errors)
+        
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+@login_required(login_url='login')
+def add_UnderComment(request, device_id, main_comment_id):
+    form = UnderCommentForm()
+    if request.method == 'POST':
+        form = UnderCommentForm(request.POST)
+        print(form)
+        if form.is_valid():
+
+            form.save(device_id, request, main_comment_id)
             messages.success(request, "Pomyślnie dodany do bazy danych.")
 
         else:

@@ -232,11 +232,12 @@
             
                             <div class="collapse justify-content-between" id="komentarz-{{ comment.id_comment }}">
                                 {% if user.is_authenticated %}
-                                <form action="#" class="border border-2 rounded-3 p-3 mb-3">
+                                
+                                <form action="{% url 'add_UnderComment' device.id_device comment.id_comment %}" class="border border-2 rounded-3 p-3 mb-3" id="under_comment_form" method="POST">
+                                    {% csrf_token %}
                                     <div class="mb-3">
                                         <label for="exampleFormControlTextarea1" class="form-label">Treść komentarza</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
+                                        <textarea name="{{under_comment_form.comment_text.name}}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
@@ -249,6 +250,7 @@
                                     <a class="btn btn-primary" href="{% url 'registration' %}"> Zarejestruj się </a>
                                 </div>
                                 {% endif %}
+                                
                             </div>
                         </div>
                     </div>

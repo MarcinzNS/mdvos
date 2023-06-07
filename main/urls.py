@@ -26,6 +26,7 @@ urlpatterns = [
     path('adminek', adminek.adminek, name="adminek"),
     path('os', os.os, name="os"),
     path('add_MainComment/<int:device_id>/', devices.add_MainComment, name='add_MainComment'),
+    path('add_UnderComment/<int:device_id>/<int:main_comment_id>/', devices.add_UnderComment, name='add_UnderComment'),
     path('fav/<int:id>/', favourite.favourite_add, name="fav"),
     path('profile/favourites/', favourite.favourites_list, name='favourites_list'),
     path('device/<int:device_id>/like/', like_devices.add_like, name='add_like'),
