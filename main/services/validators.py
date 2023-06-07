@@ -44,7 +44,7 @@ def validate_image_file_size(image):
     
     
 def validate_image_size(image):
-    max_size = 500
+    max_size = 650
 
     with Image.open(image) as img:
         if img.width > max_size or img.height > max_size:
