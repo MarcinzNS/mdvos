@@ -15,7 +15,7 @@ def add_device(request):
         
         device = main_form.save(commit=False)
         device.save()
-        create_device(specs_form.cleaned_data, device.id_device)
+        add_specs_to_device(specs_form.cleaned_data, device.id_device)
 
         messages.success(request, "Złożono propozycję dodania urządzenia.")
         return render(request, 'add_device.html', {'main_form': main_form, 'specs_form': specs_form})
@@ -26,7 +26,7 @@ def add_device(request):
     return render(request, "add_device.html", {'main_form': main_form, 'specs_form': specs_form})
 
 
-def create_device(specs_data, device_id):
+def add_specs_to_device(specs_data, device_id):
 
     cpu_spec = Specification(
         spec_type_id=Specification_type.objects.get(name='CPU'),

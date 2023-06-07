@@ -72,6 +72,7 @@ def one_device(request, id):
         "like": getDeviceLike(request, id),
         'comments': getCommentsWithUnderComments(id),
         "OS_chart": getOSChart(id),
+        "main_comment_form": CommentForm()
     }
 
     request.session['next_page'] = request.get_full_path()
@@ -80,20 +81,17 @@ def one_device(request, id):
 
 
 
-@login_required
-def add_MainComment(request):
+@login_required(login_url='login')
+def add_MainComment(request, device_id):
     form = CommentForm()
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        
+        print(form)
         if form.is_valid():
-            #return HttpResponseRedirect(request.META['HTTP_REFERER'])
-            form.save()
-            # comment_text=form.cleaned_data['comment_text']
-            # Tworzenie nowego obiektu Comment i zapis do bazy danych
-            #comment = Comment(text=comment_text, ,user_id='aa', os_id=None)
-            print("Komentarz został dodany do bazy danych.")  # Komunikat potwierdzający
+
+            form.save(device_id, request)
             messages.success(request, "Pomyślnie dodany do bazy danych.")
+
         else:
             messages.error(request,form.errors)
             
@@ -101,7 +99,6 @@ def add_MainComment(request):
     else:   
         print(form.errors)
         
-    context = {'form': form}
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
     
     

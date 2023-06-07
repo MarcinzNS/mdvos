@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices, Comment,Specification, Specification_type
+from .models.models import User, Devices, Comment
 from django import forms
 from .services.validators import *
 
@@ -191,7 +191,7 @@ class EditUserForm(forms.ModelForm):
     )
 
     def save(self, commit=True):
-        instance = super().save(commit=False)
+        instance = super().save(commit=commit)
     
     class Meta:
         model=User
@@ -204,7 +204,7 @@ class CommentForm(forms.ModelForm):
         max_length=250,
         required=True,
         error_messages={
-            'required': 'Pole jest wymagane'
+            'required': 'Wpisz treść komentarza'
         } 
     )
 
@@ -212,13 +212,13 @@ class CommentForm(forms.ModelForm):
         model = Comment  # Dodaj właściwą klasę modelu
         fields = ['comment_text']  # Dodaj pola, które chcesz uwzględnić w formularzu
 
-    def save(self, commit=True):
-        # zapisanie wartości release_date w premier
+    def save(self, device_id, request, os_id=None, main_comment_id=0, commit=True):
         instance = super().save(commit=False)
         instance.text = self.cleaned_data['comment_text']
-        instance.user_id = 1
-        instance.os_id=None
-        instance.main_comment_id=0
+        instance.user_id = request.user
+        instance.os_id=os_id
+        instance.main_comment_id=main_comment_id
+        instance.devices_id = Devices.objects.get(id_device=device_id)
 
         if commit:
             instance.save()
