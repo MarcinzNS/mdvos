@@ -1,6 +1,6 @@
 from django.urls import path
 from main.views import login_system, profile, add_device
-from main.views import index, categories, devices, error, os, favourite, like_devices
+from main.views import index, categories, devices, error, os, favourite, like_devices, adminek
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +23,7 @@ urlpatterns = [
     path('profile', profile.profile, name="profile"),
     path('error404', error.error404, name="error404"),
     path('error503', error.error503, name="error503"),
+    path('adminek', adminek.adminek, name="adminek"),
     path('os', os.os, name="os"),
     path('add_MainComment/<int:device_id>/', devices.add_MainComment, name='add_MainComment'),
     path('fav/<int:id>/', favourite.favourite_add, name="fav"),
