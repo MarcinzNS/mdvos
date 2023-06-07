@@ -104,10 +104,10 @@ class AddDeviceForm(forms.ModelForm):
     release_date = forms.DateField(required=False)
     image = forms.ImageField(
         required=False,
-        validators=[validate_image_format, validate_image_size],    
+        validators=[validate_image_format, validate_image_file_size, validate_image_size],    
         error_messages= {
             "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
-        }    
+        }, 
     )
 
     class Meta:

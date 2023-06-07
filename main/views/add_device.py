@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from ..models.models import Specification, Specification_type, Devices
 
+
 @login_required(login_url='login')
 def add_device(request):
     if request.method == "POST":
@@ -13,8 +14,7 @@ def add_device(request):
         if not (main_form.is_valid() and specs_form.is_valid()):
             return render(request, 'add_device.html', {'main_form':main_form, 'specs_form': specs_form})
         
-        device = main_form.save(commit=False)
-        device.save()
+        device = main_form.save()
         add_specs_to_device(specs_form.cleaned_data, device.id_device)
 
         messages.success(request, "Złożono propozycję dodania urządzenia.")
