@@ -38,9 +38,18 @@ class UsernameValidator(validators.RegexValidator):
     flags = 0
 
 
-def validate_image_size(image):
+def validate_image_file_size(image):
     if image.size > 1024 * 1024:
         raise ValidationError("Maksymalny rozmiar pliku to 1 MB.")
+    
+    
+def validate_image_size(image):
+    max_size = 650
+
+    with Image.open(image) as img:
+        if img.width > max_size or img.height > max_size:
+            raise ValidationError(f'Maksymalny rozmiar obrazu to {max_size}x{max_size}')
+    
     
 def validate_image_format(image):
     with Image.open(image) as img:

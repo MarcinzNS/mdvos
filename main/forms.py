@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices, Specification, Specification_type
+from .models.models import User, Devices, Comment
 from django import forms
 from .services.validators import *
 
@@ -104,10 +104,10 @@ class AddDeviceForm(forms.ModelForm):
     release_date = forms.DateField(required=False)
     image = forms.ImageField(
         required=False,
-        validators=[validate_image_format, validate_image_size],    
+        validators=[validate_image_format, validate_image_file_size, validate_image_size],    
         error_messages= {
             "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
-        }    
+        }, 
     )
 
     class Meta:
@@ -193,8 +193,64 @@ class EditUserForm(forms.ModelForm):
     )
 
     def save(self, commit=True):
-        instance = super().save(commit=False)
+        instance = super().save(commit=commit)
     
     class Meta:
         model=User
         fields = ['first_name', 'last_name', 'email'] 
+
+
+class CommentForm(forms.ModelForm):
+
+    comment_text = forms.CharField(
+        max_length=250,
+        required=True,
+        error_messages={
+            'required': 'Wpisz treść komentarza'
+        } 
+    )
+
+    class Meta:
+        model = Comment  # Dodaj właściwą klasę modelu
+        fields = ['comment_text']  # Dodaj pola, które chcesz uwzględnić w formularzu
+
+    def save(self, device_id, request, os_id=None, main_comment_id=0, commit=True):
+        instance = super().save(commit=False)
+        instance.text = self.cleaned_data['comment_text']
+        instance.user_id = request.user
+        instance.os_id=os_id
+        instance.main_comment_id=main_comment_id
+        instance.devices_id = Devices.objects.get(id_device=device_id)
+
+        if commit:
+            instance.save()
+        return instance
+
+class UnderCommentForm(forms.ModelForm):
+
+    comment_text = forms.CharField(
+        max_length=250,
+        required=True,
+        error_messages={
+            'required': 'Wpisz treść podkomentarza'
+        } 
+    )
+
+
+    class Meta:
+        model = Comment  # Dodaj właściwą klasę modelu
+        fields = ['comment_text']  # Dodaj pola, które chcesz uwzględnić w formularzu
+
+    def save(self, device_id, request, main_id, os_id=None, commit=True):
+        instance = super().save(commit=False)
+        instance.text = self.cleaned_data['comment_text']
+        instance.user_id = request.user
+        instance.os_id=os_id
+        instance.main_comment_id=main_id
+        instance.devices_id = Devices.objects.get(id_device=device_id)
+
+        if commit:
+            instance.save()
+        return instance
+
+

@@ -1,11 +1,19 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from ..services.devices import *
 from ..services.os import *
+from ..forms import CommentForm, UnderCommentForm
+
+from django.shortcuts import render
+from django.contrib import messages
+
+
 
 
 import math
 
-def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=10, page=1,):
+def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
@@ -56,15 +64,66 @@ def GETtoURL(getDict):
 
 
 def one_device(request, id):
-    
+
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
         "OS_ALL" : getOSAll(id),
         "like": getDeviceLike(request, id),
         'comments': getCommentsWithUnderComments(id),
+        "OS_chart": getOSChart(id),
+        "main_comment_form": CommentForm(),
+        "under_comment_form":UnderCommentForm()
     }
 
     request.session['next_page'] = request.get_full_path()
     
     return render(request, "device.html", context)
+
+
+
+@login_required(login_url='login')
+def add_MainComment(request, device_id):
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        print(form)
+        if form.is_valid():
+
+            form.save(device_id, request)
+            messages.success(request, "Pomyślnie dodany do bazy danych.")
+
+        else:
+            messages.error(request,form.errors)
+            
+            
+    else:   
+        print(form.errors)
+        
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+@login_required(login_url='login')
+def add_UnderComment(request, device_id, main_comment_id):
+    form = UnderCommentForm()
+    if request.method == 'POST':
+        form = UnderCommentForm(request.POST)
+        print(form)
+        if form.is_valid():
+
+            form.save(device_id, request, main_comment_id)
+            messages.success(request, "Pomyślnie dodany do bazy danych.")
+
+        else:
+            messages.error(request,form.errors)
+            
+            
+    else:   
+        print(form.errors)
+        
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    
+    
+    
+    
+
+

@@ -72,12 +72,15 @@ def getUnderComments(comment_id: int):
     under_comments = Comment.objects.filter(main_comment_id=comment_id).select_related('user_id').values('id_comment', 'text', 'user_id__username')
     return list(under_comments)
 
+
 def getMCData(id: int) -> dict:
     main_comments = Comment.objects.filter(devices_id=id, main_comment_id=0).select_related('user_id')
     main_comments_data = [{'id_comment': comment.id_comment, 'text': comment.text, 'username': comment.user_id.username} for comment in main_comments]
     return main_comments_data
 
 def getCommentsWithUnderComments(id: int) -> dict:
+
+
     main_comments_data = getMCData(id)
     comments = getComments(id)
     comments_username=getCommentUsername(id)
@@ -89,7 +92,7 @@ def getCommentsWithUnderComments(id: int) -> dict:
         comments_dict[comment_id] = {
             'id_comment': comment_id,
             'text': comment['text'],
-            'username': comments_username,
+            'username': getCommentUsername(comment_id),
             'under_comments': []
         }
 
