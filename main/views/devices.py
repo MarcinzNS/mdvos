@@ -5,7 +5,7 @@ from ..services.os import *
 
 import math
 
-def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=2, page=1,):
+def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=10, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],

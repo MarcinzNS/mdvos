@@ -110,7 +110,7 @@
                         <img src="/{{ item.device.image }}" class="w-100" alt="zdjęcie_telefonu">
                     </div>
                     <div class="col-md-6 p-4 ps-md-0">
-                        <h5 class="mt-0">{{ item.device.brand }} {{ item.device.model }}</h5>
+                        <h5 class="mt-0">{{ item.device.brand.decode }} {{ item.device.model }}</h5>
                         {% if item.specifications.SCREEN_SIZE %}
                         <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ item.specifications.SCREEN_SIZE }}"</p></span>
                         {% endif %}
