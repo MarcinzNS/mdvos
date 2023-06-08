@@ -16,17 +16,17 @@ def profile(request):
         request.session['next_page'] = request.get_full_path()
         return redirect('login')
     
-    first_name = request.user.first_name 
+    # first_name = request.user.first_name 
     # first_name_c = first_name[2:-1]
     # first_name_dec = bytes.fromhex(first_name_c).decode('utf-8')
-    print(first_name) 
+    # print(first_name) 
     # first_name_dec = first_name.decode('utf-8')
     # encoding = chardet.detect(bytes(first_name, 'utf-8'))["encoding"]
     # first_name_dec = first_name.encode(encoding).decode("utf-8")
     form = EditUserForm()
     context = {
         'form': form,
-        'first_name': first_name
+        #'first_name': first_name
     }
 
     if request.method == "POST":       
@@ -54,7 +54,7 @@ def profile(request):
             
             if len(request.POST['first_name']):
                 user.first_name = request.POST['first_name']
-                user.first_name = user.first_name.encode('utf-8')
+                # user.first_name = user.first_name.encode('utf-8')
                 user.save()
             
             if len(request.POST['last_name']):

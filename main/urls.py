@@ -2,6 +2,7 @@ from django.urls import path
 from main.views import login_system, profile, add_device
 from main.views import index, categories, devices, error, os, favourite, like_devices, adminek
 
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,6 +34,7 @@ urlpatterns = [
     path('device/<int:device_id>/dislike/', like_devices.add_dislike, name='add_dislike'),
     path('device/<int:device_id>/like/remove/', like_devices.remove_like, name='remove_like'),
     path('device/<int:device_id>/dislike/remove/', like_devices.remove_dislike, name='remove_dislike'),
+    path('password/', auth_views.PasswordChangeView.as_view(template_name="change-password.html"), name= "change-password"),
 ]
 
 if settings.DEBUG:

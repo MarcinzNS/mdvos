@@ -20,7 +20,7 @@
                             <div class="row pt-1">
                             <div class="col-5 mb-3 px-5">
                                 <h6>Imie</h6>
-                                <p class="text-muted">{{first_name}}</p>  
+                                <p class="text-muted">{{request.user.first_name}}</p>  
                                 <h6>Nazwisko</h6>
                                 <p class="text-muted">{{request.user.last_name}}</p>  
                                 <h6>Email</h6>
@@ -70,7 +70,8 @@
                                     <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#edit_modal"><i class='bi bi-pencil'></i> Edytuj dane</button>  
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <button class = "border-0" data-bs-toggle="modal" data-bs-target = "#password_modal">Zmień hasło</button>
+                                    <button class = "border-0"
+                                    ><a href="{% url 'change-password' %}">Zmień hasło</a></button>
                                 </li>
                             </ol>
                             </nav>
