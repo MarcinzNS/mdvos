@@ -17,8 +17,8 @@ def profile(request):
         return redirect('login')
     
     first_name = request.user.first_name 
-    first_name_c = first_name[2:-1]
-    first_name_dec = bytes.fromhex(first_name_c).decode('utf-8')
+    # first_name_c = first_name[2:-1]
+    # first_name_dec = bytes.fromhex(first_name_c).decode('utf-8')
     print(first_name) 
     # first_name_dec = first_name.decode('utf-8')
     # encoding = chardet.detect(bytes(first_name, 'utf-8'))["encoding"]
@@ -26,7 +26,7 @@ def profile(request):
     form = EditUserForm()
     context = {
         'form': form,
-        'first_name': first_name_dec
+        'first_name': first_name
     }
 
     if request.method == "POST":       
