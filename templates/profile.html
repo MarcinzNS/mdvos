@@ -24,7 +24,7 @@
                             <h3>Witaj, {{request.user.username}}!</h3>
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1">
-                            <div class="col-5 mb-3 px-5">
+                            <div class="col-8 mb-3 px-5">
                                 <h6>Imie</h6>
                                 <p class="text-muted">{{request.user.first_name}}</p>  
                                 <h6>Nazwisko</h6>
@@ -36,8 +36,9 @@
                                 <h6>Twoje urządzenia</h6>
                                                             
                             </div>
-                            <div class="col-7 mb-3">
+                            <div class="col-4 mb-3">
                             <div class="d-flex flex-row mb-3">
+                                                <!-- 
                                                 <a href ="{% url 'favourites_list' %}" class = "no">
                                                     <div class="card border-0 p-2" style="width: 18rem;">
                                                         <img src="{% static "img/profile/liked.png" %}" class="img-thumbnail " alt="...">
@@ -45,12 +46,12 @@
                                                             <p>Ulubione</p>
                                                         </div>
                                                     </div>
-                                                </a>
-                                                <a href ="{% url 'followed_list' %}" class = "no">
+                                                </a>-->
+                                                <a href ="{% url 'followed_list' %}" class = "no text-center" style="text-decoration:none;color:#000000">
                                                     <div class="card border-0 p-2" style="width: 18rem;">
                                                         <img src="{% static "img/profile/sledzone.png" %}" class="img-thumbnail " alt="...">
-                                                        <div class="card-body">
-                                                            <h6>Śledzone</h6>
+                                                        <div class="card-body ">
+                                                            <h6><i class='bi bi-heart'></i>  Ulubione urządzenia</h6>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -73,10 +74,10 @@
                             <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#edit_modal"><i class='bi bi-pencil'></i> Edytuj dane</button>  
+                                    <button  class = "btn " data-bs-toggle="modal" data-bs-target = "#edit_modal"><i class='bi bi-pencil'></i> Edytuj dane</button>  
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#password_modal"><i class='bi bi-pencil'></i> Zmień hasło</button>
+                                    <button  class = "btn " data-bs-toggle="modal" data-bs-target = "#password_modal"><i class='bi bi-pencil'></i> Zmień hasło</button>
                                 </li>
                             </ol>
                             </nav>
@@ -115,7 +116,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edytuj dane</h5>
+        <h5 class="modal-title">Zmień hasło</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form class="modal-body " method="post">
