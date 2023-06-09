@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from ..services.devices import *
 from ..services.os import *
-from ..forms import CommentForm, UnderCommentForm
+from ..forms import CommentForm, UnderCommentForm, AddDeviceForm, AddDeviceSpecsForm
+from main.models.models import Devices, Specification, Specification_type
 
 from django.shortcuts import render
 from django.contrib import messages
@@ -65,6 +66,23 @@ def GETtoURL(getDict):
 
 def one_device(request, id):
 
+    main_edit_device_form = AddDeviceForm(initial={
+            'brand': Devices.objects.get(id_device=id).brand,
+            'model': Devices.objects.get(id_device=id).model,
+            'device_type': Devices.objects.get(id_device=id).device_type,
+            'release_date': Devices.objects.get(id_device=id).premier,
+        }
+    )
+
+    specs_edit_device_form = AddDeviceSpecsForm(initial={
+            'cpu': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="CPU")),
+            'ram': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="RAM")),
+            'screen_size': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="SIZE")),
+            'battery': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="BATTERY")),
+            'disk_size': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="DISC")),
+        }
+    )
+
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
@@ -73,7 +91,9 @@ def one_device(request, id):
         'comments': getCommentsWithUnderComments(id),
         "OS_chart": getOSChart(id),
         "main_comment_form": CommentForm(),
-        "under_comment_form":UnderCommentForm()
+        "under_comment_form":UnderCommentForm(),
+        "main_edit_device_form": main_edit_device_form,
+        "specs_edit_device_form": specs_edit_device_form,
     }
 
     request.session['next_page'] = request.get_full_path()

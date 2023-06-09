@@ -117,9 +117,9 @@ class AddDeviceForm(forms.ModelForm):
     def save(self, commit=True):
         # zapisanie wartości release_date w premier
         instance = super().save(commit=False)
-        instance.premier = self.cleaned_data['release_date']
-        # instance.brand = self.cleaned_data['brand'].encode('utf-8')
-        # instance.model = self.cleaned_data['model'].encode('utf-8')
+
+        if self.cleaned_data['release_date'] != '':
+            instance.premier = self.cleaned_data['release_date']
 
         if commit:
             instance.save()
