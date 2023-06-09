@@ -22,3 +22,4 @@ def favourites_list(request):
     
     new = Followed_devices.objects.filter(user_id = request.user)
     return render(request,'favourites.html',{'new':new})
+

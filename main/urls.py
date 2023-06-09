@@ -22,6 +22,16 @@ urlpatterns = [
     path('devices/<str:category>/<int:page>', devices.devices, name="devices"),
     path('devices/<str:category>/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),
     path('one-device/<int:id>', devices.one_device, name="one_device"),
+
+
+    path('profile/followed/', devices.followed_list, name='followed_list'),
+    path('profile/followed/<int:page>', devices.followed_list, name="followed_list"),
+    path('profile/followed/<int:how_many_item_on_page>/<int:page>', devices.followed_list, name="followed_list"),
+    path('profile/followed/<str:category>', devices.followed_list, name="followed_list"),
+    path('profile/followed/<str:category>/<int:page>', devices.followed_list, name="followed_list"),
+    path('profile/followed/<str:category>/<int:how_many_item_on_page>/<int:page>', devices.followed_list, name="followed_list"),
+
+
     path('profile', profile.profile, name="profile"),
     path('error404', error.error404, name="error404"),
     path('error503', error.error503, name="error503"),
@@ -34,12 +44,13 @@ urlpatterns = [
     path('add_UnderComment/<int:device_id>/<int:main_comment_id>/', devices.add_UnderComment, name='add_UnderComment'),
     path('fav/<int:id>/', favourite.favourite_add, name="fav"),
     path('profile/favourites/', favourite.favourites_list, name='favourites_list'),
+    
     path('device/<int:device_id>/like/', like_devices.add_like, name='add_like'),
     path('device/<int:device_id>/dislike/', like_devices.add_dislike, name='add_dislike'),
     path('device/<int:device_id>/like/remove/', like_devices.remove_like, name='remove_like'),
     path('device/<int:device_id>/dislike/remove/', like_devices.remove_dislike, name='remove_dislike'),
-    path('password/', auth_views.PasswordChangeView.as_view(template_name="change-password.html"), name= "change-password"),
+    path('password/', auth_views.PasswordChangeView.as_view(), name= "change-password"),
 ]
-
+# template_name="change-password.html"
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

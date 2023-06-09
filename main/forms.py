@@ -192,11 +192,11 @@ class EditUserForm(forms.ModelForm):
     )
     old_password = forms.CharField(
         label='Stare hasło',
-        required=False,
+        required=True,
     )
     password1 = forms.CharField(
         label='Nowe hasło',
-        required=False,
+        required=True,
     )
 
     password2= forms.CharField(
@@ -210,6 +210,7 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model=User
         fields = ['first_name', 'last_name', 'email'] 
+
 
 
 class CommentForm(forms.ModelForm):

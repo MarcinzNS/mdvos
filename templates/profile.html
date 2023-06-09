@@ -13,7 +13,13 @@
             <div class="col col-lg-10 mb-4 mb-lg-0">
                 <div class="card mb-3 border-0 py-1">
                     <div class="row g-0">
-                        
+                    {% if messages %}
+                        {% for message in messages %}
+                          <div class="alert alert-danger" role="alert">
+                            {{message}}
+                          </div>
+                        {% endfor %}
+                    {% endif %}   
                         <div class="card-body p-4 ">
                             <h3>Witaj, {{request.user.username}}!</h3>
                             <hr class="mt-0 mb-4">
@@ -40,7 +46,7 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                                <a href ="{% url 'favourites_list' %}" class = "no">
+                                                <a href ="{% url 'followed_list' %}" class = "no">
                                                     <div class="card border-0 p-2" style="width: 18rem;">
                                                         <img src="{% static "img/profile/sledzone.png" %}" class="img-thumbnail " alt="...">
                                                         <div class="card-body">
@@ -70,16 +76,14 @@
                                     <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#edit_modal"><i class='bi bi-pencil'></i> Edytuj dane</button>  
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <button class = "border-0"
-                                    ><a href="{% url 'change-password' %}">Zmień hasło</a></button>
+                                    <button  class = "border-0" data-bs-toggle="modal" data-bs-target = "#password_modal"><i class='bi bi-pencil'></i> Zmień hasło</button>
                                 </li>
                             </ol>
                             </nav>
-                            
-
                         </div>
                     </div>
                 </div>
+
                 
             </div>
             </div>
@@ -114,31 +118,17 @@
         <h5 class="modal-title">Edytuj dane</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form class="modal-body">
+      <form class="modal-body " method="post">
         {% csrf_token %}
-        <div class="mb-3">
-          <input type="password" name="old_password"  placeholder="{{form.old_password.label}}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-          <label for="id_new_password1" class="form-label">Nowe hasło</label>
-          <input type="password" name="password1" id="id_new_password1" placeholder="{{form.password1.label}}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-          <label for="id_new_password2" class="form-label">Powtórz nowe hasło</label>
-          <input type="password" name="password2" id="id_new_password2" placeholder="{{form.password2.label}}" class="form-control" required>
-        </div>
+        <input name="{{form.old_password.name}}" class="form-control my-2" placeholder="{{form.old_password.label}}" type="password"/>
+        <input name="{{form.password1.name}}" class="form-control my-2" placeholder="{{form.password1.label}}" type="password" autocomplete="edited-account"/>
+        <input name="{{form.password2.name}}" class="form-control my-2" placeholder="{{form.password2.label}}" type="password" autocomplete="edited-account"/>
         <div class="modal-footer">
           <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
           <button type="submit" class="btn btn-primary" name="save_password_change">Zapisz</button>
         </div>
       </form>
-                {% if messages %}
-                    {% for message in messages %}
-                      <div class="alert alert-danger" role="alert">
-                        {{message}}
-                      </div>
-                    {% endfor %}
-                {% endif %}
+
     </div>
   </div>
 </div>

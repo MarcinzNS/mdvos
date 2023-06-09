@@ -31,12 +31,12 @@ def profile(request):
 
     if request.method == "POST":       
         if "save_password_change" in request.POST:
-            password_form = PasswordChangeForm(request.user, request.POST)
-            if password_form.is_valid():
-                old_password = password_form.cleaned_data['old_password']
+
+                old_password = request.POST['old_password']
                 if request.user.check_password(old_password):
-                    new_password1 = password_form.cleaned_data['password1']
-                    new_password2 = password_form.cleaned_data['password2']
+
+                    new_password1 = request.POST['password1']
+                    new_password2 = request.POST['password2']
                     if new_password1 == new_password2:
                         request.user.set_password(new_password1)
                         request.user.save()
@@ -45,11 +45,12 @@ def profile(request):
                         return redirect('profile')
                     else:
                         messages.error(request, 'Podane hasła nie są identyczne.')
+                        return redirect('profile')
 
 
         elif "save_edit" in request.POST:
             user = request.user
-
+            print("przed sprawdzeniem")
             # nie działają polskie znaki
             
             if len(request.POST['first_name']):
