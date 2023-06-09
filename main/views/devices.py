@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from ..services.devices import *
 from ..services.os import *
-from ..forms import CommentForm, UnderCommentForm, AddDeviceForm, AddDeviceSpecsForm
+from ..forms import CommentForm, UnderCommentForm, AddDeviceForm, AddDeviceSpecsForm, ChangeDevicePhotoForm
 from main.models.models import Devices, Specification, Specification_type
 
 from django.shortcuts import render
@@ -83,6 +83,8 @@ def one_device(request, id):
         }
     )
 
+    edit_image_form = ChangeDevicePhotoForm(initial={'image': Devices.objects.get(id_device=id).image})
+
     context = {
         "device" : getDeviceData(id),
         "specification" : getSpecificationData(id),
@@ -94,6 +96,7 @@ def one_device(request, id):
         "under_comment_form":UnderCommentForm(),
         "main_edit_device_form": main_edit_device_form,
         "specs_edit_device_form": specs_edit_device_form,
+        'edit_image_form': edit_image_form,
     }
 
     request.session['next_page'] = request.get_full_path()

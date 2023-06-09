@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from ..forms import CustomUserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.http import HttpResponseRedirect
 
 
 def loginUser(request):
@@ -31,13 +32,10 @@ def loginUser(request):
 
 def logoutUser(request):
 
-    next_page = request.session.get('next_page')
     logout(request)
 
-    if next_page:
-        return redirect(next_page)
-    else:
-        return redirect('home')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
 
 
 def registration(request):

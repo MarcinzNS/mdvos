@@ -28,6 +28,7 @@ urlpatterns = [
     path('adminek', adminek.adminek, name="adminek"),
     path('remove-device/<int:device_id>/', admin_functions.remove_device, name="remove_device"),
     path('edit-device-info/<int:device_id>/', admin_functions.edit_device_info, name="edit_device_info"),
+    path('edit-device-photo/<int:device_id>/', admin_functions.edit_device_photo, name="edit_device_photo"),
     path('os', os.os, name="os"),
     path('add_MainComment/<int:device_id>/', devices.add_MainComment, name='add_MainComment'),
     path('add_UnderComment/<int:device_id>/<int:main_comment_id>/', devices.add_UnderComment, name='add_UnderComment'),

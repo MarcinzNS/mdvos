@@ -126,6 +126,18 @@ class AddDeviceForm(forms.ModelForm):
         return instance
     
 
+class ChangeDevicePhotoForm(forms.ModelForm):
+    image = forms.ImageField(
+        required=False,
+        validators=[validate_image_format, validate_image_file_size, validate_image_size],    
+        error_messages= {
+            "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
+        }, 
+    )
+
+    class Meta:
+        model = Devices
+        fields = ['image']
 
 class AddDeviceSpecsForm(forms.Form):
 

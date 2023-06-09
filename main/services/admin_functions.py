@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from main.models import models
 from django.http import HttpResponseRedirect
-from main.forms import AddDeviceSpecsForm, AddDeviceForm
+from main.forms import AddDeviceSpecsForm, AddDeviceForm, ChangeDevicePhotoForm
 
 def remove_device(request, device_id):
     
@@ -28,9 +28,8 @@ def edit_device_info(request, device_id):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     
     if request.method == 'POST':
-        print(request.POST)
 
-        main_form = AddDeviceForm(request.POST, request.FILES, instance=device)
+        main_form = AddDeviceForm(request.POST, instance=device)
         specs_form = AddDeviceSpecsForm(request.POST)
 
         if main_form.is_valid() and main_form.has_changed():
@@ -39,6 +38,23 @@ def edit_device_info(request, device_id):
         if specs_form.is_valid() and specs_form.has_changed():
             edit_device_specs(specs_form.cleaned_data, device_id)
 
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def edit_device_photo(request, device_id):
+    if not request.user.is_staff:
+        return redirect('devices')
+
+    device = models.Devices.objects.get(id_device=device_id)
+    if not device:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    if request.method == 'POST':
+        image_form = ChangeDevicePhotoForm(request.POST, request.FILES, instance=device)
+
+        if image_form.is_valid() and image_form.has_changed():
+            image_form.save()
+            
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
