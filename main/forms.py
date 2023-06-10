@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models.models import User, Devices, Comment
+from .models.models import User, Devices, Comment,OS_version,OS,OS_devices
 from django import forms
 from .services.validators import *
-
+from django.contrib.admin.widgets import AdminDateWidget
 
 class CustomUserCreationForm(UserCreationForm):
     first_name_max_len = 30
@@ -212,6 +212,140 @@ class EditUserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email'] 
 
 
+
+
+class OSForm(forms.ModelForm):
+
+    name= forms.CharField(
+        label='Nowy System',
+        required=False,
+    )
+    class Meta:
+        model = OS
+        fields = ['name']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        if commit:
+            instance.save()
+        return instance
+
+class OSVersionForm(forms.ModelForm):
+
+    version = forms.CharField(
+        label="Nazwa Wersji*",
+        max_length=30,
+        error_messages={
+            'required': "Należy podać nazwę wersji",
+        },
+    )
+    
+    date_start = forms.DateField(widget=AdminDateWidget())
+    date_end = forms.DateField(widget=AdminDateWidget(), required=False)
+    
+    
+    description = forms.CharField(
+        label="Opis wersji*",
+        max_length=50,
+        error_messages={
+            'required': "Należy podać opis",
+        },
+    )
+    os_id = forms.ModelChoiceField(
+        queryset=OS.objects.all(),
+        label="System operacyjny*",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    devices = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Devices.objects.all(),
+        label="Urządzenia",
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'})
+    )
+    
+    class Meta:
+        model = OS_version
+        fields = ['os_id', 'version', 'date_start', 'date_end', 'description', 'devices']
+
+    def __init__(self, *args, **kwargs):
+        devices = kwargs.pop('devices', None)
+        super(OSVersionForm, self).__init__(*args, **kwargs)
+        if devices:
+            self.fields['devices'].queryset = devices
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.accepted = False
+
+        if commit:
+            instance.save()
+            self.save_m2m()  # Zapisanie powiązań z urządzeniami
+
+            devices = self.cleaned_data.get('devices')
+            if devices:
+                for device in devices:
+                    OS_devices.objects.create(os_id=instance, devices_id=device)
+
+        return instance
+
+
+class OSDevicesForm(forms.ModelForm):
+    os_version = forms.ModelChoiceField(queryset=OS_version.objects.all())
+    devices = forms.ModelMultipleChoiceField(queryset=Devices.objects.all())
+
+    class Meta:
+        model = OS
+        fields = ['os_version', 'devices']
+
+
+class AddOSForm(forms.ModelForm):
+
+    version = forms.CharField(
+        label="Nazwa Wersji*",
+        max_length=30,
+        error_messages={
+            'required': "Należy podać nazwę wersji",
+        },
+    )
+
+    model = forms.CharField(
+        label="Model*",
+        max_length=50,
+        error_messages={
+            'required': "Należy podać model",
+        },
+    )
+
+    device_type = forms.ChoiceField(
+        label="Kategoria",
+        choices=[
+            ("PHONE", "Telefon"),
+            ("TABLET", "Tablet"),
+            ("LAPTOP", "Laptop"),
+        ],
+    )
+    release_date = forms.DateField(required=False)
+    image = forms.ImageField(
+        required=False,
+        validators=[validate_image_format, validate_image_size],    
+        error_messages= {
+            "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
+        }    
+    )
+
+    class Meta:
+        model = Devices
+        fields = ['brand', 'model', 'device_type', 'release_date', 'image']
+
+    def save(self, commit=True):
+        # zapisanie wartości release_date w premier
+        instance = super().save(commit=False)
+        instance.premier = self.cleaned_data['release_date']
+
+        if commit:
+            instance.save()
+        return instance
 
 class CommentForm(forms.ModelForm):
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import login_system, profile, add_device
+from main.views import login_system, profile, add_device, add_os
 from main.views import index, categories, devices, error, os, favourite, like_devices, adminek
 from main.services import admin_functions
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('sign-up', login_system.registration, name="registration"),
     path('categories', categories.categories, name="categories"),
     path('add-device', add_device.add_device, name="add_device"),
+    path('add-os', add_os.add_os, name="add_os"),
     path('devices', devices.devices, name="devices"),
     path('devices/<int:page>', devices.devices, name="devices"),
     path('devices/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),

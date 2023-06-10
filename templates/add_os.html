@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-7 py-5">
+                <h2>Dodaj nową wersję systemu operacyjnego:</h2>
+                <form class="border bg-login border-2 rounded-3 p-3" action="{% url 'add_os' %}" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="col-sm-12 mx-auto mb-3">
+                        <label for="{{ os_version_form.os_id.id_for_label }}" class="form-label">{{ os_version_form.os_id.label }}</label>
+                        {{ os_version_form.os_id }}
+                        {% if os_version_form.os_id.errors %}
+                            {% for error in os_version_form.os_id.errors %}
+                                <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                                    {{ error }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    
+                    <div class="col-sm-12 mx-auto mb-3">
+                        <label for="{{ os_version_form.version.id_for_label }}" class="form-label">{{ os_version_form.version.label }}</label>
+                        {{ os_version_form.version }}
+                        {% if os_version_form.version.errors %}
+                            {% for error in os_version_form.version.errors %}
+                                <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                                    {{ error }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-12 mx-auto mb-3">
+                      <label for="{{ os_version_form.date_start.id_for_label }}" class="form-label">{{ os_version_form.date_start.label }}</label>
+                      <input name="{{ os_version_form.date_start.name }}" class="form-control" type="date"/>
+                      {% if os_version_form.date_start.errors %}
+                          {% for error in os_version_form.date_start.errors %}
+                              <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                                  {{ error }}
+                                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              </div>
+                          {% endfor %}
+                      {% endif %}
+                  </div>
+                  
+                  <div class="col-sm-12 mx-auto mb-3">
+                      <label for="{{ os_version_form.date_end.id_for_label }}" class="form-label">{{ os_version_form.date_end.label }}</label>
+                      <input name="{{ os_version_form.date_end.name }}" class="form-control" type="date"/>
+                      {% if os_version_form.date_end.errors %}
+                          {% for error in os_version_form.date_end.errors %}
+                              <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                                  {{ error }}
+                                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              </div>
+                          {% endfor %}
+                      {% endif %}
+                  </div>
+                  
+      
+                    <div class="col-sm-12 mx-auto mb-3">
+                        <label for="{{ os_version_form.description.id_for_label }}" class="form-label">{{ os_version_form.description.label }}</label>
+                        {{ os_version_form.description }}
+                        {% if os_version_form.description.errors %}
+                            {% for error in os_version_form.description.errors %}
+                                <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                                    {{ error }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Urządzenia</label>
+                      {{ os_version_form.devices }}
+                  </div>
+                    
+                    <button type="submit" class="btn btn-primary col-4 offset-sm-4">Dodaj</button>
+                    
+                  </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
