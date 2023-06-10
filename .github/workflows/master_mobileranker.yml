@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'mobileranker'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9953EBB3AA4D41F49DEB3A7DE707E702 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C180F2C1A2A9419D90FB5370995BFD12 }}
