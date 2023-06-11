@@ -24,9 +24,13 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
             'specifications': 
                 {spec['spec_type_id__name']: spec['value'] for spec in device_specifications}
         }
+        
         if len(brand_filter) + len(ram_filter) > 0:
-            if device_data['specifications']["RAM"] in ram_filter or device['brand'] in brand_filter:
-                result.append(device_data)
+            try:
+                if device_data['specifications']["RAM"] in map(str, ram_filter) or device['brand'] in brand_filter:
+                    result.append(device_data)
+            except:
+                pass
         else:
             result.append(device_data)
 

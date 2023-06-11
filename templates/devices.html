@@ -79,12 +79,22 @@
                                 </div>
                                 <!--Sortowanie-->
                                 <div class="col-12 border-top border-3 pt-3 mt-3">
-                                    <form action="#">
+                                        {% if category %}
+                                        <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" method="POST" >
+                                        {% else %}
+                                        <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" method="POST" >
+                                        {% endif %}
+                                        {% csrf_token %}
                                         <div class="mb-3">
-                                            <select id="disabledSelect" class="form-select">
-                                              <option>Sortuj wg daty</option>
-                                              <option>Sortuj po nazwie</option>
-                                              <option>Sortuj po nazwie modelu</option>
+                                            <select id="disabledSelect" name="sort_by" class="form-select">
+                                                {% if sort_by and sort_by_text %}
+                                                    <option value="{{ sort_by }}">{{ sort_by_text }}</option>
+                                                {% else %}
+                                                    <option>--</option>
+                                                {% endif %}
+                                                {% for k,v in sidebar.sort_by.items %}
+                                                    <option value="{{ v }}">{{ k }}</option>
+                                                {% endfor %}
                                             </select>
                                           </div>
                                         <button type="submit" class="btn btn-primary float-end">Sortuj</button>
@@ -92,11 +102,7 @@
                                 </div>
                             </div>
                             
-                            
-                            
-        
                         </div>
-                        
                         
                     </nav>
                 </div>
@@ -136,17 +142,44 @@
                         <ul class="pagination">
                             {% if show_arrow.0 %}
                                 <li class="page-item">
-                                    <a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=page.previous %}{{ urlEnd }}" aria-label="Previous">
+                                    {% if category and sort_by%}
+                                    <a class="page-link" href="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" aria-label="Previous">
+                                    {% elif category %}
+                                    <a class="page-link" href="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" aria-label="Previous">
+                                    {% elif sort_by %}
+                                    <a class="page-link" href="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" aria-label="Previous">
+                                    {% else %}
+                                    <a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}{{ urlEnd }}" aria-label="Previous">
+                                    {% endif %}
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                             {% endif %}
                             {% for item in how_many_pages %}
-                                <li class="page-item"><a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">{{ item }}</a></li>
+                                <li class="page-item">
+                                    {% if category and sort_by%}
+                                    <a class="page-link" href="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
+                                    {% elif category %}
+                                    <a class="page-link" href="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
+                                    {% elif sort_by %}
+                                    <a class="page-link" href="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
+                                    {% else %}
+                                    <a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
+                                    {% endif %}
+                                    {{ item }}</a>
+                                </li>
                             {% endfor %}
                             {% if show_arrow.1 %}
                                 <li class="page-item">
+                                    {% if category and sort_by%}
+                                    <a class="page-link" href="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=page.next %}{{ urlEnd }}" aria-label="Next">
+                                    {% elif category %}
+                                    <a class="page-link" href="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=page.next %}{{ urlEnd }}" aria-label="Next">
+                                    {% elif sort_by %}
+                                    <a class="page-link" href="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=page.next %}{{ urlEnd }}" aria-label="Next">
+                                    {% else %}
                                     <a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=page.next %}{{ urlEnd }}" aria-label="Next">
+                                    {% endif %}
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
