@@ -9,12 +9,9 @@ from main.models.models import Devices, Specification, Specification_type
 from django.shortcuts import render
 from django.contrib import messages
 
-
-
-
 import math
 
-def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=5, page=1,):
+def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
@@ -29,6 +26,17 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=5, pag
         urlEnd = GETtoURL(request.GET)
         brand_filter = [brand_name for brand_name in context["sidebar"]["brand"] if request.GET.get(brand_name, False)]
         ram_filter = [ram_value for ram_value in context["sidebar"]["ram"] if request.GET.get(f"ram{ram_value}", False)]
+
+    dict_hold = dict()
+    for key, value in context["sidebar"]["sort_by"].items():
+        dict_hold[value] = key
+
+    if category != "NOT": context |= {"category":category}
+    if sort_by != "NOT": context |= {"sort_by":sort_by, "sort_by_text": dict_hold[sort_by]}
+    elif request.method == "POST":
+        sort_by = request.POST.get("sort_by", "NOT")
+        if sort_by != "NOT":
+            context |= {"sort_by":sort_by, "sort_by_text":dict_hold[sort_by]}
 
     data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter)
     
@@ -50,12 +58,12 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=5, pag
         },
         "urlEnd": urlEnd
     }
-    if category != "NOT": context |= {"category":category}
-    if sort_by != "NOT": context |= {"sort_by":sort_by}
     
     request.session['next_page'] = request.get_full_path()
     
     return render(request, "devices.html", context)
+
+
 
 def followed_list(request, category="NOT", sort_by="NOT", how_many_item_on_page=5, page=1,):
    
