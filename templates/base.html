@@ -33,11 +33,11 @@
 
         <div class="collapse navbar-collapse justify-content-between" id="mainmenu">
           <div class="row w-100">
-            <div class="col-sm-6 col-xl-2 my-2">
+            <div class="col-sm-6 col-xl-2 mt-2">
               <ul class="navbar-nav mx-3">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="category" aria-haspopup="true"> Kategorie </a>
-                  <div class="dropdown-menu" aria-labelledby="category px-3">
+                  <div class="dropdown-menu" aria-labelledby="category">
                     <a class="dropdown-item" href="{% url 'devices' category='PHONE' %}"><i class="bi bi-phone"></i> Telefony </a>
                     <a class="dropdown-item" href="{% url 'devices' category='TABLET' %}"><i class="bi bi-tablet"></i> Tablety </a>
                     <a class="dropdown-item" href="{% url 'devices' category='LAPTOP' %}"><i class="bi bi-laptop"></i> Laptopy </a>
@@ -47,17 +47,19 @@
               </ul>
             </div>
 
-            <div class="col-sm-12 col-xl-6 ">
+            <div class="col-sm-12 col-xl-6 mt-2 ">
               <div class="row ">
                 <div class=" col-xl-3 ">
                   <ul class="navbar-nav mx-3">
-                    <li class="nav-item">
-                    
-                    <a class="nav-link text" href="{% url 'add_device' %}" >Dodaj produkt</a>
-                  </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="add" aria-haspopup="true"> Dodaj </a>
+                      <div class="dropdown-menu" aria-labelledby="add">
+                        <a class="dropdown-item" href="{% url 'add_device' %}"><i class="bi bi-phone"></i> Urządzenie </a>
+                        <a class="dropdown-item" href="{% url 'add_os' %}"><i class="bi bi-gear-wide-connected"></i>System operacyjny </a>
+                        
+                      </div>
+                    </li>
                   </ul>
-                  
-                 
                 </div>
                 <div class="col-sm-6 col-xl-6">
                   <form class="form-inline mx-3 my-2">
