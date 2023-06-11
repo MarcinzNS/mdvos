@@ -3,48 +3,47 @@
 {% load static %}
 
 {% block content %}
-<main class="container  mt-5 ">
-    <div class="row justify-content-center mt-5">
-        
-        <div class="col-sm-12 col-md-3">
-            <div class="container ">
-                <div class="row justify-content-center">
-                    <nav class="navbar navbar-light navbar-expand-xl ">
-                    
-                        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtr" aria-controls="filtr" aria-expanded="false" aria-label="Przełącznik filtra">
-                            <i class="bi bi-funnel"></i></span>
-                            
-                        </button>
-                        <div class="collapse navbar-collapse mt-2 border border-2 rounded-3 p-3 me-2" id="filtr">
-                            <div class="row">
-                                <!--Filtrowanie-->
-                                <div class="col-12">
-                                    <form action="#">
-                                        <p class="h3 mb-2">Filtry</p>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="Android">
-                                            <label class="form-check-label" for="Android">Android</label>
-                                          </div>
-                                          <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="IOS">
-                                            <label class="form-check-label" for="IOS">IOS</label>
-                                          </div>
-                                          <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="inne">
-                                            <label class="form-check-label" for="inne">innet</label>
-                                          </div>
-                                        <button type="submit" class="btn btn-primary float-end">Filtruj</button>
-                                    </form>
-                                </div>
-                                
-                            </div>
+<main class="container  mt-2 ">
+    
+    <form method="GET" action="{% url 'os' %}">
+        <label for="sort_by"> Sortuj według: </label>
+        <select name="sort_by" id="sort_by">
+            <option value="name">Nazwa</option>
+            <option value="version">Wersja</option>
+            <option value="devices_count">Popularność</option>
+        </select>
+        <button type="submit">Sortuj</button>
+    </form>
 
-                        </div>
-                        
-                        
-                    </nav>
-                </div>
-            </div>  
+    <div class="row justify-content-center mt-1">
+        <div class="card-body my-3 pt-3 ">  
+            <div class="card-body border-top">
+                <table class="table">
+                    <tr>
+                        <th scope="row">Nazwa systemu operacyjnego</th>
+                        <th scope="row">Wersja</th>
+                        <th scope="row">Data wprowadzenia</th>
+                        <th scope="row">Data zakończenia wsparcia</th>
+                        <th scope="row">Ilość obsługiwanych urządzeń</th>
+                        <th scope="row">Opis</th> 
+                    </tr>
+                    
+                    {% for os_info_id, os_info in os_info.items %}
+                        <tr>
+                            <td>{{ os_info.name }}</td>
+                            <td>{{ os_info.version }}</td>
+                            <td>{{ os_info.date_start }}</td>
+                            <td>{{ os_info.date_end }}</td>
+                            <td>{{ os_info.devices_count }}</td> 
+                            <td>{{ os_info.description }}</td> 
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4"> Brak systemów w bazie </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
         <div class="col-sm-12 col-md-7 ">
             
