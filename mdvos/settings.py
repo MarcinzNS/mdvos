@@ -31,12 +31,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = ['http://34.89.18.227/', 'https://34.89.18.227']
+
+CSRF_COOKIE_DOMAIN = '34.89.18.227'
+
+CORS_ORIGIN_WHITELIST = (
+    'http://34.89.18.227',
+    'https://34.89.18.227'
+)
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'main',
+    'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -54,6 +69,7 @@ AUTH_USER_MODEL = "main.User"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
