@@ -171,6 +171,10 @@
                             {% endif %}
                             {% for item in how_many_pages %}
                                 <li class="page-item">
+                                    {% if page.current == item %}
+                                    <b>
+                                    {% endif %}
+                                    
                                     {% if category and sort_by%}
                                     <a class="page-link" href="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
                                     {% elif category %}
@@ -181,6 +185,10 @@
                                     <a class="page-link" href="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=item %}{{ urlEnd }}">
                                     {% endif %}
                                     {{ item }}</a>
+                                    
+                                    {% if page.current == item %}
+                                    </b>
+                                    {% endif %}
                                 </li>
                             {% endfor %}
                             {% if show_arrow.1 %}

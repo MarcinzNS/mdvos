@@ -49,6 +49,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
         "page": {
             "previous": page-1,
             "next": page+1,
+            "current": page,
             "show_pages_controler": how_many_pages > 1
         },
         "how_many_item_on_page": how_many_item_on_page,
