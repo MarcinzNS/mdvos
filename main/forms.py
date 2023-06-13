@@ -241,8 +241,8 @@ class OSVersionForm(forms.ModelForm):
         },
     )
     
-    date_start = forms.DateField(widget=AdminDateWidget())
-    date_end = forms.DateField(widget=AdminDateWidget(), required=False)
+    date_start = forms.DateField(label="Data rozpoczęcia wsparcia*", widget=AdminDateWidget())
+    date_end = forms.DateField(label="Data zakończenia wsparcia", widget=AdminDateWidget(), required=False)
     
     
     description = forms.CharField(

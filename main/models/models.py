@@ -99,6 +99,8 @@ class Comment(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     devices_id = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True)
     os_id = models.ForeignKey(OS, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return f"{self.text}"
 
 class Like(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

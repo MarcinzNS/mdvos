@@ -79,7 +79,7 @@ def getOS_Info(sort_by=None):
             date_start = "System nie został wprowadzony"
             date_end = ""
         if (date_end is None) and (date_start is not None):
-            date_end = "Ciągle wpierany"
+            date_end = "Ciągle wspierany"
 
         devices_count = Devices.objects.filter(os_devices__os_id=os_info['os_version_id']).count()
 
