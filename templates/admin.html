@@ -5,46 +5,178 @@
 {% load static %}
 
 {% block content %}
-<main>
-    <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_sidebar.html -->
-      <div class="flex-shrink-0 p-3" style="width: 280px;">
-        <a class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-          <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-          <span class="fs-5 fw-semibold">Panel admina</span>
-        </a>
-        <ul class="list-unstyled ps-0">
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-              Użytkownicy
-            </button>
-            <div class="collapse show" id="home-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Komentarze</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">lajki</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">konta</a></li>
-              </ul>
+<main class="container">
+  <div class="row justify-content-center py-4">
+    <div class="col-sm-12 col-md-5 border-end border-2">
+      <div class="container">
+          <div class="row justify-content-center">
+            <div class="navbar-light">
+              <div class="mt-2 pt-3 ps-3 pe-4 me-2" id="filtr">
+                <div class="row">
+                  <div class="col-12">
+                    <p class="h3 mb-2">Panel admina</p>
+                    <div class="mb-3 form-check pt-3">
+                      <p class="mb-2">Użytkownicy</p>
+                      <div class="mt-2 p-3 border-top">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#comment" aria-expanded="true" aria-controls="comment">
+                              Komentarze
+                            </button>
+                          </h5>
+                        </div>
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#Lajki" aria-expanded="true" aria-controls="Lajki">
+                              Lajki
+                            </button>
+                          </h5>
+                        </div>
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="true" aria-controls="users">
+                              Ustawienia kont
+                            </button>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-check pt-3">
+                      <p class="mb-2">Urządzenia</p>
+                      <div class="mt-2 p-3 border-top">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#Edycja" aria-expanded="true" aria-controls="Edycja">
+                              Edycja
+                            </button>
+                          </h5>
+                        </div>
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link active" data-bs-toggle="collapse" data-bs-target="#Akceptuj" aria-expanded="true" aria-controls="Akceptuj">
+                              Akceptuj nowe
+                            </button>
+                          </h5>
+                        </div>
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#zglosone" aria-expanded="true" aria-controls="zglosone">
+                              Zgłoszone błędy
+                            </button>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-check pt-3">
+                      <p class="mb-2">Ustawienia</p>
+                      <div class="mt-2 p-3 border-top">
+                        <a class="dropdown-item" href="{% url 'profile' %}">Moje Konto</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </li>
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-              urządzenia
-            </button>
-            <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">O</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">W</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">M</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ay</a></li>
-              </ul>
-            </div>
-          </li>
-          
-          
-        </ul>
+            
+          </div>
+      </div>  
+  </div>
+  <div class="col-sm-12 col-md-7">
+    <div id="accordion">
+      <div id="comment" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+        <div class="card-body">
+          Treść sekcji "comment"
+        </div>
       </div>
+      <div id="Lajki" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+        <div class="card-body">
+          Treść sekcji "Lajki"
+        </div>
+      </div>
+      <div id="users" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+        <div class="card-body">
+          Treść sekcji "Ustawienia kont"
+        </div>   
+      </div>
+      <div id="Edycja" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+        <div class="card-body">
+          Treść sekcji "Ustawienia"
+        </div>
+      </div>
+      <div id="Akceptuj" class="collapse active" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+        <div class="card-body">
+          <div class="container"> 
+            <p class="h4">Nowe urządzenia </p>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">Samsung X14</h5>
+                <div class="row mt-4">
+                  <div class="col-6">
+                    <span><p>Marka: Samsung</p></span>
+                    <span><p>Model: X14</p></span>
+                    <span><p>Rodzaj: Telefon</p> </span>
+                    <span><p>Data premiery: Telefon</p> </span>
+                  </div>
+                  <div class="col-6">
+                    <span><p>CPU: xd3</p></span>
+                    <span><p>RAM: 2Gb</p></span>
+                    <span><p>Rozmiar: 12.5</p></span>
+                    <span><p>Bateria: 12000 mAh</p></span>
+                    <span><p>Pamięć: 125 Gb</p></span>
+                  </div>
+                </div>
+                
+                <button class="btn">
+                  <i class="bi bi-check-circle"></i> Akceptuj
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="container"> 
+            <p class="h4">Nowe systemu operacyjne </p>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">IOS</h5>
+                <div class="row mt-4">
+                  <div class="col-6">
+                    <span><p>Data Start: 12.06.2023</p></span>
+      
+                    <span><p>Nazwa wersji: tak</p> </span>
+                    
+                  </div>
+                  <div class="col-6">
+                    <span><p>Data koniec: 14.06.2023</p></span>
+                    <span><p>opis wersji: Tak tak</p></span>
+                    
+                  </div>
+                  <div class="col-10 mt-2">
+                    <p>Urządzenia</p>
+                    <span><p>Phone: Apple IPhone 14</p></span>
+                    <span><p>Tablet: Apple iPad 9gen</p></span>
+                    
+                  </div>
+                </div>
+                
+                <button class="btn">
+                  <i class="bi bi-check-circle"></i> Akceptuj
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div id="zglosone" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+        <div class="card-body">
+          Treść sekcji "Ustawienia"
+        </div>
+      </div>
+      <!-- Dodaj kolejne sekcje w odpowiednim formacie -->
     </div>
-</div>
-  </main>
+  </div>
+  </div>
+    
+    
+    
+</main>
 {% endblock %}
