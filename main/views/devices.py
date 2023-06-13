@@ -56,7 +56,8 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
             "brand": brand_filter, 
             "ram": ram_filter
         },
-        "urlEnd": urlEnd
+        "urlEnd": urlEnd,
+        "how_many_results": data["how_many_results"]
     }
     
     request.session['next_page'] = request.get_full_path()

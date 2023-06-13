@@ -119,6 +119,11 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
+            {% if how_many_results == 0 %}
+                <div class="row position-relative border-top rounded mt-2 p-1 align-items-center" role="alert">
+                    Nie znaleziono urządzenia!
+                </div>
+            {% endif %}
             {% for item in data %}
                 <div class="row position-relative border-top rounded mt-2 p-1">
                     <div class="col-md-6 mb-md-0 p-md-4">
