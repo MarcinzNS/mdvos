@@ -20,11 +20,14 @@ def getOSAll(id: int) -> dict:
     os_data = {}
 
     for os_info in os_all:
+        date_end = os_info['date_end']
+        if date_end is None:
+            date_end = "Ciągle wspierany"
         os_id = os_info['os_id']
         os_data[os_info['os_version_id']] = {
             'version': os_info['version'],
             'date_start': os_info['date_start'],
-            'date_end': os_info['date_end'],
+            'date_end': date_end,
             'name': next((os_name['name'] for os_name in os_all_name if os_name['id_os'] == os_id), None)
         }
 
