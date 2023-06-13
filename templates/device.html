@@ -277,8 +277,18 @@
                         </div>
                     {% endif %}
                 </div>
+            </br>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'warning' %}
+                        <div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 
-
                 
             </div>
             <!-- Przyciski "Like" i "Dislike" KONRAD 

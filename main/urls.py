@@ -1,7 +1,6 @@
 from django.urls import path
-from main.views import login_system, profile, add_device, add_os
+from main.views import login_system, profile, add_device, add_os, devices_admin
 from main.views import index, categories, devices, error, os, favourite, like_devices, adminek
-from main.services import admin_functions
 
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -46,9 +45,9 @@ urlpatterns = [
     path('error404', error.error404, name="error404"),
     path('error503', error.error503, name="error503"),
     path('adminek', adminek.adminek, name="adminek"),
-    path('remove-device/<int:device_id>/', admin_functions.remove_device, name="remove_device"),
-    path('edit-device-info/<int:device_id>/', admin_functions.edit_device_info, name="edit_device_info"),
-    path('edit-device-photo/<int:device_id>/', admin_functions.edit_device_photo, name="edit_device_photo"),
+    path('remove-device/<int:device_id>/', devices_admin.remove_device, name="remove_device"),
+    path('edit-device-info/<int:device_id>/', devices_admin.edit_device_info, name="edit_device_info"),
+    path('edit-device-photo/<int:device_id>/', devices_admin.edit_device_photo, name="edit_device_photo"),
     path('os', os.os, name="os"),
     path('add_MainComment/<int:device_id>/', devices.add_MainComment, name='add_MainComment'),
     path('add_UnderComment/<int:device_id>/<int:main_comment_id>/', devices.add_UnderComment, name='add_UnderComment'),
