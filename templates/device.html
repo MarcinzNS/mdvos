@@ -492,16 +492,49 @@
                 
                 
                 var start = (parseInt(data[keys[i]].start)-2013);
+                var start_m=(parseInt(data[keys[i]].start_m));
                 var end = (parseInt(data[keys[i]].koniec)-2013);
-                if(start==end){
-                    start=start*50-10;
-                    end=20;
+                var end_m = (parseInt(data[keys[i]].koniec_m));
+                
+                if(end>=1 && end<=15){
+                    
+                    if(start==end){
+                        if(start_m==end_m){
+                            start_m=start_m-1;
+                            end_m=end_m+1;
+                        }
+                    }
+                    else{
+                        end=(end-start)*50;
+                        start=start*50;
+                    }
+                    start=start+(start_m/12);
+                    end=end+(end_m/12);
                 }
                 else{
-                    end=(end-start)*50;
-                    start=start*50;
+                    end=10;
+                    end_m=12
+                    if(start==end){
+                        if(start_m==end_m){
+                            start_m=start_m-1;
+                        }
+                    }
+                    start=start+(start_m/12);
                 }
-                    
+              
+                console.log("start",start);
+                console.log("start_m",start_m);
+                console.log("end",end);
+                console.log("end_m",end_m);
+                
+                end=(start-end)*50;
+                start=start*50;
+                console.log("start",start);
+                console.log("start_m",start_m);
+                console.log("end",end);
+                console.log("end_m",end_m);
+
+                //console.log(end);
                // var key = parseInt(keys[i]);
                 
                 transformedList.push([start, end]);
@@ -512,17 +545,38 @@
         
         function draw() {
             var tablica=konwersja(lista)
-            //var tablica=[[100,300],[150,300],[200,300],[250,300]]
+            //var tablica=[[100,300],[100,300]]
+            //var tablica=[[100,300]]
             console.log(tablica);
             console.log(tablica.length)
             const canvas = document.getElementById("Wsparcie");
             const ctx = canvas.getContext("2d");
-            const height = tablica.length * 50;
-        
+            var height;
+            var h;
+            if(tablica.length==1){
+                h =200;
+                height = 90;
+                //1
+                //190
+                //70
+                
+            }
+            if(tablica.length==2){
+                h=200 - tablica.length * 10;
+                height = tablica.length * 60;
+                //2
+                //180
+                //120
+            }
+            if(tablica.length>=3){
+                h = 200 - tablica.length * 20;
+                height = tablica.length * 50;
+            }
+            console.log(h)
+            console.log(height)
             canvas.width = 600;
             canvas.height = height;
         
-            var h = 200 - tablica.length * 20;
         
             ctx.fillStyle = "rgb(255, 255, 255)";
             ctx.fillRect(20, 260 - h, 660, 5);
@@ -535,7 +589,13 @@
                 ctx.fillRect(100 + i * 100, 20, 1, 240 - h);
                 ctx.fillStyle = "rgb(20, 20, 20)";
                 ctx.fillRect(48 + i * 100, 255 - h, 5, 10);
-                ctx.fillText((2014 + i * 2).toString(), 32 + i *100, 285 - h);
+                if(i==6){
+                    ctx.fillText(("NOW").toString(), 32 + i *100, 285 - h);
+                }
+                else{
+                    ctx.fillText((2014 + i * 2).toString(), 32 + i *100, 285 - h);
+                }
+                
             }
         
             for (var i = 0; i < tablica.length; i++) {

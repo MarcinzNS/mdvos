@@ -50,7 +50,9 @@ def getOSChart(id: int) -> dict:
         os_data[os_info['os_version_id']] = {
             
             "start": os_info['date_start'].year if os_info['date_start'] else None,
+            "start_m":os_info['date_start'].month if os_info['date_start'] else None,
             "koniec": os_info['date_end'].year if os_info['date_end'] else None,
+            "koniec_m":os_info['date_end'].month if os_info['date_end'] else None,
         }
 
     os_chart_json = json.dumps(os_data)
