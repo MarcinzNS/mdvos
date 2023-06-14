@@ -3,7 +3,7 @@ from django.db.models import Q
 from main.models.models import Comment
 from django.shortcuts import get_object_or_404
 
-def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page: int, brand_filter: list, ram_filter: list, search: str) -> dict:
+def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page: int, brand_filter: list, ram_filter: list) -> dict:
     start = (which_page-1)*how_many
 
     devices = Devices.objects.filter(accepted=True)
@@ -24,36 +24,25 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
             'specifications': 
                 {spec['spec_type_id__name']: spec['value'] for spec in device_specifications}
         }
-
-        name_matches = False
-        try:
-            device_name = device['brand'] + device['model']
-            device_name = device_name.replace(' ', '')
-            device_name = device_name.lower()
-            if search in device_name:
-                name_matches = True
-        except:
-            pass
-        if len(brand_filter) > 0 and len(ram_filter) > 0 and name_matches:
+        if len(brand_filter) > 0 and len(ram_filter) > 0:
             try:
                 if device_data['specifications']["RAM"] in map(str, ram_filter) and device['brand'] in brand_filter:
                     result.append(device_data)
             except:
                 pass
-        elif len(ram_filter) > 0 and name_matches:
+        elif len(ram_filter) > 0:
             try:
                 if device_data['specifications']["RAM"] in map(str, ram_filter):
                     result.append(device_data)
             except:
                 pass
-        elif len(brand_filter) > 0 and name_matches:
+        elif len(brand_filter) > 0:
             try:
                 if device['brand'] in brand_filter:
                     result.append(device_data)
             except:
                 pass
-
-        elif name_matches:
+        else:
             result.append(device_data)
 
     return {"data": result[start:start+how_many], "how_many_results": len(result)}

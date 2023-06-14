@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from ..services.devices import *
@@ -11,7 +11,7 @@ from django.contrib import messages
 
 import math
 
-def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, page=1, search_query=''):
+def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, page=1,):
     context = {
         "sidebar": {
             "brand": ["Xiaomi", "Samsung", "Apple", "Motorola"],
@@ -26,11 +26,6 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
         urlEnd = GETtoURL(request.GET)
         brand_filter = [brand_name for brand_name in context["sidebar"]["brand"] if request.GET.get(brand_name, False)]
         ram_filter = [ram_value for ram_value in context["sidebar"]["ram"] if request.GET.get(f"ram{ram_value}", False)]
-        search = request.GET.get('search_query')
-        if search:
-            search = search.replace(' ', '')
-            search = search.lower()
-            search_query=search
 
     dict_hold = dict()
     for key, value in context["sidebar"]["sort_by"].items():
@@ -43,7 +38,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
         if sort_by != "NOT":
             context |= {"sort_by":sort_by, "sort_by_text":dict_hold[sort_by]}
 
-    data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter, search_query)
+    data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter)
     
     how_many_pages = math.ceil(data["how_many_results"]/how_many_item_on_page)
     
@@ -63,8 +58,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
             "ram": ram_filter
         },
         "urlEnd": urlEnd,
-        "how_many_results": data["how_many_results"],
-        "search_query": search_query,
+        "how_many_results": data["how_many_results"]
     }
     
     request.session['next_page'] = request.get_full_path()

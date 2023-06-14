@@ -62,15 +62,20 @@
                   </ul>
                 </div>
                 <div class="col-sm-6 col-xl-6">
-                  <form autocomplete="off" class="form-inline mx-3 my-2" method="get" action="{% url 'devices' %}">
+                  <form class="form-inline mx-3 my-2">
                     <div class="input-group">
                       <div class="form-control d-flex bg-wyszukaj">
-                        <input name="search_query" type="text" class="form-control border-0 bg-wyszukaj" placeholder="Wyszukaj" 
-                        aria-label="Wyszukaj" aria-describedby="basic-addon1"/>
+                        <input type="text" class="form-control border-0 bg-wyszukaj" placeholder="Wyszukaj" aria-label="Wyszukaj" aria-describedby="basic-addon1">
                         <div class="input-group-prepend ">
-                            <button class="btn  border-0 bg-wyszukaj ms-2" type="submit">
+                          <a href="{% url 'devices' %}">
+                            <button class="btn  border-0 bg-wyszukaj ms-2" type="button">
                               <span class="input-group-text  border-0 bg-wyszukaj" id="basic-addon1"><i class="bi bi-search"></i></span>
                             </button>
+                            <!--
+                              tutaj następuje sprawdzenie wyszukiwania a następnie przekierowuje na strone z produktami,
+                              na pustym wyszukaniu wyświetlić najbardziej popularne
+                            -->
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -103,9 +108,6 @@
                         <a class="dropdown-item" href="{% url 'registration' %}"> Zarejestruj się </a>
                         {% endif %}
                         {% if request.user.is_authenticated %}
-                        {% if request.user.is_staff %}
-                        <a class="dropdown-item" href="{% url 'adminek' %}"> Panel administratora </a>
-                        {% endif %}
                         <a class="dropdown-item" href="{% url 'profile' %}"> Mój Profil </a>
                         <a class="dropdown-item" href ="{% url 'followed_list' %}"> Obserwowane </a>
                         <a class="dropdown-item" href="{% url 'logout' %}"> Wyloguj się </a>

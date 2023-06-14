@@ -17,22 +17,17 @@ urlpatterns = [
     path('add-device', add_device.add_device, name="add_device"),
     path('add-os', add_os.add_os, name="add_os"),
     
-    path('devices', devices.devices, name="devices"),   
-    path('devices/<str:search_query>', devices.devices, name="devices"),  
+    path('devices', devices.devices, name="devices"),
     path('devices/<int:page>', devices.devices, name="devices"),
-    path('devices/<int:how_many_item_on_page>/<int:page>/<str:search_query>', devices.devices, name="devices"),
     path('devices/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),
     path('devices/<str:category>', devices.devices, name="devices"),
     path('devices/<str:category>/<int:page>', devices.devices, name="devices"),
-    path('devices/<str:category>/<int:how_many_item_on_page>/<int:page>/<str:search_query>', devices.devices, name="devices"),
     path('devices/<str:category>/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),
 
     path('devices/<str:sort_by>/<int:page>', devices.devices, name="devices"),
-    path('devices/<int:how_many_item_on_page>/<str:sort_by>/<int:page>/<str:search_query>', devices.devices, name="devices"),
     path('devices/<int:how_many_item_on_page>/<str:sort_by>/<int:page>', devices.devices, name="devices"),
     path('devices/<str:category>/<str:sort_by>', devices.devices, name="devices"),
     path('devices/<str:category>/<str:sort_by>/<int:page>', devices.devices, name="devices"),
-    path('devices/<str:category>/<str:sort_by>/<int:how_many_item_on_page>/<int:page>/<str:search_query>', devices.devices, name="devices"),
     path('devices/<str:category>/<str:sort_by>/<int:how_many_item_on_page>/<int:page>', devices.devices, name="devices"),
 
     path('one-device/<int:id>', devices.one_device, name="one_device"),

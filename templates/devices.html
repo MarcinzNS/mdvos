@@ -20,26 +20,14 @@
                             <div class="row">
                                 <!--Filtrowanie-->
                                 <div class="col-12">
-                                    {% if search_query %}
-                                        {% if category and sort_by%}
-                                        <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 search_query=search_query %}" method="GET" >
-                                        {% elif category %}
-                                        <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 search_query=search_query %}" method="GET" >
-                                        {% elif sort_by %}
-                                        <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 search_query=search_query %}" method="GET" >
-                                        {% else %}
-                                        <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 search_query=search_query %}" method="GET" >
-                                        {% endif %}
+                                    {% if category and sort_by%}
+                                    <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                                    {% elif category %}
+                                    <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
+                                    {% elif sort_by %}
+                                    <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
                                     {% else %}
-                                        {% if category and sort_by%}
-                                        <form action="{% url 'devices' category=category sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
-                                        {% elif category %}
-                                        <form action="{% url 'devices' category=category how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
-                                        {% elif sort_by %}
-                                        <form action="{% url 'devices' sort_by=sort_by how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
-                                        {% else %}
-                                        <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
-                                        {% endif %}
+                                    <form action="{% url 'devices' how_many_item_on_page=how_many_item_on_page page=1 %}" method="GET" >
                                     {% endif %}
                                         <p class="h3 mb-2">Filtry</p>
         
