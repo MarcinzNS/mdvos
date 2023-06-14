@@ -109,7 +109,7 @@
                         {% endif %}
                         {% if request.user.is_authenticated %}
                         <a class="dropdown-item" href="{% url 'profile' %}"> Mój Profil </a>
-                        <a class="dropdown-item" href ="{% url 'favourites_list' %}"> Ulubione </a>
+                        <a class="dropdown-item" href ="{% url 'followed_list' %}"> Obserwowane </a>
                         <a class="dropdown-item" href="{% url 'logout' %}"> Wyloguj się </a>
                         {% endif %}
                       </div>

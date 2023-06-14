@@ -1,4 +1,4 @@
-from ..models.models import Devices, Specification ,Like
+from ..models.models import Devices, Specification, Like, Followed_devices
 from django.db.models import Q
 from main.models.models import Comment
 from django.shortcuts import get_object_or_404
@@ -46,6 +46,30 @@ def getDevicesDataForPage(category: str, sort_by: str, how_many: int, which_page
             result.append(device_data)
 
     return {"data": result[start:start+how_many], "how_many_results": len(result)}
+
+def getDevicesFollowed(id:int):
+    devices = Devices.objects.filter(accepted=True)
+    devices = devices.values()
+
+    specifications = list(Specification.objects.values('spec_type_id__name', 'value', "devices_id"))
+    
+    follow = list(Followed_devices.objects.filter(user_id=id).values('devices_id'))
+    print(follow)
+    result = []
+    for device in devices:
+        device_specifications = [spec for spec in specifications if spec['devices_id'] == device['id_device']]
+        device_data = {
+            'device': 
+                device,
+            'specifications': 
+                {spec['spec_type_id__name']: spec['value'] for spec in device_specifications}
+        }
+        if device['id_device'] in map(lambda x: x['devices_id'], follow):
+            result.append(device_data)
+
+    return {"data": result}
+
+
 
 def getDeviceData(id: int) -> dict:
     return Devices.objects.all().filter(id_device=id).values()[0]
