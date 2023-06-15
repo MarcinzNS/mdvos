@@ -131,9 +131,6 @@
                     </div>
                     <div class="col-md-6 p-4 ps-md-0">
                         <h5 class="mt-0">{{ item.device.brand }} {{ item.device.model }}</h5>
-                        {% if item.specifications.SCREEN_SIZE %}
-                        <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ item.specifications.SCREEN_SIZE }}"</p></span>
-                        {% endif %}
                         {% if item.specifications.CPU %}
                         <span class="d-flex"><i class="bi bi-cpu  me-3"></i><p>{{ item.specifications.CPU }}</p></span>
                         {% endif %}
@@ -142,6 +139,9 @@
                         {% endif %}
                         {% if item.specifications.DISC %}
                         <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ item.specifications.DISC }} GB</p></span>
+                        {% endif %}
+                        {% if item.specifications.SIZE %}
+                        <span class="d-flex"><i class="bi bi-arrows-angle-expand me-3"></i><p>{{ item.specifications.SIZE }}"</p></span>
                         {% endif %}
                         <a href="{% url 'one_device' id=item.device.id_device %}" class="stretched-link">Czytaj więcej</a>
                     </div>

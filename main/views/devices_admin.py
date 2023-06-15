@@ -8,7 +8,7 @@ from django.urls import reverse
 def remove_device(request, device_id):
     
     if not request.user.is_staff:
-        return redirect('devices')
+        return redirect('error404')
     
     try:
         device = models.Devices.objects.get(id_device=device_id)
@@ -24,7 +24,7 @@ def remove_device(request, device_id):
 
 def edit_device_info(request, device_id):
     if not request.user.is_staff:
-        return redirect('devices')
+        return redirect('error404')
     
     device = models.Devices.objects.get(id_device=device_id)
     if not device:
@@ -52,7 +52,7 @@ def edit_device_info(request, device_id):
 
 def edit_device_photo(request, device_id):
     if not request.user.is_staff:
-        return redirect('devices')
+        return redirect('error404')
 
     device = models.Devices.objects.get(id_device=device_id)
     if not device:

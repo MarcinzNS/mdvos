@@ -22,10 +22,23 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
     brand_filter = []
     ram_filter = []
     urlEnd = ""
+    search = ''
     if request.method == "GET":
         urlEnd = GETtoURL(request.GET)
         brand_filter = [brand_name for brand_name in context["sidebar"]["brand"] if request.GET.get(brand_name, False)]
         ram_filter = [ram_value for ram_value in context["sidebar"]["ram"] if request.GET.get(f"ram{ram_value}", False)]
+        
+        search = request.GET.get('search_query')
+        if search or search=="":
+            search = search.replace(" ", "").lower()
+            request.session['search'] = search
+
+        elif category == "NOT" and sort_by == "NOT":
+            search = ''
+            
+        else:
+            search = request.session['search']
+
 
     dict_hold = dict()
     for key, value in context["sidebar"]["sort_by"].items():
@@ -38,7 +51,7 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
         if sort_by != "NOT":
             context |= {"sort_by":sort_by, "sort_by_text":dict_hold[sort_by]}
 
-    data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter)
+    data = getDevicesDataForPage(category, sort_by, how_many_item_on_page, page, brand_filter, ram_filter, search)
     
     how_many_pages = math.ceil(data["how_many_results"]/how_many_item_on_page)
     
