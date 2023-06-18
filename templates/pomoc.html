@@ -29,9 +29,31 @@
                         {% if item.specifications.DISC %}
                         <span class="d-flex"><i class="bi bi-hdd me-3"></i><p>{{ item.specifications.DISC }} GB</p></span>
                         {% endif %}
-                        <a href="{% url 'one_device' id=item.device.id_device %}" class="stretched-link">Czytaj więcej</a>
+                        
                   
-            
+                        <div class="me-2">
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmAccept{{ item.device.id_device }}">
+                              <i class="bi bi-trash"></i> Akceptuj
+                            </button>
+                        
+                            <div class="modal fade" id="confirmAccept{{ item.device.id_device }}" tabindex="-1" aria-labelledby="confirmAcceptLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmAcceptLabel">Potwierdź zaakceptowanie urządzenia</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body d-grid gap-2  col-6 mx-auto">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                                      
+                                      <a href="{% url 'accept_device' device_id=item.device.id_device %}" class="btn btn-primary">Akceptuj</a>
+                                      
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
             <div class="me-2">
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ item.device.id_device }}">
                   <i class="bi bi-trash"></i> Usuń urządzenie
@@ -55,28 +77,7 @@
                 </div>
             </div>
 
-            <div class="me-2">
-                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmAccept{{ item.device.id_device }}">
-                  <i class="bi bi-trash"></i> Akceptuj
-                </button>
             
-                <div class="modal fade" id="confirmAccept{{ item.device.id_device }}" tabindex="-1" aria-labelledby="confirmAcceptLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="confirmAcceptLabel">Potwierdź zaakceptowanie urządzenia</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body d-grid gap-2  col-6 mx-auto">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-                          
-                          <a href="{% url 'accept_device' device_id=item.device.id_device %}" class="btn btn-primary">Akceptuj</a>
-                          
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
         </div>
     </div>
             {% endfor %}
