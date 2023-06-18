@@ -32,18 +32,13 @@ def devices(request, category="NOT", sort_by="NOT", how_many_item_on_page=4, pag
         if search or search=="":
             search = search.replace(" ", "").lower()
             request.session['search'] = search
-
-        elif category == "NOT" and sort_by == "NOT":
-            search = ''
-            
-        else:
-            search = request.session['search']
+        elif category == "NOT" and sort_by == "NOT": search = ''
+        else: search = request.session['search']
 
 
     dict_hold = dict()
-    for key, value in context["sidebar"]["sort_by"].items():
-        dict_hold[value] = key
-
+    for key, value in context["sidebar"]["sort_by"].items(): dict_hold[value] = key
+    
     if category != "NOT": context |= {"category":category}
     if sort_by != "NOT": context |= {"sort_by":sort_by, "sort_by_text": dict_hold[sort_by]}
     elif request.method == "POST":
