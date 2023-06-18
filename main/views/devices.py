@@ -94,24 +94,9 @@ def GETtoURL(getDict):
 
 def one_device(request, id):
 
-    main_edit_device_form = AddDeviceForm(initial={
-            'brand': Devices.objects.get(id_device=id).brand,
-            'model': Devices.objects.get(id_device=id).model,
-            'device_type': Devices.objects.get(id_device=id).device_type,
-            'release_date': Devices.objects.get(id_device=id).premier,
-        }
-    )
-
-    specs_edit_device_form = AddDeviceSpecsForm(initial={
-            'cpu': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="CPU")),
-            'ram': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="RAM")),
-            'screen_size': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="SIZE")),
-            'battery': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="BATTERY")),
-            'disk_size': Specification.objects.get(devices_id=id, spec_type_id=Specification_type.objects.get(name="DISC")),
-        }
-    )
-
-    edit_image_form = ChangeDevicePhotoForm(initial={'image': Devices.objects.get(id_device=id).image})
+    main_edit_device_form = AddDeviceForm(initial=initialForAddDeviceForm())
+    specs_edit_device_form = AddDeviceSpecsForm(initial=initialForAddDeviceSpecsForm())
+    edit_image_form = ChangeDevicePhotoForm(initial=initialForChangeDevicePhotoForm())
 
     context = {
         "device" : getDeviceData(id),
