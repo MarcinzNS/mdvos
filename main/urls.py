@@ -1,6 +1,6 @@
 from django.urls import path
 from main.views import login_system, profile, add_device, add_os, devices_admin
-from main.views import index, categories, devices, error, os, favourite, like_devices, adminek
+from main.views import index, devices, error, os, favourite, like_devices, adminek
 
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -13,7 +13,6 @@ urlpatterns = [
     path('sign-in', login_system.loginUser, name="login"),
     path('sign-out', login_system.logoutUser, name="logout"),
     path('sign-up', login_system.registration, name="registration"),
-    path('categories', categories.categories, name="categories"),
     path('add-device', add_device.add_device, name="add_device"),
     path('add-os', add_os.add_os, name="add_os"),
     
