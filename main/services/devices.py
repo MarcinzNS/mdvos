@@ -157,6 +157,7 @@ def ADD_OS(os_version_form):
     devices = os_version_form.cleaned_data['devices']  # Pobranie zaznaczonych urządzeń
     for device in devices:
         OS_devices.objects.create(os_id=os_version, devices_id=device)
+    return True
 
 def getComments(id: int) -> dict:
     comments = Comment.objects.filter(devices_id=id, main_comment_id='0').values()
