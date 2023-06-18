@@ -1,4 +1,4 @@
-from ..models.models import Devices, Specification, Like, Followed_devices, Specification_type
+from ..models.models import Devices, Specification, Like, Followed_devices, Specification_type, OS_devices
 from django.db.models import Q
 from main.models.models import Comment
 from django.shortcuts import get_object_or_404
@@ -109,6 +109,55 @@ def getDeviceLike(request,id: int) ->dict:
                      'like_count': like_count,'dislike_count': dislike_count}
     return result
 
+def ADD_Like(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+     # Sprawdź, czy użytkownik ma już niepolubienie dla tego urządzenia
+    existing_dislike = Like.objects.filter(user_id=user, devices_id=device, dislike=True).first()
+    if existing_dislike:
+        existing_dislike.delete()  # Usuń dislike
+
+    like = Like(user_id=user, devices_id=device, like=True, dislike=False)
+    like.save()
+    return True
+
+def ADD_Dislike(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    # Sprawdź, czy użytkownik ma już like dla tego urządzenia
+    existing_like = Like.objects.filter(user_id=user, devices_id=device, like=True).first()
+    if existing_like:
+        existing_like.delete()  # Usuń like
+
+    dislike = Like(user_id=user, devices_id=device, like=False, dislike=True)
+    dislike.save()
+    return True
+
+def Remove_Like(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    like = Like.objects.filter(user_id=user, devices_id=device, like=True).first()
+    if like:
+        like.delete()
+    return True
+
+def Remove_Dislike(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    dislike = Like.objects.filter(user_id=user, devices_id=device, dislike=True).first()
+    if dislike:
+        dislike.delete()
+    return True
+
+def ADD_OS(os_version_form):
+    os_version = os_version_form.save(commit=False)
+    os_version.accepted = False
+    os_version.save()
+    os_version_form.save_m2m()
+
+    devices = os_version_form.cleaned_data['devices']  # Pobranie zaznaczonych urządzeń
+    for device in devices:
+        OS_devices.objects.create(os_id=os_version, devices_id=device)
+    return True
 
 def getComments(id: int) -> dict:
     comments = Comment.objects.filter(devices_id=id, main_comment_id='0').values()
@@ -179,39 +228,28 @@ def add_specs_to_device(specs_data, device_id):
     
     return True
 
-"""
-    cpu_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='CPU'),
-        value=specs_data['cpu'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    cpu_spec.save()
+def initialForAddDeviceForm():
+    device = Devices.objects.get(id_device=id)
+    return {
+        'brand': device.brand,
+        'model': device.model,
+        'device_type': device.device_type,
+        'release_date': device.premier,
+    }
 
-    ram_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='RAM'),
-        value=specs_data['ram'],
-        devices_id=Devices.objects.get(id_device=device_id),
+def initialForAddDeviceSpecsForm():
+    specification_type_names = ["CPU", "RAM", "SIZE", "BATTERY", "DISC"]
+    specifications = Specification.objects.filter(
+        devices_id=id,
+        spec_type_id__in=Specification_type.objects.filter(name__in=specification_type_names)
     )
-    ram_spec.save()
+    specs_dict = {}
+    for specification in specifications:
+        specs_dict[specification.spec_type_id.name.lower()] = specification
+    return specs_dict
 
-    screen_size_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='SIZE'),
-        value=specs_data['screen_size'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    screen_size_spec.save()
+def initialForChangeDevicePhotoForm():
+    return {'image': Devices.objects.get(id_device=id).image}
 
-    battery_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='BATTERY'),
-        value=specs_data['battery'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    battery_spec.save()
 
-    disk_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='DISC'),
-        value=specs_data['disk_size'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    disk_spec.save()
-"""
+

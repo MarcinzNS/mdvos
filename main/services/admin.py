@@ -25,3 +25,49 @@ def getUnaccepted():
         result.append(device_data)
     return {"data": result}
 
+
+def edit_device_specs(specs_data, device_id):
+    cpu = models.Specification.objects.get(
+        spec_type_id=models.Specification_type.objects.get(name='CPU'),
+        devices_id=models.Devices.objects.get(id_device=device_id),
+    )
+    cpu.value = specs_data['cpu']
+    cpu.save()
+
+    ram = models.Specification.objects.get(
+        spec_type_id=models.Specification_type.objects.get(name='RAM'),
+        devices_id=models.Devices.objects.get(id_device=device_id),
+    )
+    ram.value = specs_data['ram']
+    ram.save()
+
+    screen_size = models.Specification.objects.get(
+        spec_type_id=models.Specification_type.objects.get(name='SIZE'),
+        devices_id=models.Devices.objects.get(id_device=device_id),
+    )
+    screen_size.value = specs_data['screen_size']
+    screen_size.save()
+
+    battery = models.Specification.objects.get(
+        spec_type_id=models.Specification_type.objects.get(name='BATTERY'),
+        devices_id=models.Devices.objects.get(id_device=device_id),
+    )
+    battery.value = specs_data['battery']
+    battery.save()
+
+    disk = models.Specification.objects.get(
+        spec_type_id=models.Specification_type.objects.get(name='DISC'),
+        devices_id=models.Devices.objects.get(id_device=device_id),
+    )
+    disk.value = specs_data['disk_size']
+    disk.save()
+
+
+def get_device(device_id):
+    return models.Devices.objects.get(id_device=device_id)
+
+
+def remove_device(device_id):
+    device = models.Devices.objects.get(id_device=device_id)
+    device.accepted = False
+    device.save()
