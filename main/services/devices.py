@@ -109,6 +109,44 @@ def getDeviceLike(request,id: int) ->dict:
                      'like_count': like_count,'dislike_count': dislike_count}
     return result
 
+def ADD_Like(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+     # Sprawdź, czy użytkownik ma już niepolubienie dla tego urządzenia
+    existing_dislike = Like.objects.filter(user_id=user, devices_id=device, dislike=True).first()
+    if existing_dislike:
+        existing_dislike.delete()  # Usuń dislike
+
+    like = Like(user_id=user, devices_id=device, like=True, dislike=False)
+    like.save()
+    return True
+
+def ADD_Dislike(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    # Sprawdź, czy użytkownik ma już like dla tego urządzenia
+    existing_like = Like.objects.filter(user_id=user, devices_id=device, like=True).first()
+    if existing_like:
+        existing_like.delete()  # Usuń like
+
+    dislike = Like(user_id=user, devices_id=device, like=False, dislike=True)
+    dislike.save()
+    return True
+
+def Remove_Like(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    like = Like.objects.filter(user_id=user, devices_id=device, like=True).first()
+    if like:
+        like.delete()
+    return True
+
+def Remove_Dislike(user,device_id):
+    device = get_object_or_404(Devices, pk=device_id)
+
+    dislike = Like.objects.filter(user_id=user, devices_id=device, dislike=True).first()
+    if dislike:
+        dislike.delete()
+    return True
 
 def getComments(id: int) -> dict:
     comments = Comment.objects.filter(devices_id=id, main_comment_id='0').values()
