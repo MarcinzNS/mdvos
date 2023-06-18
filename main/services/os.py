@@ -11,7 +11,7 @@ def getOSAll(id: int) -> dict:
     for os_device in os_devices:
         os_version_id = os_device[0]
         os_versions = list(
-            OS_version.objects.filter(os_version_id=os_version_id)
+            OS_version.objects.filter(os_version_id=os_version_id, accepted=True)
             .values('os_version_id', 'version', 'date_start', 'date_end', 'os_id')
         )
         os_all.extend(os_versions)
@@ -20,9 +20,15 @@ def getOSAll(id: int) -> dict:
     os_data = {}
 
     for os_info in os_all:
+        date_start = os_info['date_start']
         date_end = os_info['date_end']
-        if date_end is None:
+        if date_start is None:
+            date_start = "System nie został wprowadzony"
+            date_end = ""
+        if (date_end is None) and (date_start is not None):
             date_end = "Ciągle wspierany"
+        
+        
         os_id = os_info['os_id']
         os_data[os_info['os_version_id']] = {
             'version': os_info['version'],
@@ -68,11 +74,15 @@ from datetime import datetime
 def getOS_Info(sort_by=None):
     os_data = {}
     os_all = []
+
+
     os_all_name = list(OS.objects.values('id_os', 'name'))
 
-    os_versions = list(OS_version.objects.all()
+    os_versions = list(OS_version.objects.filter(accepted=True)
                        .values('os_version_id', 'version', 'date_start', 'date_end', 'description', 'os_id'))
     os_all.extend(os_versions)
+
+
 
     for os_info in os_all:
         os_id = os_info['os_id']

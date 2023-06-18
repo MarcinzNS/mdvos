@@ -5,18 +5,21 @@
 {% block content %}
 <main class="container  mt-2 ">
     
-    <form method="GET" action="{% url 'os' %}">
-        <label for="sort_by"> Sortuj według: </label>
-        <select name="sort_by" id="sort_by">
-            <option value="name">Nazwa</option>
-            <option value="version">Wersja</option>
-            <option value="devices_count">Popularność</option>
-        </select>
-        <button type="submit">Sortuj</button>
+    <form class="d-flex align-items-center mb-1" method="GET" action="{% url 'os' %}">
+        <div class="input-group flex-grow-1">
+            <label class="input-group-text" for="sort_by">Sortuj według:</label>
+            <select class="form-select border-1 shadow-none" name="sort_by" id="sort_by">
+                <option value="name">Nazwa</option>
+                <option value="version">Wersja</option>
+                <option value="devices_count">Popularność</option>
+            </select>
+        </div>
+        <button class="btn btn-dark ms-3" type="submit">Sortuj</button>
     </form>
-
+    
+    
     <div class="row justify-content-center mt-1">
-        <div class="card-body my-3 pt-3 ">  
+        <div class="card-body my-1 pt-1 ">  
             <div class="card-body border-top">
                 <table class="table">
                     <tr>
@@ -24,7 +27,6 @@
                         <th scope="row">Wersja</th>
                         <th scope="row">Data wprowadzenia</th>
                         <th scope="row">Data zakończenia wsparcia</th>
-                        <th scope="row">Ilość obsługiwanych urządzeń</th>
                         <th scope="row">Opis</th> 
                     </tr>
                     
@@ -34,7 +36,6 @@
                             <td>{{ os_info.version }}</td>
                             <td>{{ os_info.date_start }}</td>
                             <td>{{ os_info.date_end }}</td>
-                            <td>{{ os_info.devices_count }}</td> 
                             <td>{{ os_info.description }}</td> 
                         </tr>
                     {% empty %}
