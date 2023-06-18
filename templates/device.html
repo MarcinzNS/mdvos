@@ -522,18 +522,21 @@
                     start=start+(start_m/12);
                 }
               
-                console.log("start",start);
-                console.log("start_m",start_m);
-                console.log("end",end);
-                console.log("end_m",end_m);
+               // console.log("start",start);
+                //console.log("start_m",start_m);
+                //console.log("end",end);
+                //console.log("end_m",end_m);
                 
                 end=(start-end)*50;
                 start=start*50;
-                console.log("start",start);
-                console.log("start_m",start_m);
-                console.log("end",end);
-                console.log("end_m",end_m);
-
+                //console.log("start",start);
+                //console.log("start_m",start_m);
+                //console.log("end",end);
+                //console.log("end_m",end_m);
+                if(end<0)
+                    {
+                        end=end*(-1);
+                    }
                 //console.log(end);
                // var key = parseInt(keys[i]);
                 

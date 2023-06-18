@@ -1,4 +1,4 @@
-from ..models.models import Devices, Specification, Like, Followed_devices
+from ..models.models import Devices, Specification, Like, Followed_devices, Specification_type
 from django.db.models import Q
 from main.models.models import Comment
 from django.shortcuts import get_object_or_404
@@ -156,3 +156,62 @@ def getCommentsWithUnderComments(id: int) -> dict:
 
     return list(comments_dict.values())
 
+
+def add_specs_to_device(specs_data, device_id):
+    spec_types = {
+        'CPU': 'cpu',
+        'RAM': 'ram',
+        'SIZE': 'screen_size',
+        'BATTERY': 'battery',
+        'DISC': 'disk_size',
+    }
+
+    devices_id=Devices.objects.get(id_device=device_id)
+
+    for spec_type_name, spec_data_key in spec_types.items():
+        id_spec_type = Specification_type.objects.get(name=spec_type_name)
+        spec = Specification(
+            spec_type_id=id_spec_type,
+            value=specs_data[spec_data_key],
+            devices_id=devices_id
+        )
+        spec.save()
+    
+    return True
+
+"""
+    cpu_spec = Specification(
+        spec_type_id=Specification_type.objects.get(name='CPU'),
+        value=specs_data['cpu'],
+        devices_id=Devices.objects.get(id_device=device_id),
+    )
+    cpu_spec.save()
+
+    ram_spec = Specification(
+        spec_type_id=Specification_type.objects.get(name='RAM'),
+        value=specs_data['ram'],
+        devices_id=Devices.objects.get(id_device=device_id),
+    )
+    ram_spec.save()
+
+    screen_size_spec = Specification(
+        spec_type_id=Specification_type.objects.get(name='SIZE'),
+        value=specs_data['screen_size'],
+        devices_id=Devices.objects.get(id_device=device_id),
+    )
+    screen_size_spec.save()
+
+    battery_spec = Specification(
+        spec_type_id=Specification_type.objects.get(name='BATTERY'),
+        value=specs_data['battery'],
+        devices_id=Devices.objects.get(id_device=device_id),
+    )
+    battery_spec.save()
+
+    disk_spec = Specification(
+        spec_type_id=Specification_type.objects.get(name='DISC'),
+        value=specs_data['disk_size'],
+        devices_id=Devices.objects.get(id_device=device_id),
+    )
+    disk_spec.save()
+"""

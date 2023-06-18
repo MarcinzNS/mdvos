@@ -219,6 +219,9 @@ class OSForm(forms.ModelForm):
     name= forms.CharField(
         label='Nowy System',
         required=False,
+                error_messages={
+            'required': "Należy podać opis",
+        },
     )
     class Meta:
         model = OS
@@ -241,13 +244,18 @@ class OSVersionForm(forms.ModelForm):
         },
     )
     
-    date_start = forms.DateField(label="Data rozpoczęcia wsparcia*", widget=AdminDateWidget())
+    date_start = forms.DateField(label="Data rozpoczęcia wsparcia*", widget=AdminDateWidget(),
+        error_messages={
+            'required': "Należy podać datę rozpoczęcia wsparcia",
+        },
+    )
     date_end = forms.DateField(label="Data zakończenia wsparcia", widget=AdminDateWidget(), required=False)
     
     
     description = forms.CharField(
         label="Opis wersji*",
         max_length=50,
+        widget=forms.Textarea(attrs={'placeholder': 'Tutaj wpisz opis wersji systemu', 'rows': 3, 'cols': 63}),
         error_messages={
             'required': "Należy podać opis",
         },
@@ -255,6 +263,9 @@ class OSVersionForm(forms.ModelForm):
     os_id = forms.ModelChoiceField(
         queryset=OS.objects.all(),
         label="System operacyjny*",
+        error_messages={
+            'required': "Należy wybrać odpowiedni system",
+        },
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     devices = forms.ModelMultipleChoiceField(
@@ -288,64 +299,16 @@ class OSVersionForm(forms.ModelForm):
                     OS_devices.objects.create(os_id=instance, devices_id=device)
 
         return instance
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        date_start = cleaned_data.get('date_start')
+        date_end = cleaned_data.get('date_end')
 
+        if date_start and date_end and date_end < date_start:
+            raise forms.ValidationError(("Data zakończenia wsparcia nie może być wcześniejsza niż data rozpoczęcia wsparcia."))
 
-class OSDevicesForm(forms.ModelForm):
-    os_version = forms.ModelChoiceField(queryset=OS_version.objects.all())
-    devices = forms.ModelMultipleChoiceField(queryset=Devices.objects.all())
-
-    class Meta:
-        model = OS
-        fields = ['os_version', 'devices']
-
-
-class AddOSForm(forms.ModelForm):
-
-    version = forms.CharField(
-        label="Nazwa Wersji*",
-        max_length=30,
-        error_messages={
-            'required': "Należy podać nazwę wersji",
-        },
-    )
-
-    model = forms.CharField(
-        label="Model*",
-        max_length=50,
-        error_messages={
-            'required': "Należy podać model",
-        },
-    )
-
-    device_type = forms.ChoiceField(
-        label="Kategoria",
-        choices=[
-            ("PHONE", "Telefon"),
-            ("TABLET", "Tablet"),
-            ("LAPTOP", "Laptop"),
-        ],
-    )
-    release_date = forms.DateField(required=False)
-    image = forms.ImageField(
-        required=False,
-        validators=[validate_image_format, validate_image_size],    
-        error_messages= {
-            "invalid_image": "Przesłany plik nie jest obrazem lub jest uszkodzony.",
-        }    
-    )
-
-    class Meta:
-        model = Devices
-        fields = ['brand', 'model', 'device_type', 'release_date', 'image']
-
-    def save(self, commit=True):
-        # zapisanie wartości release_date w premier
-        instance = super().save(commit=False)
-        instance.premier = self.cleaned_data['release_date']
-
-        if commit:
-            instance.save()
-        return instance
+        return cleaned_data
 
 class CommentForm(forms.ModelForm):
 
