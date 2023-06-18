@@ -46,16 +46,16 @@
                       <div class="mt-2 p-3 border-top">
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
-                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#Edycja" aria-expanded="true" aria-controls="Edycja">
+                            <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#Edycja" aria-expanded="false" aria-controls="Edycja">
                               Edycja
                             </button>
                           </h5>
                         </div>
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
-                            <button class="btn nav-link active" data-bs-toggle="collapse" data-bs-target="#Akceptuj" aria-expanded="true" aria-controls="Akceptuj">
+                            <a  class="dropdown-item" href="{% url 'pomoc' %}">
                               Akceptuj nowe
-                            </button>
+                            </a>
                           </h5>
                         </div>
                         <div class="card-header" id="headingOne">
@@ -63,6 +63,7 @@
                             <button class="btn nav-link" data-bs-toggle="collapse" data-bs-target="#zglosone" aria-expanded="true" aria-controls="zglosone">
                               Zgłoszone błędy
                             </button>
+                            
                           </h5>
                         </div>
                       </div>
