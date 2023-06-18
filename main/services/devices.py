@@ -226,7 +226,7 @@ def add_specs_to_device(specs_data, device_id):
     
     return True
 
-def initialForAddDeviceForm():
+def initialForAddDeviceForm(id):
     device = Devices.objects.get(id_device=id)
     return {
         'brand': device.brand,
@@ -235,7 +235,7 @@ def initialForAddDeviceForm():
         'release_date': device.premier,
     }
 
-def initialForAddDeviceSpecsForm():
+def initialForAddDeviceSpecsForm(id):
     specification_type_names = ["CPU", "RAM", "SIZE", "BATTERY", "DISC"]
     specifications = Specification.objects.filter(
         devices_id=id,
@@ -246,7 +246,7 @@ def initialForAddDeviceSpecsForm():
         specs_dict[specification.spec_type_id.name.lower()] = specification
     return specs_dict
 
-def initialForChangeDevicePhotoForm():
+def initialForChangeDevicePhotoForm(id):
     return {'image': Devices.objects.get(id_device=id).image}
 
 

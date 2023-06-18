@@ -75,10 +75,14 @@ def getOS_Info(sort_by=None):
     os_data = {}
     os_all = []
 
+
     os_all_name = list(OS.objects.values('id_os', 'name'))
+
     os_versions = list(OS_version.objects.filter(accepted=True)
                        .values('os_version_id', 'version', 'date_start', 'date_end', 'description', 'os_id'))
     os_all.extend(os_versions)
+
+
 
     for os_info in os_all:
         os_id = os_info['os_id']

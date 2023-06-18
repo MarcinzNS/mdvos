@@ -94,9 +94,9 @@ def GETtoURL(getDict):
 
 def one_device(request, id):
 
-    main_edit_device_form = AddDeviceForm(initial=initialForAddDeviceForm())
-    specs_edit_device_form = AddDeviceSpecsForm(initial=initialForAddDeviceSpecsForm())
-    edit_image_form = ChangeDevicePhotoForm(initial=initialForChangeDevicePhotoForm())
+    main_edit_device_form = AddDeviceForm(initial=initialForAddDeviceForm(id))
+    specs_edit_device_form = AddDeviceSpecsForm(initial=initialForAddDeviceSpecsForm(id))
+    edit_image_form = ChangeDevicePhotoForm(initial=initialForChangeDevicePhotoForm(id))
 
     context = {
         "device" : getDeviceData(id),
