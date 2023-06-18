@@ -179,8 +179,6 @@ def getMCData(id: int) -> dict:
     return main_comments_data
 
 def getCommentsWithUnderComments(id: int) -> dict:
-
-
     main_comments_data = getMCData(id)
     comments = getComments(id)
     comments_username=getCommentUsername(id)
