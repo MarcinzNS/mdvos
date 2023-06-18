@@ -1,4 +1,4 @@
-from ..models.models import Devices, Specification, Like, Followed_devices, Specification_type
+from ..models.models import Devices, Specification, Like, Followed_devices, Specification_type, OS_devices
 from django.db.models import Q
 from main.models.models import Comment
 from django.shortcuts import get_object_or_404
@@ -147,6 +147,16 @@ def Remove_Dislike(user,device_id):
     if dislike:
         dislike.delete()
     return True
+
+def ADD_OS(os_version_form):
+    os_version = os_version_form.save(commit=False)
+    os_version.accepted = False
+    os_version.save()
+    os_version_form.save_m2m()
+
+    devices = os_version_form.cleaned_data['devices']  # Pobranie zaznaczonych urządzeń
+    for device in devices:
+        OS_devices.objects.create(os_id=os_version, devices_id=device)
 
 def getComments(id: int) -> dict:
     comments = Comment.objects.filter(devices_id=id, main_comment_id='0').values()
