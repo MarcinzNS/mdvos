@@ -217,39 +217,28 @@ def add_specs_to_device(specs_data, device_id):
     
     return True
 
-"""
-    cpu_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='CPU'),
-        value=specs_data['cpu'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    cpu_spec.save()
+def initialForAddDeviceForm():
+    device = Devices.objects.get(id_device=id)
+    return {
+        'brand': device.brand,
+        'model': device.model,
+        'device_type': device.device_type,
+        'release_date': device.premier,
+    }
 
-    ram_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='RAM'),
-        value=specs_data['ram'],
-        devices_id=Devices.objects.get(id_device=device_id),
+def initialForAddDeviceSpecsForm():
+    specification_type_names = ["CPU", "RAM", "SIZE", "BATTERY", "DISC"]
+    specifications = Specification.objects.filter(
+        devices_id=id,
+        spec_type_id__in=Specification_type.objects.filter(name__in=specification_type_names)
     )
-    ram_spec.save()
+    specs_dict = {}
+    for specification in specifications:
+        specs_dict[specification.spec_type_id.name.lower()] = specification
+    return specs_dict
 
-    screen_size_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='SIZE'),
-        value=specs_data['screen_size'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    screen_size_spec.save()
+def initialForChangeDevicePhotoForm():
+    return {'image': Devices.objects.get(id_device=id).image}
 
-    battery_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='BATTERY'),
-        value=specs_data['battery'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    battery_spec.save()
 
-    disk_spec = Specification(
-        spec_type_id=Specification_type.objects.get(name='DISC'),
-        value=specs_data['disk_size'],
-        devices_id=Devices.objects.get(id_device=device_id),
-    )
-    disk_spec.save()
-"""
+
