@@ -7,7 +7,7 @@ def adminek(request):
         return redirect('error404')
     
     context = {
-        "now" : datetime.now()
+        "now" : 1
     }
     return render(request, "admin.html", context)
 
